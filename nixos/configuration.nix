@@ -74,23 +74,17 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    helix
     tree
     wget
     git
-    neofetch
     bottom
-    bat
     nix-index
     brightnessctl
     playerctl
     htop
     nil
-    starship
     waybar
-    alacritty
     zathura
-    eza
     fzf
     ripgrep
     wofi
@@ -98,8 +92,6 @@
     gammastep
     file
     capitaine-cursors
-    glib
-    dconf
   ];
 
   # Fonts

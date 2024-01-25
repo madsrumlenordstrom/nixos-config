@@ -103,7 +103,7 @@
     themes = {
       base16 = with config.colorScheme.colors; {
         "attributes" = "#${base09}";
-        "comment" = { fg = "#${base03}"; modifiers = ["italic"]; };
+        "comment" = { fg = "#${base04}"; modifiers = ["italic"]; };
         "constant" = "#${base09}";
         "constant.character.escape" = "#${base0C}";
         "constant.numeric" = "#${base09}";
@@ -149,11 +149,11 @@
         "ui.cursor" = { fg = "#${base00}"; bg = "#${base05}"; };
         "ui.cursor.insert" = { fg = "#${base05}"; modifiers = ["reversed"]; };
         "ui.cursorline.primary" = { fg = "#${base05}"; bg = "#${base01}"; };
-        "ui.cursor.match" = { fg = "#${base09}"; modifiers = ["bold"]; };
+        "ui.cursor.match" = { fg = "#${base09}"; };
         "ui.cursor.select" = { fg = "#${base05}"; modifiers = ["reversed"]; };
         "ui.gutter" = { bg = "#${base00}"; };
         "ui.help" = { fg = "#${base05}"; bg = "#${base01}"; };
-        "ui.linenr" = { fg = "#${base03}"; bg = "#${base00}"; };
+        "ui.linenr" = { fg = "#${base04}"; bg = "#${base00}"; };
         "ui.linenr.selected" = { fg = "#${base05}"; bg = "#${base00}"; modifiers = ["bold"]; };
         "ui.menu" = { fg = "#${base05}"; bg = "#${base01}"; };
         "ui.menu.scroll" = { fg = "#${base03}"; bg = "#${base01}"; };

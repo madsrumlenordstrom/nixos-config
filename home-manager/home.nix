@@ -12,7 +12,12 @@
     ./programs/firefox.nix
     ./programs/git.nix
     ./programs/alacritty.nix
+    ./programs/fish.nix
+    ./programs/starship.nix
+    ./programs/fzf.nix
+    ./programs/eza.nix
     ./programs/helix.nix
+    ./programs/bat.nix
   ];
 
   # Global color scheme
@@ -56,10 +61,10 @@
     };
 
     packages = with pkgs; [
-      fortune
       hexyl
-      qbittorrent
       mpv
+      transmission-gtk # Torrent client
+      gdu
     ];
 
     stateVersion = "23.11";
