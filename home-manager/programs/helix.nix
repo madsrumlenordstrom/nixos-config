@@ -101,7 +101,7 @@
     };
 
     themes = {
-      base16 = with config.colorScheme.colors; {
+      base16 = with config.colorScheme.palette; {
         "attributes" = "#${base09}";
         "comment" = { fg = "#${base04}"; modifiers = ["italic"]; };
         "constant" = "#${base09}";

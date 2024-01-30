@@ -18,6 +18,9 @@
     ./programs/eza.nix
     ./programs/helix.nix
     ./programs/bat.nix
+    ./programs/zathura.nix
+    ./programs/wofi.nix
+    ./programs/imv.nix
   ];
 
   # Global color scheme
@@ -76,6 +79,7 @@
 
   # Enable home-manager
   programs.home-manager.enable = true;
+  news.display = "show";
 
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";

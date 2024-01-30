@@ -36,7 +36,7 @@
           y = 0;
         };
       };
-      colors = with config.colorScheme.colors; {
+      colors = with config.colorScheme.palette; {
         primary = {
           foreground = "0x${base05}";
           background = "0x${base00}";

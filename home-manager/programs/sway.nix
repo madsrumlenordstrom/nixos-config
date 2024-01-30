@@ -76,7 +76,7 @@
       #     "${c.modifier}+Shift+d" = " exec ${pkgs.fd}/bin/fd --type file |${pkgs.wofi}/bin/wofi -Imi --show dmenu -M fuzzy |${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
       #     "${c.modifier}+v" = "splitt";
       #   };
-      colors = with config.colorScheme.colors; {
+      colors = with config.colorScheme.palette; {
         focused = {
           border = "#${base07}";
           background = "#${base00}";

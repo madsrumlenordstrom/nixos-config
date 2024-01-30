@@ -10,9 +10,12 @@
   programs.fish = {
     enable = true;
     shellAbbrs = {
-      mkdir = "mkdir -p";
-      rp = { setCursor = true; expansion = "realpath -z % |xargs --null -I -- echo 'wl-copy --' |sh"; };
-      wg = "wl-paste | xargs -I % echo 'wget --no-hsts %' | sh";
+      # Nix abbreviations
+      n = "nix";
+      nd = "nix develop -c $SHELL";
+      ns = {setCursor = true; expansion = "nix shell nixpkgs#%"; };
+      snrs = "sudo nixos-rebuild --flake . switch";
+      hms = "home-manager --flake . switch";
 
       # Git abbreviations
       ga = "git add";
@@ -26,11 +29,16 @@
       gl = "git log";
       gpl = "git pull";
       gcl = "wl-paste | xargs -I % echo 'git clone %' | sh";
+
+      # Other
+      mkdir = "mkdir -p";
+      rp = { setCursor = true; expansion = "realpath -z % |xargs --null -I -- echo 'wl-copy --' |sh"; };
+      wg = "wl-paste | xargs -I % echo 'wget --no-hsts %' | sh";
     };
     functions = {
       fish_greeting = "";
     };
-    interactiveShellInit = with config.colorScheme.colors;''
+    interactiveShellInit = with config.colorScheme.palette;''
       # Delete word on control + backspace
       bind \b backward-kill-word
 

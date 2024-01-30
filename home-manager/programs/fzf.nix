@@ -1,5 +1,3 @@
-
-
 {
   inputs,
   outputs,
@@ -12,20 +10,17 @@
   programs.fzf = {
     enable = true;
     defaultCommand = "${pkgs.fd}/bin/fd --type file --follow";
-    defaultOptions = with config.colorScheme.colors; [
+    defaultOptions = [
       "--height=60%"
       "--layout=reverse"
-      "--info=inline:' '"
+      "--info=right"
       "--border=sharp"
       "--preview-window=border-sharp"
-      " --preview '${pkgs.bat}/bin/bat -n --color=always {}'"
+      " --preview='${pkgs.bat}/bin/bat -n --color=always {}'"
       "--no-scrollbar"
       "--no-separator"
       "--margin=1"
-      "--color=16,border:-1"
-      "--color=bg+:#${base02},bg:#${base00},spinner:#${base06},hl:#${base08}"
-      "--color=info:#${base04},pointer:#${base06},gutter:-1"
-      "--color=marker:#${base06},fg+:#${base05},prompt:#${base0E},hl+:#${base08}"
+      "--info=hidden"
     ];
     fileWidgetCommand = "${pkgs.fd}/bin/fd --type file --follow";
     fileWidgetOptions = [
@@ -35,5 +30,29 @@
     changeDirWidgetOptions = [
       "--preview '${pkgs.eza}/bin/eza --tree --color=always --icons=always {}'"
     ];
+    colors = with config.colorScheme.palette; {
+      "fg" = "#${base05}";
+      "bg" = "#${base00}";
+      "hl" = "#${base08}";
+      "fg+" = "#${base05}";
+      "bg+" = "#${base02}";
+      "gutter" = "#${base00}";
+      "hl+" = "#${base08}";
+      "query" = "#${base05}";
+      "disabled" = "#${base05}";
+      "info" = "#${base04}";
+      "border" = "#${base04}";
+      "scrollbar" = "#${base04}";
+      "preview-border" = "#${base04}";
+      "preview-scrollbar" = "#${base04}";
+      "separator" = "#${base04}";
+      "label" = "#${base04}";
+      "preview-label" = "#${base04}";
+      "prompt" = "#${base0E}";
+      "pointer" = "#${base06}";
+      "marker" = "#${base06}";
+      "spinner" = "#${base06}";
+      "header" = "#${base06}";
+    };
   };
 }

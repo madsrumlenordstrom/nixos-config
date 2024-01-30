@@ -10,7 +10,6 @@
       # Hardware
       ./hardware-configuration.nix
       inputs.hardware.nixosModules.apple-macbook-pro-12-1
-      inputs.hardware.nixosModules.common-gpu-intel
     ];
 
   # Booting
@@ -74,7 +73,6 @@
 
   # Packages
   environment.systemPackages = with pkgs; [
-    tree
     wget
     git
     bottom
@@ -84,8 +82,6 @@
     htop
     nil
     waybar
-    zathura
-    fzf
     ripgrep
     wofi
     wl-clipboard
