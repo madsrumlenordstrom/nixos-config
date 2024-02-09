@@ -20,7 +20,7 @@
       insensitive = true;
       prompt = "search";
     };
-    style = with config.colorScheme.palette; ''
+    style = with config.colorScheme.palette; /*css*/ ''
       window {
         margin: 0px;
         border: 1px solid #${base04};

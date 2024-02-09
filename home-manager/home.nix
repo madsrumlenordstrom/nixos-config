@@ -8,15 +8,18 @@
 }: {
   imports = [
     inputs.nix-colors.homeManagerModules.default
-    # ./programs/sway.nix
+    ./programs/sway.nix
+    ./programs/waybar.nix
     ./programs/firefox.nix
     ./programs/git.nix
     ./programs/alacritty.nix
     ./programs/fish.nix
     ./programs/starship.nix
+    ./programs/gtk.nix
     ./programs/fzf.nix
     ./programs/eza.nix
     ./programs/helix.nix
+    ./programs/vscode.nix
     ./programs/bat.nix
     ./programs/zathura.nix
     ./programs/wofi.nix
@@ -26,6 +29,7 @@
   # Global color scheme
   # See https://github.com/tinted-theming/base16-schemes
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
+  # colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;
   # colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
   # colorScheme = inputs.nix-colors.colorSchemes.nord;
   # colorScheme = inputs.nix-colors.colorSchemes.brushtrees-dark;
@@ -51,7 +55,7 @@
     # Configure your nixpkgs instance
     config = {
       # Disable if you don't want unfree packages
-      # allowUnfree = true;
+      allowUnfree = true;
     };
   };
 
@@ -60,7 +64,7 @@
     homeDirectory = "/home/${config.home.username}";
 
     sessionVariables = {
-      # EDITOR = "helix"
+      # EDITOR = "hx"
     };
 
     packages = with pkgs; [

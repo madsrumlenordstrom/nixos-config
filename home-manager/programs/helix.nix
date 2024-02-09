@@ -7,6 +7,9 @@
   ...
 }:
 {
+  home.sessionVariables = {
+    EDITOR = "hx";
+  };
   programs.helix = {
     enable = true;
     settings = {
@@ -124,7 +127,7 @@
         "special" = "#${base0D}";
         "string"  = "#${base0B}";
         "type" = "#${base0A}";
-        "variable" = "#${base08}";
+        "variable" = "#${base05}";
         "variable.other.member" = "#${base0B}";
         "warning" = "#${base09}";
 

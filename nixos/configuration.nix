@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  modulesPath,
   ...
 }: {
   imports = [
@@ -12,11 +13,16 @@
       inputs.hardware.nixosModules.apple-macbook-pro-12-1
     ];
 
+  nixpkgs.config.allowUnfree = true;
+
   # Booting
   boot = {
     # Boot loader
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 10;
+      };
       efi.canTouchEfiVariables = true;
       timeout = 1;
     };
@@ -29,7 +35,7 @@
     auto-optimise-store = true;
   };
 
-  # Add flakes to nix registry
+  # Add flakes to nix registry (used in legacy commands)
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
   # Networking
@@ -42,9 +48,7 @@
     } ];
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-        22
-      ];
+      allowedTCPPorts = [ 22 ];
     };
   };
 
@@ -53,18 +57,13 @@
 
   # Time zone and locale.
   time.timeZone = "Europe/Copenhagen";
-  i18n = {
-    defaultLocale = "en_US.UTF-8";
-  };
+  i18n = { defaultLocale = "en_US.UTF-8"; };
 
   # User
   users.users.madsrumlenordstrom = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
+    extraGroups = [ "wheel" "networkmanager" "video" ];
     hashedPassword = "$y$j9T$.uZNPXk3OFWaoNetj2P2e0$6rD7ex86u17L78b0wKQ.QzXd3cZUVkAPifTs7r.L3l5";
     openssh.authorizedKeys.keys = [
       "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCvT9oPm1+tMYdUp4pngUjDciJpKP0kPlxmyJDQh6+Nb7f2AwW+C7BGEPADcf0yHtG8FYW/9MkfpCZcMoatsMSQnW1Wtzf3Xrjl59AGhuGc9Yc5stC6JLgWhosNpVoiZ44s0lU7vxMMVws+dBqmnanjYOqsKkVMBhmel9pfusY+gFvhRLGJQB98Ck+D5h/5VLefidM8d4hcnt0CK8+4/jMNIPojyx5j63yAG4vKZemJVgeBUM3enftfi7onY7xpuI7dhY4jWnp0JnPww8VIYHrbfZRc3XdpeTVMWF7oZB05nqkuOYUPanQp4jDIf/tdJTHwvv2ZnxmuxwheeLNDw2lMSmuogX2Zv+x91CHHHAWJFEWrcv7CKSL5LDS8fuw4Nw1Y/tjtZIIMfCXGLvxinZVAnCF/OOpyPNZIxn0bqrIVO42cF0smciWEeEIzvtiTzNJXdhIO/eg9dOWnBAq+PYIl+LxsCYrqcFgrhol9a6yX/DlUFBAbRbvuEY3SIVFV5O0= madsrumlenordstrom@arch"
@@ -75,19 +74,13 @@
   environment.systemPackages = with pkgs; [
     wget
     git
-    bottom
     nix-index
     brightnessctl
-    playerctl
     htop
     nil
-    waybar
     ripgrep
-    wofi
     wl-clipboard
-    gammastep
     file
-    capitaine-cursors
   ];
 
   # Fonts
@@ -110,23 +103,32 @@
 
   # Shell
   programs.fish.enable = true;
-  environment.shells = with pkgs; [
-    fish
-  ];
+  environment.shells = [ pkgs.fish ];
   users.defaultUserShell = pkgs.fish;
 
-  # Sway WM
-  programs.sway.enable = true;
-  xdg.portal.wlr.enable = true;
-  services.greetd = {
-    enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd sway";
-      };
+  # Make system prepared for a wayland compositor
+  security = { 
+    polkit.enable = true;
+    pam = {
+      # Needed for swaylock authentications
+      services.swaylock = {};
+      # Allow user programs to request realtime priority
+      loginLimits = [{ domain = "@users"; item = "rtprio"; type = "-"; value = 1; }];
+    };
+  };
+  xdg = {
+    portal = {
+      enable = true;
+      wlr.enable = true;
+      config.sway.default = [ "wlr" "gtk" ];
     };
   };
 
+  # Greeter before compositor
+  services.greetd = {
+    enable = true;
+    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd sway";
+  };
 
   # Audio
   security.rtkit.enable = true;
@@ -137,6 +139,10 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+  # Power managerment
+  services.thermald.enable = true;
+  powerManagement.powertop.enable = true;
 
   # Install version
   system.stateVersion = "23.05";

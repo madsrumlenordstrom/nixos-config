@@ -38,7 +38,7 @@
     functions = {
       fish_greeting = "";
     };
-    interactiveShellInit = with config.colorScheme.palette;''
+    interactiveShellInit = with config.colorScheme.palette; /*fish*/ ''
       # Delete word on control + backspace
       bind \b backward-kill-word
 

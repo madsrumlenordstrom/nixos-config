@@ -42,7 +42,7 @@
     packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    # formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays {inherit inputs;};
@@ -58,9 +58,7 @@
     nixosConfigurations = {
       "nixos" = nixpkgs.lib.nixosSystem {
         specialArgs = {inherit inputs outputs;};
-        modules = [
-          ./nixos/configuration.nix
-        ];
+        modules = [ ./nixos/configuration.nix ];
       };
     };
 
@@ -70,10 +68,7 @@
       "madsrumlenordstrom@nixos" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [
-          ./home-manager/home.nix
-          nur.hmModules.nur
-        ];
+        modules = [ ./home-manager/home.nix nur.hmModules.nur ];
       };
     };
   };

@@ -5,17 +5,17 @@
   config,
   pkgs,
   ...
-}:
-let
+}: let
   updateInterval = 24 * 60 * 60 * 1000; # Updates icons every day
-in
-{
+in {
+  home.sessionVariables = {
+    BROWSER = "firefox";
+  };
   programs.firefox = {
     enable = true;
     profiles = {
       default = {
         isDefault = true;
-
         search = {
           default = "DuckDuckGo";
           force = true;
@@ -25,9 +25,18 @@ in
                 {
                   template = "https://search.nixos.org/packages";
                   params = [
-                    { name = "type"; value = "packages"; }
-                    { name = "channel"; value = "unstable"; }
-                    { name = "query"; value = "{searchTerms}"; }
+                    {
+                      name = "type";
+                      value = "packages";
+                    }
+                    {
+                      name = "channel";
+                      value = "unstable";
+                    }
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
                   ];
                 }
               ];
@@ -36,12 +45,32 @@ in
               definedAliases = ["@np"];
             };
 
+            "AOTY" = {
+              urls = [
+                {
+                  template = "https://www.albumoftheyear.org/search";
+                  params = [
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
+                  ];
+                }
+              ];
+              iconUpdateURL = "https://cdn.albumoftheyear.org/images/favicon.png";
+              inherit updateInterval;
+              definedAliases = ["@aoty"];
+            };
+
             "Den Danske Ordbog" = {
               urls = [
                 {
                   template = "https://ordnet.dk/ddo/ordbog";
                   params = [
-                    { name = "query"; value = "{searchTerms}"; }
+                    {
+                      name = "query";
+                      value = "{searchTerms}";
+                    }
                   ];
                 }
               ];
@@ -55,7 +84,10 @@ in
                 {
                   template = "https://github.com/search";
                   params = [
-                    { name = "q"; value = "{searchTerms}"; }
+                    {
+                      name = "q";
+                      value = "{searchTerms}";
+                    }
                   ];
                 }
               ];
@@ -69,7 +101,10 @@ in
                 {
                   template = "https://en.wikipedia.org";
                   params = [
-                    { name = "search"; value = "{searchTerms}"; }
+                    {
+                      name = "search";
+                      value = "{searchTerms}";
+                    }
                   ];
                 }
               ];
@@ -83,7 +118,10 @@ in
                 {
                   template = "https://en.wiktionary.org";
                   params = [
-                    { name = "search"; value = "{searchTerms}"; }
+                    {
+                      name = "search";
+                      value = "{searchTerms}";
+                    }
                   ];
                 }
               ];
@@ -98,9 +136,18 @@ in
                 {
                   template = "https://translate.google.com";
                   params = [
-                    { name = "sl"; value = "{searchTerms}"; } # Input language
-                    { name = "tl"; value = "{searchTerms}"; } # Output language
-                    { name = "text"; value = "{searchTerms}"; } # Text to translate
+                    {
+                      name = "sl";
+                      value = "{searchTerms}";
+                    } # Input language
+                    {
+                      name = "tl";
+                      value = "{searchTerms}";
+                    } # Output language
+                    {
+                      name = "text";
+                      value = "{searchTerms}";
+                    } # Text to translate
                   ];
                 }
               ];
@@ -115,7 +162,7 @@ in
             "Wikipedia (en)".metaData.hidden = true;
           };
         };
-  
+
         # Extentions must be manually enabled on first launch
         extensions = with config.nur.repos.rycee.firefox-addons; [
           darkreader
@@ -292,334 +339,308 @@ in
         };
 
         # Theme
-        userChrome = ''
-@define-color mantle #292c3c;
-@define-color crust #232634;
+        userChrome = with config.colorScheme.palette;
+        /*
+        css
+        */
+          ''
+            /*
+            ┌─┐┬┌┬┐┌─┐┬  ┌─┐
+            └─┐││││├─┘│  ├┤
+            └─┘┴┴ ┴┴  ┴─┘└─┘
+            ┌─┐┌─┐─┐ ┬
+            ├┤ │ │┌┴┬┘
+            └  └─┘┴ └─
 
-@define-color text #c6d0f5;
-@define-color subtext0 #a5adce;
-@define-color subtext1 #b5bfe2;
+            by Miguel Avila
 
-@define-color surface0 #414559;
-@define-color surface1 #51576d;
-@define-color surface2 #626880;
+            */
 
-@define-color overlay0 #737994;
-@define-color overlay1 #838ba7;
-@define-color overlay2 #949cbb;
+            /*
 
-@define-color blue #8caaee;
-@define-color lavender #babbf1;
-@define-color sapphire #85c1dc;
-@define-color sky #99d1db;
-@define-color teal #81c8be;
-@define-color green #a6d189;
-@define-color yellow #e5c890;
-@define-color peach #ef9f76;
-@define-color maroon #ea999c;
-@define-color red #e78284;
-@define-color mauve #ca9ee6;
-@define-color pink #f4b8e4;
-@define-color flamingo #eebebe;
-@define-color rosewater #f2d5cf;
+            ┌─┐┌─┐┌┐┌┌─┐┬┌─┐┬ ┬┬─┐┌─┐┌┬┐┬┌─┐┌┐┌
+            │  │ ││││├┤ ││ ┬│ │├┬┘├─┤ │ ││ ││││
+            └─┘└─┘┘└┘└  ┴└─┘└─┘┴└─┴ ┴ ┴ ┴└─┘┘└┘
 
-/* 
-┌─┐┬┌┬┐┌─┐┬  ┌─┐
-└─┐││││├─┘│  ├┤ 
-└─┘┴┴ ┴┴  ┴─┘└─┘
-┌─┐┌─┐─┐ ┬      
-├┤ │ │┌┴┬┘      
-└  └─┘┴ └─
+            */
 
-by Miguel Avila
+            :root {
+              --sfwindow: #${base01};
+              --sfsecondary: #${base00};
+              --text: #${base05};
+              --surface2: #${base04};
+              --tab-min-height: 33px !important;
+              --tab-min-width: 60px !important;
+              --urlbar-min-height: 25px !important;
+              --uc-navbar-height: 33px !important;
+            }
 
-*/
+            /* TABS: height */
+            #tabbrowser-tabs,
+            #tabbrowser-tabs>#tabbrowser-arrowscrollbox,
+            .tabbrowser-tabs .tabbrowser-tab {
+              min-height: var(--tab-min-height) !important;
+              max-height: var(--tab-min-height) !important;
+            }
 
-/*
- 
-┌─┐┌─┐┌┐┌┌─┐┬┌─┐┬ ┬┬─┐┌─┐┌┬┐┬┌─┐┌┐┌
-│  │ ││││├┤ ││ ┬│ │├┬┘├─┤ │ ││ ││││
-└─┘└─┘┘└┘└  ┴└─┘└─┘┴└─┴ ┴ ┴ ┴└─┘┘└┘
+            /* affecting #nav-bar height */
+            #search-container,
+            #urlbar-container {
+              padding: calc((var(--uc-navbar-height) - var(--urlbar-min-height)) / 2) 0 !important;
+            }
 
-*/
+            /* (optional) the blue little icon when you drag tabs, in case you want extra slim tabs */
+            /* .tab-drop-indicator {
+            	/* default icon, height="29" */
+            /* background: url(chrome://browser/skin/tabbrowser/tab-drag-indicator.svg) no-repeat center; */
+            /* replacement icon, height="18" */
 
-:root {
-  --sfwindow: #292c3c;
-  --sfsecondary: #303446;
-  --text: #c6d0f5;
-  --overlay0: #737994;
-  --tab-min-height: 33px !important;
-  --tab-min-width: 60px !important;
-  --urlbar-min-height: 25px !important;
-  --uc-navbar-height: 33px !important;
-}
+            /*
+            ┌─┐┌─┐┬  ┌─┐┬─┐┌─┐
+            │  │ ││  │ │├┬┘└─┐
+            └─┘└─┘┴─┘└─┘┴└─└─┘
+            */
 
-/* TABS: height */
-#tabbrowser-tabs,
-#tabbrowser-tabs>#tabbrowser-arrowscrollbox,
-.tabbrowser-tabs .tabbrowser-tab {
-  min-height: var(--tab-min-height) !important;
-  max-height: var(--tab-min-height) !important;
-}
+            #toolbar-menubar {
+              color: var(--text) !important;
+            }
 
-/* affecting #nav-bar height */
-#search-container,
-#urlbar-container {
-  padding: calc((var(--uc-navbar-height) - var(--urlbar-min-height)) / 2) 0 !important;
-}
+            /* Tabs colors  */
+            #tabbrowser-tabs:not([movingtab])>#tabbrowser-arrowscrollbox>.tabbrowser-tab>.tab-stack>.tab-background[multiselected='true'],
+            #tabbrowser-tabs:not([movingtab])>#tabbrowser-arrowscrollbox>.tabbrowser-tab>.tab-stack>.tab-background[selected='true'] {
+              background-image: none !important;
+              background-color: var(--toolbar-bgcolor) !important;
+            }
 
-/* (optional) the blue little icon when you drag tabs, in case you want extra slim tabs */
-/* .tab-drop-indicator {
-	/* default icon, height="29" */
-/* background: url(chrome://browser/skin/tabbrowser/tab-drag-indicator.svg) no-repeat center; */
-/* replacement icon, height="18" */
+            #tabbrowser-tab:is([visuallyselected], [multiselected]) {
+              background-color: var(--toolbar-bgcolor) !important;
+            }
 
-/* 
-┌─┐┌─┐┬  ┌─┐┬─┐┌─┐
-│  │ ││  │ │├┬┘└─┐
-└─┘└─┘┴─┘└─┘┴└─└─┘ 
-*/
+            .tab-background:is([selected], [multiselected]) {
+              background-color: var(--toolbar-bgcolor) !important;
+            }
 
-#toolbar-menubar {
-  color: var(--text) !important;
-}
+            /* Inactive tabs color */
+            #navigator-toolbox {
+              background-color: var(--sfwindow) !important;
+            }
 
-/* Tabs colors  */
-#tabbrowser-tabs:not([movingtab])>#tabbrowser-arrowscrollbox>.tabbrowser-tab>.tab-stack>.tab-background[multiselected='true'],
-#tabbrowser-tabs:not([movingtab])>#tabbrowser-arrowscrollbox>.tabbrowser-tab>.tab-stack>.tab-background[selected='true'] {
-  background-image: none !important;
-  background-color: var(--toolbar-bgcolor) !important;
-}
+            .tab-text {
+              color: var(--text) !important;
+            }
 
-#tabbrowser-tab:is([visuallyselected], [multiselected]) {
-  background-color: var(--toolbar-bgcolor) !important;
-}
+            /* Icon color */
+            .toolbarbutton-icon {
+              color: var(--text) !important;
+            }
 
-.tab-background:is([selected], [multiselected]) {
-  background-color: var(--toolbar-bgcolor) !important;
-}
+            .close-icon {
+              color: var(--text) !important;
+            }
 
-/* Inactive tabs color */
-#navigator-toolbox {
-  background-color: var(--sfwindow) !important;
-}
+            .tab-icon-image {
+              fill: var(--text) !important;
+            }
 
-.tab-text {
-  color: var(--text) !important;
-}
+            /* Window colors  */
+            :root {
+              --toolbar-color: var(--text) !important;
+              --toolbar-bgcolor: var(--sfsecondary) !important;
+              --tabs-border-color: var(--sfsecondary) !important;
+              --lwt-sidebar-background-color: var(--sfwindow) !important;
+              --lwt-toolbar-field-focus: var(--sfsecondary) !important;
+            }
 
-/* Icon color */
-.toolbarbutton-icon {
-  color: var(--text) !important;
-}
+            /* Sidebar color  */
+            #sidebar-box,
+            .sidebar-placesTree {
+              background-color: var(--sfwindow) !important;
+            }
 
-.close-icon {
-  color: var(--text) !important;
-}
+            /*
 
-.tab-icon-image {
-  fill: var(--text) !important;
-}
+            ┌┬┐┌─┐┬  ┌─┐┌┬┐┌─┐
+             ││├┤ │  ├┤  │ ├┤
+            ─┴┘└─┘┴─┘└─┘ ┴ └─┘
+            ┌─┐┌─┐┌┬┐┌─┐┌─┐┌┐┌┌─┐┌┐┌┌┬┐┌─┐
+            │  │ ││││├─┘│ ││││├┤ │││ │ └─┐
+            └─┘└─┘┴ ┴┴  └─┘┘└┘└─┘┘└┘ ┴ └─┘
 
-/* Window colors  */
-:root {
-  --toolbar-color: var(--text) !important;
-  --toolbar-bgcolor: var(--sfsecondary) !important;
-  --tabs-border-color: var(--sfsecondary) !important;
-  --lwt-sidebar-background-color: var(--sfwindow) !important;
-  --lwt-toolbar-field-focus: var(--sfsecondary) !important;
-}
+            */
 
-/* Sidebar color  */
-#sidebar-box,
-.sidebar-placesTree {
-  background-color: var(--sfwindow) !important;
-}
+            /* Tabs elements  */
+            /*
+            .tabbrowser-tab:not([pinned]) .tab-icon-image {
+              display: none !important;
+            }
+            */
 
-/* 
+            .titlebar-buttonbox-container {
+              display: none;
+            }
 
-┌┬┐┌─┐┬  ┌─┐┌┬┐┌─┐            
- ││├┤ │  ├┤  │ ├┤             
-─┴┘└─┘┴─┘└─┘ ┴ └─┘            
-┌─┐┌─┐┌┬┐┌─┐┌─┐┌┐┌┌─┐┌┐┌┌┬┐┌─┐
-│  │ ││││├─┘│ ││││├┤ │││ │ └─┐
-└─┘└─┘┴ ┴┴  └─┘┘└┘└─┘┘└┘ ┴ └─┘
+            .titlebar-spacer {
+              display: none !important;
+            }
 
-*/
+            #nav-bar:not([tabs-hidden='true']) {
+              box-shadow: none;
+            }
 
-/* Tabs elements  */
-/*
-.tabbrowser-tab:not([pinned]) .tab-icon-image {
-  display: none !important;
-}
-*/
+            #tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {
+              margin-inline-start: 0px !important;
+            }
 
-.titlebar-buttonbox-container {
-  display: none;
-}
+            #tabbrowser-tabs {
+              margin-inline-start: 0 !important;
+              padding-inline-start: 0 !important;
+              border-inline-start: 0 !important;
+            }
 
-.titlebar-spacer {
-  display: none !important;
-}
+            :root {
+              --toolbarbutton-border-radius: 0 !important;
+              --tab-border-radius: 0 !important;
+              --tab-block-margin: 0 !important;
+            }
 
-#nav-bar:not([tabs-hidden='true']) {
-  box-shadow: none;
-}
+            .tab-background {
+              border-right: 0px solid rgba(0, 0, 0, 0) !important;
+              margin-left: 0px !important;
+            }
 
-#tabbrowser-tabs[haspinnedtabs]:not([positionpinnedtabs]) > #tabbrowser-arrowscrollbox > .tabbrowser-tab:nth-child(1 of :not([pinned], [hidden])) {
-  margin-inline-start: 0px !important;
-}
+            .tabbrowser-tab:is([visuallyselected], [multiselected])>.tab-stack>.tab-background {
+              box-shadow: none !important;
+            }
 
-#tabbrowser-tabs {
-  margin-inline-start: 0 !important;
-  padding-inline-start: 0 !important;
-  border-inline-start: 0 !important;
-}
+            .tabbrowser-tab[last-visible-tab='true'] {
+              padding-inline-end: 0 !important;
+            }
 
-:root {
-  --toolbarbutton-border-radius: 0 !important;
-  --tab-border-radius: 0 !important;
-  --tab-block-margin: 0 !important;
-}
+            .tabbrowser-tab {
+              padding: 0px !important;
+            }
 
-.tab-background {
-  border-right: 0px solid rgba(0, 0, 0, 0) !important;
-  margin-left: 0px !important;
-}
+            #tabs-newtab-button {
+              padding-left: 0 !important;
+            }
 
-.tabbrowser-tab:is([visuallyselected], [multiselected])>.tab-stack>.tab-background {
-  box-shadow: none !important;
-}
+            /* Url Bar  */
+            #urlbar-input-container {
+              color: var(--text) !important;
+              background-color: var(--sfsecondary) !important;
+              border: 1px solid rgba(0, 0, 0, 0) !important;
+            }
 
-.tabbrowser-tab[last-visible-tab='true'] {
-  padding-inline-end: 0 !important;
-}
+            #urlbar-container {
+              margin-left: 0 !important;
+            }
 
-.tabbrowser-tab {
-  padding: 0px !important;
-}
+            #urlbar[focused='true']>#urlbar-background {
+              box-shadow: none !important;
+            }
 
-#tabs-newtab-button {
-  padding-left: 0 !important;
-}
+            #navigator-toolbox {
+              border: none !important;
+            }
 
-/* Url Bar  */
-#urlbar-input-container {
-  color: var(--text) !important;
-  background-color: var(--sfsecondary) !important;
-  border: 1px solid rgba(0, 0, 0, 0) !important;
-}
+            .urlbarView {
+              margin-inline: 0px !important;
+              width: 100% !important;
+              background-color: var(--sfsecondary) !important;
+            }
 
-#urlbar-container {
-  margin-left: 0 !important;
-}
+            .urlbarView-title {
+              color: var(--text) !important;
+            }
 
-#urlbar[focused='true']>#urlbar-background {
-  box-shadow: none !important;
-}
+            .urlbarView-url {
+              color: var(--surface2) !important;
+            }
 
-#navigator-toolbox {
-  border: none !important;
-}
+            .urlbarView-body-inner {
+              border: none !important
+            }
 
-.urlbarView {
-  margin-inline: 0px !important;
-  width: 100% !important;
-  background-color: var(--sfsecondary) !important;
-}
+            .urlbarView-row-inner {
+              border-radius: 0px !important;
+            }
 
-.urlbarView-title {
-  color: var(--text) !important;
-}
+            .urlbarView-row[selected],
+            .urlbarView-row:hover {
+              background-color: var(--button-hover-bgcolor) !important;
+            }
 
-.urlbarView-url {
-  color: var(--overlay0) !important;
-}
+            /* Tool bar  */
+            .bookmark-item .toolbarbutton-icon {
+              display: none;
+            }
 
-.urlbarView-body-inner {
-  border: none !important
-}
+            toolbarbutton.bookmark-item:not(.subviewbutton) {
+              min-width: 1.6em;
+            }
 
-.urlbarView-row-inner {
-  border-radius: 0px !important;
-}
+            #toolbarbutton {
+              padding: 0px !important;
+            }
 
-.urlbarView-row[selected],
-.urlbarView-row:hover {
-  background-color: var(--button-hover-bgcolor) !important;
-}
+            #nav-bar-customization-target > :is(toolbarbutton, toolbaritem):first-child {
+              padding-inline-start: 0px !important;
+            }
 
-/* Tool bar  */
-.bookmark-item .toolbarbutton-icon {
-  display: none;
-}
+            /*
+            .toolbaritem-combined-buttons {
+              display: none;
+            }
+            */
 
-toolbarbutton.bookmark-item:not(.subviewbutton) {
-  min-width: 1.6em;
-}
+            /* Toolbar  */
+            #PersonalToolbar,
+            #browser-window-close-button,
+            #tracking-protection-icon-container,
+            #urlbar-zoom-button,
+            #star-button-box,
+            #pageActionButton,
+            #pageActionSeparator,
+            #firefox-view-button,
+            #save-to-pocket-button,
+            #alltabs-button,
+            .tab-secondary-label {
+              display: none !important;
+            }
 
-#toolbarbutton {
-  padding: 0px !important;
-}
+            /* Disable elements  */
+            #context-navigation,
+            #context-savepage,
+            #context-pocket,
+            #context-sendpagetodevice,
+            #context-selectall,
+            #context-viewsource,
+            #context-inspect-a11y,
+            #context-sendlinktodevice,
+            #context-openlinkinusercontext-menu,
+            #context-bookmarklink,
+            #context-savelink,
+            #context-savelinktopocket,
+            #context-sendlinktodevice,
+            #context-searchselect,
+            #context-sendimage,
+            #context-print-selection {
+              display: none !important;
+            }
 
-#nav-bar-customization-target > :is(toolbarbutton, toolbaritem):first-child {
-  padding-inline-start: 0px !important;
-}
+            #context_bookmarkTab,
+            #context_moveTabOptions,
+            #context_sendTabToDevice,
+            #context_reopenInContainer,
+            #context_selectAllTabs,
+            #context_closeTabOptions {
+              display: none !important;
+            }
 
-/*
-.toolbaritem-combined-buttons {
-  display: none;
-}
-*/
-
-/* Toolbar  */
-#PersonalToolbar,
-#browser-window-close-button,
-#tracking-protection-icon-container,
-#urlbar-zoom-button,
-#star-button-box,
-#pageActionButton,
-#pageActionSeparator,
-#firefox-view-button,
-#save-to-pocket-button,
-#alltabs-button,
-.tab-secondary-label {
-  display: none !important;
-}
-
-/* Disable elements  */
-#context-navigation,
-#context-savepage,
-#context-pocket,
-#context-sendpagetodevice,
-#context-selectall,
-#context-viewsource,
-#context-inspect-a11y,
-#context-sendlinktodevice,
-#context-openlinkinusercontext-menu,
-#context-bookmarklink,
-#context-savelink,
-#context-savelinktopocket,
-#context-sendlinktodevice,
-#context-searchselect,
-#context-sendimage,
-#context-print-selection {
-  display: none !important;
-}
-
-#context_bookmarkTab,
-#context_moveTabOptions,
-#context_sendTabToDevice,
-#context_reopenInContainer,
-#context_selectAllTabs,
-#context_closeTabOptions {
-  display: none !important;
-}
-
-#statuspanel {
-  display: none !important;
-}
-        '';
+            #statuspanel {
+              display: none !important;
+            }
+          '';
       };
     };
   };
