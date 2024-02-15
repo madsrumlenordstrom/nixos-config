@@ -25,8 +25,8 @@ in
           example = 1080;
         };
         refreshRate = mkOption {
-          type = types.int;
-          default = 60;
+          type = types.float;
+          default = 60.0;
         };
         x = mkOption {
           type = types.int;
@@ -36,13 +36,9 @@ in
           type = types.int;
           default = 0;
         };
-        enabled = mkOption {
-          type = types.bool;
-          default = true;
-        };
-        workspace = mkOption {
-          type = types.nullOr types.str;
-          default = null;
+        scale = mkOption {
+          type = types.float;
+          default = 1.0;
         };
       };
     });

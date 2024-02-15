@@ -6,10 +6,13 @@
   pkgs,
   ...
 }: {
+  # Modules for import
   imports = [
     inputs.nix-colors.homeManagerModules.default
+    outputs.homeManagerModules.monitors
     ./programs/sway.nix
     ./programs/waybar.nix
+    ./programs/mako.nix
     ./programs/firefox.nix
     ./programs/git.nix
     ./programs/alacritty.nix
@@ -26,8 +29,7 @@
     ./programs/imv.nix
   ];
 
-  # Global color scheme
-  # See https://github.com/tinted-theming/base16-schemes
+  # Global color scheme. See https://github.com/tinted-theming/base16-schemes
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
   # colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;
   # colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
@@ -64,22 +66,50 @@
     homeDirectory = "/home/${config.home.username}";
 
     sessionVariables = {
-      # EDITOR = "hx"
     };
 
+    # User packages
     packages = with pkgs; [
-      hexyl
-      mpv
-      transmission-gtk # Torrent client
-      gdu
+      hexyl              # Hexdumper
+      mpv                # Media player
+      transmission-gtk   # Torrent client
+      gdu                # Disk usage analyzer
+      wl-clipboard       # Copy paste utils
+      ripgrep            # Grep but better
+      htop               # Process viewer
+      file               # File type analyzer
+      nil                # LSP server for nix
+      xdg-utils          # Useful desktop CLI tools
+      tldr               # Alternative to man pages
     ];
 
     stateVersion = "23.11";
   };
 
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  monitors = [
+    { # Built in display
+      name = "eDP-1";
+      width = 2880;
+      height = 1800;
+      refreshRate = 59.990;
+      x = 0;
+      y = 0;
+      scale = 2.0;
+      primary = true;
+    }
+    { # External monitor
+      name = "HDMI-A-3";
+      width = 2560;
+      height = 1600;
+      refreshRate = 59.972;
+      x = 1440;
+      y = 0;
+      scale = 2.0;
+    }
+  ];
+
+  # Playerctl for controlling media
+  services.playerctld.enable = true;
 
   # Enable home-manager
   programs.home-manager.enable = true;

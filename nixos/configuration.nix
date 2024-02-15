@@ -74,13 +74,7 @@
   environment.systemPackages = with pkgs; [
     wget
     git
-    nix-index
     brightnessctl
-    htop
-    nil
-    ripgrep
-    wl-clipboard
-    file
   ];
 
   # Fonts
@@ -127,7 +121,12 @@
   # Greeter before compositor
   services.greetd = {
     enable = true;
-    settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet --cmd sway";
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --user-menu --remember --time --time-format '%Y-%m-%d %H:%M' --asterisks --cmd ${pkgs.sway}/bin/sway";
+        user = "greeter";
+      };
+    };
   };
 
   # Audio

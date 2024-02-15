@@ -19,7 +19,7 @@
     finder = "${pkgs.fd}/bin/fd --type file|${pkgs.wofi}/bin/wofi -Imi --show dmenu -M fuzzy|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
     fallback = "${config.colorScheme.palette.base02}";
     lock = "${pkgs.swaylock}/bin/swaylock -f -i ${wallpaper} -c ${fallback}";
-    timeout = 600; # Seconds idle before going to sleep
+    timeout = 900; # Seconds idle before going to sleep
 
     # Basic bindings
     modifier = "Mod4";
@@ -54,10 +54,15 @@
         };
       };
 
-      output = {
-        "*".bg = "${wallpaper} fill '#${fallback}'";
-        eDP-1 = { scale = "2"; };
-      };
+      output = builtins.listToAttrs(map(m: {
+        name = m.name;
+        value = {
+          mode = "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
+          scale = toString m.scale;
+          pos = "${toString m.x} ${toString m.y}";
+          background = "${wallpaper} fill '#${fallback}'";
+        };
+      }) (config.monitors));
 
       startup = [
         { command = "${pkgs.gammastep}/bin/gammastep"; }
@@ -66,8 +71,8 @@
           ${pkgs.swayidle}/bin/swayidle -w \
           timeout 10 'if ${pkgs.procps}/bin/pgrep -x swaylock; then ${pkgs.sway}/bin/swaymsg "output * power off"; fi' \
           resume '${pkgs.sway}/bin/swaymsg "output * power on"' \
-          timeout ${toString timeout} ${lock} \
           timeout ${toString (timeout + 10)} '${pkgs.sway}/bin/swaymsg "output * power off"' \
+          timeout ${toString timeout} '${lock}' \
           resume '${pkgs.sway}/bin/swaymsg "output * power on"'
         ''; }
       ];
