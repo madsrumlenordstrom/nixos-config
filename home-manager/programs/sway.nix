@@ -7,19 +7,40 @@
   ...
 }:
 {
-  home.sessionVariables = {
-    ELECTRON_OZONE_PLATFORM_HINT = "auto";
-  };
+  imports = [
+    ./waybar.nix        # Status bar
+    ./wofi.nix          # Menu
+    ./mako.nix          # Notification daemon
+    ./gammastep.nix     # Color temperature adjuster
+    ./swaylock.nix      # Screen locker
+  ];
+
+  # Playerctl for controlling media
+  services.playerctld.enable = lib.mkIf config.wayland.windowManager.sway.enable true;
+
+  # Make electron apps work on wayland
+  home.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = lib.mkIf config.wayland.windowManager.sway.enable "auto";
+
   wayland.windowManager.sway = 
   let
     # Essentials
-    wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png";
-    terminal = "${pkgs.alacritty}/bin/alacritty";
-    menu = "${pkgs.wofi}/bin/wofi -Imi --show drun|${pkgs.findutils}/bin/xargs ${pkgs.sway}/bin/swaymsg exec --";
-    finder = "${pkgs.fd}/bin/fd --type file|${pkgs.wofi}/bin/wofi -Imi --show dmenu -M fuzzy|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
-    fallback = "${config.colorScheme.palette.base02}";
-    lock = "${pkgs.swaylock}/bin/swaylock -f -i ${wallpaper} -c ${fallback}";
+    sway = "${config.wayland.windowManager.sway.package}/bin/sway";
+    swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
+    swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+    lock = "${swaylock} -f -i ${wallpaper} -c ${fallback}";
+    terminal = config.home.sessionVariables.TERM;
+    wofi = "${config.programs.wofi.package}/bin/wofi";
+    menu = "${wofi} -Imi --show drun|${pkgs.findutils}/bin/xargs ${sway} exec --";
+    finder = "${pkgs.fd}/bin/fd --type file|${wofi} -Imi --show dmenu -M fuzzy|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
+    waybar = "${config.programs.waybar.package}/bin/waybar";
+    gammastep = "${config.services.gammastep.package}/bin/gammastep";
+    playerctl = "${config.services.playerctld.package}/bin/playerctl";
+    grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
     timeout = 900; # Seconds idle before going to sleep
+
+    # Wallpaper
+    wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png";
+    fallback = "${config.colorScheme.palette.base02}"; # Fallback color for wallpaper
 
     # Basic bindings
     modifier = "Mod4";
@@ -65,15 +86,15 @@
       }) (config.monitors));
 
       startup = [
-        { command = "${pkgs.gammastep}/bin/gammastep"; }
+        { command = "${gammastep}"; }
         # EASYEFFECTS TODO
         { command = ''
           ${pkgs.swayidle}/bin/swayidle -w \
-          timeout 10 'if ${pkgs.procps}/bin/pgrep -x swaylock; then ${pkgs.sway}/bin/swaymsg "output * power off"; fi' \
-          resume '${pkgs.sway}/bin/swaymsg "output * power on"' \
-          timeout ${toString (timeout + 10)} '${pkgs.sway}/bin/swaymsg "output * power off"' \
+          timeout 10 'if ${pkgs.procps}/bin/pgrep -x ${swaylock}; then ${swaymsg} "output * power off"; fi' \
+          resume '${swaymsg} "output * power on"' \
+          timeout ${toString (timeout + 10)} '${swaymsg} "output * power off"' \
           timeout ${toString timeout} '${lock}' \
-          resume '${pkgs.sway}/bin/swaymsg "output * power on"'
+          resume '${swaymsg} "output * power on"'
         ''; }
       ];
 
@@ -91,7 +112,7 @@
         border = 1;
       };
 
-      bars = [{ command = "${pkgs.waybar}/bin/waybar"; }];
+      bars = [{ command = "${waybar}"; }];
 
       keybindings = {
         # Essentials
@@ -156,7 +177,7 @@
 
         "${modifier}+x" = "exec ${lock}";
         "${modifier}+c" = "reload";
-        "${modifier}+Shift+e" = "exec ${pkgs.sway}/bin/swaymsg exit";
+        "${modifier}+Shift+e" = "exec ${swaymsg} exit";
 
         "${modifier}+r" = "mode resize";
 
@@ -175,20 +196,19 @@
         "--locked XF86AudioRaiseVolume " = "exec ~/.config/user-scripts/volume-control.sh up";
 
         # Media control
-        "--locked XF86AudioPlay " = "exec ${pkgs.playerctl}/bin/playerctl --player playerctld play-pause";
-        "--locked XF86AudioNext " = "exec ${pkgs.playerctl}/bin/playerctl --player playerctld next";
-        "--locked XF86AudioPrev " = "exec ${pkgs.playerctl}/bin/playerctl --player playerctld previous";
-
+        "--locked XF86AudioPlay " = "exec ${playerctl} --player playerctld play-pause";
+        "--locked XF86AudioNext " = "exec ${playerctl} --player playerctld next";
+        "--locked XF86AudioPrev " = "exec ${playerctl} --player playerctld previous";
 
         # Screenshots
-        "${modifier}+Shift+XF86LaunchA" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save output";
-        "${modifier}+Ctrl+Shift+XF86LaunchA" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy output";
+        "${modifier}+Shift+XF86LaunchA" = "exec ${grimshot} save output";
+        "${modifier}+Ctrl+Shift+XF86LaunchA" = "exec ${grimshot} copy output";
         # Selected area
-        "${modifier}+Shift+XF86LaunchB" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save area";
-        "${modifier}+Ctrl+Shift+XF86LaunchB" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy area";
+        "${modifier}+Shift+XF86LaunchB" = "exec ${grimshot} save area";
+        "${modifier}+Ctrl+Shift+XF86LaunchB" = "exec ${grimshot} copy area";
         # Specific window
-        "${modifier}+Shift+XF86KbdBrightnessDown" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot save window";
-        "${modifier}+Ctrl+Shift+XF86KbdBrightnessDown" = "exec ${pkgs.sway-contrib.grimshot}/bin/grimshot copy window";
+        "${modifier}+Shift+XF86KbdBrightnessDown" = "exec ${grimshot} save window";
+        "${modifier}+Ctrl+Shift+XF86KbdBrightnessDown" = "exec ${grimshot} copy window";
       };
 
       floating = {
