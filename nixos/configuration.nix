@@ -56,8 +56,18 @@
   services.openssh.enable = true;
 
   # Time zone and locale.
+  location.provider = "geoclue2";
   time.timeZone = "Europe/Copenhagen";
-  i18n = { defaultLocale = "en_US.UTF-8"; };
+  i18n = { 
+    defaultLocale = "en_US.UTF-8";
+    extraLocaleSettings = {
+      LC_TIME = lib.mkDefault "da_DK.UTF-8";
+    };
+    supportedLocales = lib.mkDefault [
+      "en_US.UTF-8/UTF-8"
+      "da_DK.UTF-8/UTF-8"
+    ];
+  };
 
   # User
   users.users.madsrumlenordstrom = {
