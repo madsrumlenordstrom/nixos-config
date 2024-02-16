@@ -21,13 +21,10 @@ in
       package = gtkThemeFromScheme { scheme = config.colorScheme; };
     };
     iconTheme = {
-      inherit (config.icons) name;
-      inherit (config.icons) package;
+      inherit (config.icons) name package;
     };
     cursorTheme = {
-      inherit (config.cursor) name;
-      inherit (config.cursor) package;
-      inherit (config.cursor) size;
+      inherit (config.cursor) name package size;
     };
     gtk3 = {
       extraConfig = {
