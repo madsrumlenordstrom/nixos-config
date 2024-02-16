@@ -28,7 +28,7 @@
     swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
     swaylock = "${config.programs.swaylock.package}/bin/swaylock";
     lock = "${swaylock} -f -i ${wallpaper} -c ${fallback}";
-    terminal = config.home.sessionVariables.TERM;
+    terminal = "${config.programs.alacritty.package}/bin/alacritty"; # TODO find modular way to do this
     wofi = "${config.programs.wofi.package}/bin/wofi";
     menu = "${wofi} -Imi --show drun|${pkgs.findutils}/bin/xargs ${sway} exec --";
     finder = "${pkgs.fd}/bin/fd --type file|${wofi} -Imi --show dmenu -M fuzzy|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
