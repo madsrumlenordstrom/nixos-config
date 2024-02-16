@@ -13,8 +13,6 @@
     outputs.homeManagerModules.icons
     outputs.homeManagerModules.cursor
     ./programs/sway.nix
-    ./programs/waybar.nix
-    ./programs/mako.nix
     ./programs/firefox.nix
     ./programs/git.nix
     ./programs/alacritty.nix
@@ -27,7 +25,6 @@
     ./programs/vscode.nix
     ./programs/bat.nix
     ./programs/zathura.nix
-    ./programs/wofi.nix
     ./programs/imv.nix
   ];
 
@@ -78,9 +75,6 @@
     username = "madsrumlenordstrom";
     homeDirectory = "/home/${config.home.username}";
 
-    sessionVariables = {
-    };
-
     # User packages
     packages = with pkgs; [
       hexyl              # Hexdumper
@@ -120,9 +114,6 @@
       scale = 1.0;
     }
   ];
-
-  # Playerctl for controlling media
-  services.playerctld.enable = true;
 
   # Enable home-manager
   programs.home-manager.enable = true;
