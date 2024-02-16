@@ -10,6 +10,8 @@
   imports = [
     inputs.nix-colors.homeManagerModules.default
     outputs.homeManagerModules.monitors
+    outputs.homeManagerModules.icons
+    outputs.homeManagerModules.cursor
     ./programs/sway.nix
     ./programs/waybar.nix
     ./programs/mako.nix
@@ -31,10 +33,21 @@
 
   # Global color scheme. See https://github.com/tinted-theming/base16-schemes
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
-  # colorScheme = inputs.nix-colors.colorSchemes.catppuccin-latte;
-  # colorScheme = inputs.nix-colors.colorSchemes.gruvbox-dark-medium;
-  # colorScheme = inputs.nix-colors.colorSchemes.nord;
-  # colorScheme = inputs.nix-colors.colorSchemes.brushtrees-dark;
+
+  # System icon theme
+  icons = {
+    enable = true;
+    package = pkgs.papirus-icon-theme;
+    name = if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light";
+  };
+
+  # System cursor theme
+  cursor = {
+    enable = true;
+    package = pkgs.capitaine-cursors;
+    name = "${if config.colorScheme.variant == "dark" then "capitaine-cursors-white" else "capitaine-cursors"}";
+    size = 32;
+  };
 
   nixpkgs = {
     # You can add overlays here
@@ -93,7 +106,7 @@
       height = 1800;
       refreshRate = 59.990;
       x = 0;
-      y = 0;
+      y = 1600;
       scale = 2.0;
       primary = true;
     }
@@ -102,9 +115,9 @@
       width = 2560;
       height = 1600;
       refreshRate = 59.972;
-      x = 1440;
+      x = 0;
       y = 0;
-      scale = 2.0;
+      scale = 1.0;
     }
   ];
 

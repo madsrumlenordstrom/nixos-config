@@ -21,14 +21,13 @@ in
       package = gtkThemeFromScheme { scheme = config.colorScheme; };
     };
     iconTheme = {
-      name = if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light";
-      package = pkgs.papirus-icon-theme;
+      inherit (config.icons) name;
+      inherit (config.icons) package;
     };
     cursorTheme = {
-      # name = "capitaine-cursors-white";
-      name = if config.colorScheme.variant == "dark" then "capitaine-cursors-white" else "capitaine-cursors";
-      package = pkgs.capitaine-cursors;
-      size = 32;
+      inherit (config.cursor) name;
+      inherit (config.cursor) package;
+      inherit (config.cursor) size;
     };
     gtk3 = {
       extraConfig = {

@@ -7,11 +7,9 @@
   ...
 }:
 {
-  home.sessionVariables = {
-    EDITOR = "hx";
-  };
   programs.helix = {
     enable = true;
+    defaultEditor = true;
     settings = {
       editor = {
         bufferline = "multiple";

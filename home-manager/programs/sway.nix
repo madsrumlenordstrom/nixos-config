@@ -221,7 +221,7 @@
 
       # Cursor theme
       seat.seat0 = {
-        xcursor_theme = "${if config.colorScheme.variant == "dark" then "capitaine-cursors-white" else "capitaine-cursors"} 32"; # TODO
+        xcursor_theme = "${config.cursor.name} ${toString config.cursor.size}";
       };
 
       # Colors
