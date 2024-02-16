@@ -7,10 +7,9 @@
   ...
 }:
 {
+  # Set as default terminal if enabled
+  home.sessionVariables.TERM = lib.mkIf config.programs.alacritty.enable "alacritty";
 
-  home.sessionVariables = {
-    TERM = "alacritty";
-  };
   programs.alacritty = {
     enable = true;
     settings = {
@@ -23,7 +22,7 @@
           shape = "Beam";
         };
       };
-      font.size = 10.0;
+      font.size = 10.0; # TODO
       keyboard.bindings = [
         { key = "Return"; mods = "Super|Shift"; action = "SpawnNewInstance"; }
       ];
