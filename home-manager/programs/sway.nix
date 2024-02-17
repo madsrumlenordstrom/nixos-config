@@ -10,7 +10,7 @@
   imports = [
     ./waybar.nix        # Status bar
     ./wofi.nix          # Menu
-    ./mako.nix          # Notification daemon
+    ./dunst.nix          # Notification daemon
     ./gammastep.nix     # Color temperature adjuster
     ./swaylock.nix      # Screen locker
   ];
@@ -21,6 +21,7 @@
   # Make electron apps work on wayland
   home.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = lib.mkIf config.wayland.windowManager.sway.enable "auto";
 
+  # Sway config
   wayland.windowManager.sway = 
   let
     # Essentials
@@ -39,7 +40,7 @@
     timeout = 900; # Seconds idle before going to sleep
 
     # Wallpaper
-    wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png";
+    wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png"; # TODO find better way to do this
     fallback = "${config.colorScheme.palette.base02}"; # Fallback color for wallpaper
 
     # Basic bindings
@@ -48,6 +49,44 @@
     down = "j";
     up = "k";
     right = "l";
+
+    volume-control = pkgs.writeShellScriptBin "volume-control" /*shell*/ ''
+      # Script to control volume 
+
+      ctl=""
+      val=3
+      msgTag="audio-volume"
+
+      # Get argument
+      if [ "$1" = "up" ]
+      then
+        ctl="$val%+"
+      elif [ "$1" = "down" ]
+      then
+        ctl="$val%-"
+        val=-$val
+      else
+        echo "Run script with correct argument:\n$0 <up|down>"
+        exit 1
+      fi
+
+      # Show notification
+      ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
+      volume="$(${pkgs.wireplumber}/bin/wpctl get-volume @DEFAULT_AUDIO_SINK@ | ${pkgs.gnused}/bin/sed -r 's/Volume:\s//g;s/(0\.|0\.0|\.)//g')" 
+      volume=$(($volume + $val))
+      if [ "$volume" -le "0" ]
+      then
+        # Show the sound muted notification
+        volume="0"
+        ${pkgs.libnotify}/bin/notify-send -a "change-volume" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume" "󰝟 Audio muted" 
+      else
+        # Show the volume notification
+        ${pkgs.libnotify}/bin/notify-send -a "change-volume" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume" "󰕾 Audio volume"
+      fi
+
+      # Set volume
+      ${pkgs.wireplumber}/bin/wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ $ctl
+    '';
   in {
     enable = true;
     xwayland = false;
@@ -192,8 +231,8 @@
 
         # Volume control
         "--locked XF86AudioMute " = "exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        "--locked XF86AudioLowerVolume " = "exec ~/.config/user-scripts/volume-control.sh down";
-        "--locked XF86AudioRaiseVolume " = "exec ~/.config/user-scripts/volume-control.sh up";
+        "--locked XF86AudioLowerVolume " = "exec ${volume-control}/bin/volume-control down";
+        "--locked XF86AudioRaiseVolume " = "exec ${volume-control}/bin/volume-control up";
 
         # Media control
         "--locked XF86AudioPlay " = "exec ${playerctl} --player playerctld play-pause";
@@ -240,9 +279,7 @@
       };
 
       # Cursor theme
-      seat.seat0 = {
-        xcursor_theme = "${config.cursor.name} ${toString config.cursor.size}";
-      };
+      seat.seat0.xcursor_theme = "${config.cursor.name} ${toString config.cursor.size}";
 
       # Colors
       colors = with config.colorScheme.palette; {
@@ -269,6 +306,7 @@
         };
       };
     };
+
     extraConfig = ''
       # Allow switching between workspaces with left and right swipes
       bindgesture swipe:4:right workspace prev
