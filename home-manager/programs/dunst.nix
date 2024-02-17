@@ -47,6 +47,7 @@
           background = "#${base00}";
           foreground = "#${base05}";
           highlight = "#${base04}";
+          frame_color = "#${base04}";
           timeout = 3;
       };
 
@@ -54,14 +55,15 @@
           background = "#${base00}";
           foreground = "#${base05}";
           highlight = "#${base04}";
+          frame_color = "#${base04}";
           timeout = 3;
       };
 
       urgency_critical = with config.colorScheme.palette; {
           background = "#${base00}";
           foreground = "#${base05}";
-          frame_color = "#${base09}";
           highlight = "#${base04}";
+          frame_color = "#${base09}";
           timeout = 0;
       };
     };
