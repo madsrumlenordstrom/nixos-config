@@ -39,6 +39,11 @@ in
   config = mkIf cfg.enable {
     home.packages = [ cfg.package ];
 
+    home.sessionVariables = {
+      XCURSOR_THEME = cfg.name;
+      XCURSOR_SIZE = cfg.size;
+    };
+
     # Dynamically set the `path` if it's not explicitly configured by the user
     cursor.path = mkDefault "${cfg.package}/share/icons/${cfg.name}";
   };
