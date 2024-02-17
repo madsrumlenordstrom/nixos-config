@@ -391,7 +391,7 @@ in {
 
             /* (optional) the blue little icon when you drag tabs, in case you want extra slim tabs */
             /* .tab-drop-indicator {
-            	/* default icon, height="29" */
+            /* default icon, height="29" */
             /* background: url(chrome://browser/skin/tabbrowser/tab-drag-indicator.svg) no-repeat center; */
             /* replacement icon, height="18" */
 
@@ -608,12 +608,16 @@ in {
               display: none !important;
             }
 
-            /* Disable elements  */
+            /* For context menu options see https://github.com/stonecrusher/simpleMenuWizard */
+
+            /* Disable elements in context menu */
             #context-navigation,
+            #context-sep-navigation,
             #context-savepage,
             #context-pocket,
             #context-sendpagetodevice,
             #context-selectall,
+            #context-sep-selectall,
             #context-viewsource,
             #context-inspect-a11y,
             #context-sendlinktodevice,
@@ -628,15 +632,22 @@ in {
               display: none !important;
             }
 
+            /* Tap context menu */
             #context_bookmarkTab,
             #context_moveTabOptions,
             #context_sendTabToDevice,
             #context_reopenInContainer,
             #context_selectAllTabs,
+            #context_selectAllTabs + menuseparator,
             #context_closeTabOptions {
               display: none !important;
             }
 
+            /* Hamburger menu */
+            #appMenu-fxa-status2,
+            #appMenu-fxa-separator {
+              display: none !important;
+            }
             #statuspanel {
               display: none !important;
             }

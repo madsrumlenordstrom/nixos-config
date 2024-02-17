@@ -32,7 +32,7 @@ in
       };
       extraCss = /*css*/ ''
         * {
-          border-radius: 0px;
+          border-radius: 0px; /* No round round corners allowed */
           box-shadow: none;
         }
       '';
