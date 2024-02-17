@@ -100,14 +100,14 @@
       height = 1800;
       refreshRate = 59.990;
       x = 0;
-      y = 1600;
+      y = 1440;
       scale = 2.0;
       primary = true;
     }
     { # External monitor
       name = "HDMI-A-3";
       width = 2560;
-      height = 1600;
+      height = 1440;
       refreshRate = 59.972;
       x = 0;
       y = 0;
