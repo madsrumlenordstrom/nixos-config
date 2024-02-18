@@ -10,7 +10,7 @@
   imports = [
     ./waybar.nix        # Status bar
     ./wofi.nix          # Menu
-    ./dunst.nix          # Notification daemon
+    ./dunst.nix         # Notification daemon
     ./gammastep.nix     # Color temperature adjuster
     ./swaylock.nix      # Screen locker
   ];
@@ -19,7 +19,7 @@
   services.playerctld.enable = lib.mkIf config.wayland.windowManager.sway.enable true;
 
   # Make electron apps work on wayland
-  home.sessionVariables.ELECTRON_OZONE_PLATFORM_HINT = lib.mkIf config.wayland.windowManager.sway.enable "auto";
+  home.sessionVariables.NIXOS_OZONE_WL  = lib.mkIf config.wayland.windowManager.sway.enable "1";
 
   # Sway config
   wayland.windowManager.sway = 
@@ -140,7 +140,6 @@
       gaps = {
         inner = 6;
         outer = 0;
-        left = 38; # fixes my broken screen :(
         smartGaps = false;
         smartBorders = "off";
       };

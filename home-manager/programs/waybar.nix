@@ -13,10 +13,10 @@
       layer = "top";
       position = "top";
       height = 27;
-      margin-top = 6;
-      margin-left = 44; # Fixes my broken screen
-      margin-right = 6;
-      margin-bottom = 0;
+      margin-top = lib.mkDefault 6;
+      margin-left = lib.mkDefault 6;
+      margin-right = lib.mkDefault 6;
+      margin-bottom = lib.mkDefault 0;
       spacing = 2;
 
       modules-left = [ "sway/mode" "sway/workspaces" ];
@@ -113,8 +113,8 @@
       	padding: 1px 5px 1px 5px;
       }
 
-      #workspaces button.hover {
-      	background-color: #${base05};
+      #workspaces button:hover {
+      	background-color: #${base02};
       }
 
       #workspaces button.urgent {
@@ -122,7 +122,6 @@
       }
 
       #workspaces button.focused {
-      	color: #${base05};
       	background-color: #${base01};
       }
 
