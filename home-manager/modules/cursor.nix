@@ -40,8 +40,8 @@ in
     home.packages = [ cfg.package ];
 
     home.sessionVariables = {
-      XCURSOR_THEME = cfg.name;
-      XCURSOR_SIZE = cfg.size;
+      XCURSOR_THEME = mkDefault cfg.name;
+      XCURSOR_SIZE = mkDefault cfg.size;
     };
 
     # Dynamically set the `path` if it's not explicitly configured by the user
