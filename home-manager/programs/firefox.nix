@@ -130,32 +130,6 @@ in {
               definedAliases = ["@wt"];
             };
 
-            # Does not work how I want it to right now
-            "Google Translate" = {
-              urls = [
-                {
-                  template = "https://translate.google.com";
-                  params = [
-                    {
-                      name = "sl";
-                      value = "{searchTerms}";
-                    } # Input language
-                    {
-                      name = "tl";
-                      value = "{searchTerms}";
-                    } # Output language
-                    {
-                      name = "text";
-                      value = "{searchTerms}";
-                    } # Text to translate
-                  ];
-                }
-              ];
-              iconUpdateURL = "https://ssl.gstatic.com/translate/favicon.ico";
-              inherit updateInterval;
-              definedAliases = ["@tl"];
-            };
-
             "Google".metaData.hidden = true;
             "Bing".metaData.hidden = true;
             "Amazon.com".metaData.hidden = true;
