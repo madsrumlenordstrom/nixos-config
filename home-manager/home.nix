@@ -28,6 +28,10 @@
     ./programs/imv.nix
   ];
 
+  # Fixes my broken display :(
+  wayland.windowManager.sway.config.gaps.left = 38;
+  programs.waybar.settings.main.margin-left = 44;
+
   # Global color scheme. See https://github.com/tinted-theming/base16-schemes
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
 
