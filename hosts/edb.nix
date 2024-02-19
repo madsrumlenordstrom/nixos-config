@@ -4,28 +4,23 @@
   lib,
   config,
   pkgs,
-  modulesPath,
   ...
 }: {
   imports = [
     # Hardware
     ./edb-hardware.nix
-    inputs.hardware.nixosModules.apple-macbook-pro-12-1
   ];
 
   nixpkgs.config.allowUnfree = true;
 
-  # Booting
-  boot = {
-    # Boot loader
-    loader = {
-      systemd-boot = {
-        enable = true;
-        configurationLimit = 10;
-      };
-      efi.canTouchEfiVariables = true;
-      timeout = 1;
+  # Boot loader
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
     };
+    efi.canTouchEfiVariables = true;
+    timeout = 1;
   };
 
   nix.settings = {
@@ -100,12 +95,10 @@
       noto-fonts-emoji
       (nerdfonts.override { fonts = [ "Meslo" ]; })
     ];
-    fontconfig = {
-      defaultFonts = {
-        serif = [ "Noto Serif" ];
-        sansSerif = [ "Noto Sans" ];
-        monospace = [ "MesloLGLDZ Nerd Font" ];
-      };
+    fontconfig.defaultFonts = {
+      serif = [ "Noto Serif" ];
+      sansSerif = [ "Noto Sans" ];
+      monospace = [ "MesloLGLDZ Nerd Font" ];
     };
   };
 
@@ -119,22 +112,18 @@
       loginLimits = [{ domain = "@users"; item = "rtprio"; type = "-"; value = 1; }];
     };
   };
-  xdg = {
-    portal = {
-      enable = true;
-      wlr.enable = true;
-      config.sway.default = [ "wlr" "gtk" ];
-    };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    config.sway.default = [ "wlr" "gtk" ];
   };
 
   # Greeter before compositor
   services.greetd = {
     enable = true;
-    settings = {
-      default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet --user-menu --remember --time --time-format '%Y-%m-%d %H:%M' --asterisks --cmd ${pkgs.sway}/bin/sway";
-        user = "greeter";
-      };
+    settings.default_session = {
+      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --user-menu --remember --time --time-format '%Y-%m-%d %H:%M' --asterisks --cmd sway";
+      user = "greeter";
     };
   };
 
