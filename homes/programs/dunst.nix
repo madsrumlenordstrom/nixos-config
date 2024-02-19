@@ -14,7 +14,7 @@
   services.dunst = {
     enable = true;
     settings = {
-       global = {
+      global = {
         follow = "mouse";
         width = 220;
         height = 300;
@@ -37,39 +37,38 @@
         markup = "full";
         format = "<b>%s</b>\n%b";
         enable_recursive_icon_lookup = true;
-        # icon_theme = config.icons.name;
-        # icon_path = config.icons.path;
         browser = "${pkgs.xdg-utils}/bin/xdg-open";
         corner_radius = 0;
       };
 
       urgency_low = with config.colorScheme.palette; {
-          background = "#${base00}";
-          foreground = "#${base05}";
-          highlight = "#${base04}";
-          frame_color = "#${base04}";
-          timeout = 3;
+        background = "#${base00}";
+        foreground = "#${base05}";
+        highlight = "#${base04}";
+        frame_color = "#${base04}";
+        timeout = 3;
       };
 
       urgency_normal = with config.colorScheme.palette; {
-          background = "#${base00}";
-          foreground = "#${base05}";
-          highlight = "#${base04}";
-          frame_color = "#${base04}";
-          timeout = 3;
+        background = "#${base00}";
+        foreground = "#${base05}";
+        highlight = "#${base04}";
+        frame_color = "#${base04}";
+        timeout = 3;
       };
 
       urgency_critical = with config.colorScheme.palette; {
-          background = "#${base00}";
-          foreground = "#${base05}";
-          highlight = "#${base04}";
-          frame_color = "#${base09}";
-          timeout = 0;
+        background = "#${base00}";
+        foreground = "#${base05}";
+        highlight = "#${base04}";
+        frame_color = "#${base09}";
+        timeout = 0;
       };
     };
-      iconTheme = {
-        inherit (config.icons) name package;
-        size = "32x32";
-      };
+
+    iconTheme = {
+      inherit (config.icons) name package;
+      size = "32x32";
+    };
   };
 }

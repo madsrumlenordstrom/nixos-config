@@ -19,7 +19,7 @@
   services.playerctld.enable = lib.mkIf config.wayland.windowManager.sway.enable true;
 
   # Make electron apps work on wayland
-  home.sessionVariables.NIXOS_OZONE_WL  = lib.mkIf config.wayland.windowManager.sway.enable "1";
+  home.sessionVariables.NIXOS_OZONE_WL = lib.mkIf config.wayland.windowManager.sway.enable "1";
 
   # Sway config
   wayland.windowManager.sway = 
