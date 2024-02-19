@@ -17,7 +17,7 @@
         overlay_font = "monospace:10";
         overlay_text_color = "${base05}";
         overlay_background_color = "${base00}";
-        overlay_background_alpha  = "ff";
+        overlay_background_alpha = "ff";
         overlay_position_bottom = true;
       };
     };
