@@ -45,31 +45,34 @@
     formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
 
     # Your custom packages and modifications, exported as overlays
-    overlays = import ./overlays {inherit inputs;};
+    overlays = import ./overlays { inherit inputs; };
     # Reusable nixos modules you might want to export
     # These are usually stuff you would upstream into nixpkgs
-    nixosModules = import ./nixos/modules;
+    nixosModules = import ./modules/nixos;
     # Reusable home-manager modules you might want to export
     # These are usually stuff you would upstream into home-manager
-    homeManagerModules = import ./home-manager/modules;
+    homeManagerModules = import ./modules/home-manager;
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      "nixos" = nixpkgs.lib.nixosSystem {
-        specialArgs = {inherit inputs outputs;};
-        modules = [ ./nixos/configuration.nix ];
+      "edb" = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
+        modules = [ ./hosts/edb.nix ];
       };
     };
 
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
-      "madsrumlenordstrom@nixos" = home-manager.lib.homeManagerConfiguration {
+      "madsrumlenordstrom@edb" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = {inherit inputs outputs;};
-        modules = [ ./home-manager/home.nix nur.hmModules.nur ];
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [ ./homes/madsrumlenordstrom.nix nur.hmModules.nur ];
       };
     };
+
+    # Development shell for boot strapping
+    # devShells = forAllSystems (system: "${system}".default = nixpkgs.legacyPackages.${system}.mkShell {} );
   };
 }
