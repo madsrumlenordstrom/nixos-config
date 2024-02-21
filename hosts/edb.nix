@@ -51,7 +51,6 @@
   services.openssh.enable = true;
 
   # Time zone and locale.
-  location.provider = "geoclue2";
   time.timeZone = "Europe/Copenhagen";
   i18n = { 
     defaultLocale = "en_US.UTF-8";
