@@ -125,7 +125,6 @@
       }) (config.monitors));
 
       startup = [
-        { command = "${gammastep}"; }
         # EASYEFFECTS TODO
         { command = ''
           ${pkgs.swayidle}/bin/swayidle -w \
@@ -293,14 +292,14 @@
           border = "#${base04}";
           background = "#${base00}";
           text = "#${base05}";
-          indicator = "#${base06}";
+          indicator = "#${base04}";
           childBorder = "#${base01}";
         };
         unfocused = {
           border = "#${base04}";
           background = "#${base00}";
           text = "#${base05}";
-          indicator = "#${base06}";
+          indicator = "#${base04}";
           childBorder = "#${base01}";
         };
       };
