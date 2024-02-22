@@ -4,6 +4,7 @@
   lib,
   config,
   pkgs,
+  modulesPath,
   ...
 }: {
   imports = [
@@ -51,7 +52,7 @@
   services.openssh.enable = true;
 
   # Time zone and locale.
-  time.timeZone = "Europe/Copenhagen";
+  services.automatic-timezoned.enable = true;
   i18n = { 
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
@@ -135,10 +136,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
-  # Power managerment
-  services.thermald.enable = true;
-  powerManagement.powertop.enable = true;
 
   # Install version
   system.stateVersion = "23.05";
