@@ -12,8 +12,9 @@
     shellAbbrs = {
       # Nix abbreviations
       n = "nix";
+      nf = "nix flake";
       nd = "nix develop -c $SHELL";
-      ns = {setCursor = true; expansion = "nix shell nixpkgs#%"; };
+      ns = { setCursor = true; expansion = "nix shell nixpkgs#%"; };
       snrs = "sudo nixos-rebuild --flake . switch";
       hms = "home-manager --flake . switch";
 
@@ -35,9 +36,11 @@
       rp = { setCursor = true; expansion = "realpath -z % |xargs --null -I -- echo 'wl-copy --' |sh"; };
       wg = "wl-paste | xargs -I % echo 'wget --no-hsts %' | sh";
     };
+
     functions = {
       fish_greeting = "";
     };
+
     interactiveShellInit = with config.colorScheme.palette; /*fish*/ ''
       # Delete word on control + backspace
       bind \b backward-kill-word

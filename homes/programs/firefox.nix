@@ -19,112 +19,73 @@ in {
         search = {
           default = "DuckDuckGo";
           force = true;
+
           engines = {
             "Nix Packages" = {
-              urls = [
-                {
-                  template = "https://search.nixos.org/packages";
-                  params = [
-                    {
-                      name = "type";
-                      value = "packages";
-                    }
-                    {
-                      name = "channel";
-                      value = "unstable";
-                    }
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+              urls = [ {
+                template = "https://search.nixos.org/packages";
+                params = [
+                  { name = "type"; value = "packages"; }
+                  { name = "channel"; value = "unstable"; }
+                  { name = "query"; value = "{searchTerms}"; }
+                ];
+              } ];
+
               iconUpdateURL = "https://nixos.org/favicon.png";
               inherit updateInterval;
               definedAliases = ["@np"];
             };
 
             "AOTY" = {
-              urls = [
-                {
-                  template = "https://www.albumoftheyear.org/search";
-                  params = [
-                    {
-                      name = "q";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+              urls = [ {
+                template = "https://www.albumoftheyear.org/search";
+                params = [ { name = "q"; value = "{searchTerms}"; } ];
+              } ];
+
               iconUpdateURL = "https://cdn.albumoftheyear.org/images/favicon.png";
               inherit updateInterval;
               definedAliases = ["@aoty"];
             };
 
             "Den Danske Ordbog" = {
-              urls = [
-                {
-                  template = "https://ordnet.dk/ddo/ordbog";
-                  params = [
-                    {
-                      name = "query";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+              urls = [ {
+                template = "https://ordnet.dk/ddo/ordbog";
+                params = [ { name = "query"; value = "{searchTerms}"; } ];
+              } ];
+
               iconUpdateURL = "https://ordnet.dk/favicon.ico";
               inherit updateInterval;
               definedAliases = ["@ddo"];
             };
 
             "GitHub" = {
-              urls = [
-                {
-                  template = "https://github.com/search";
-                  params = [
-                    {
-                      name = "q";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+              urls = [ {
+                template = "https://github.com/search";
+                params = [ { name = "q"; value = "{searchTerms}"; } ];
+              } ];
+
               iconUpdateURL = "https://github.githubassets.com/favicons/favicon-dark.png";
               inherit updateInterval;
               definedAliases = ["@gh"];
             };
 
             "Wikipedia" = {
-              urls = [
-                {
-                  template = "https://en.wikipedia.org";
-                  params = [
-                    {
-                      name = "search";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+              urls = [ {
+                template = "https://en.wikipedia.org";
+                params = [ { name = "search"; value = "{searchTerms}"; } ];
+              } ];
+
               iconUpdateURL = "https://en.wikipedia.org/static/favicon/wikipedia.ico";
               inherit updateInterval;
               definedAliases = ["@wp"];
             };
 
             "Wiktionary" = {
-              urls = [
-                {
-                  template = "https://en.wiktionary.org";
-                  params = [
-                    {
-                      name = "search";
-                      value = "{searchTerms}";
-                    }
-                  ];
-                }
-              ];
+              urls = [ {
+                template = "https://en.wiktionary.org";
+                params = [ { name = "search"; value = "{searchTerms}"; } ];
+              } ];
+
               iconUpdateURL = "https://en.wiktionary.org/static/favicon/wiktionary/en.ico";
               inherit updateInterval;
               definedAliases = ["@wt"];
@@ -319,18 +280,6 @@ in {
         */
           ''
             /*
-            ┌─┐┬┌┬┐┌─┐┬  ┌─┐
-            └─┐││││├─┘│  ├┤
-            └─┘┴┴ ┴┴  ┴─┘└─┘
-            ┌─┐┌─┐─┐ ┬
-            ├┤ │ │┌┴┬┘
-            └  └─┘┴ └─
-
-            by Miguel Avila
-
-            */
-
-            /*
 
             ┌─┐┌─┐┌┐┌┌─┐┬┌─┐┬ ┬┬─┐┌─┐┌┬┐┬┌─┐┌┐┌
             │  │ ││││├┤ ││ ┬│ │├┬┘├─┤ │ ││ ││││
@@ -342,7 +291,6 @@ in {
               --sfwindow: #${base01};
               --sfsecondary: #${base00};
               --text: #${base05};
-              --surface2: #${base04};
               --tab-min-height: 33px !important;
               --tab-min-width: 60px !important;
               --urlbar-min-height: 25px !important;
@@ -429,6 +377,17 @@ in {
             #sidebar-box,
             .sidebar-placesTree {
               background-color: var(--sfwindow) !important;
+            }
+
+            /* Context menu */
+            menupopup, panel {
+              --panel-color: var(--text) !important;
+              --panel-background: var(--sfwindow) !important;
+              --panel-shadow: 0 !important;
+              --panel-border-color: #${base04} !important;
+              --panel-border-radius: 0px !important;
+              --arrowpanel-background: var(--sfwindow) !important;
+              --arrowpanel-menuitem-border-radius: 0px !important;
             }
 
             /*
@@ -528,7 +487,7 @@ in {
             }
 
             .urlbarView-url {
-              color: var(--surface2) !important;
+              color: #${base04} !important;
             }
 
             .urlbarView-body-inner {
@@ -541,6 +500,7 @@ in {
 
             .urlbarView-row[selected],
             .urlbarView-row:hover {
+              color: var(--text) !important;
               background-color: var(--button-hover-bgcolor) !important;
             }
 
