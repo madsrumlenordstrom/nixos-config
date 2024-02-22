@@ -4,30 +4,48 @@
   lib,
   config,
   pkgs,
+  modulesPath,
   ...
 }: {
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
+
+    # My model is older but this works. This configures almost everything for an Intel laptop.
     inputs.hardware.nixosModules.apple-macbook-pro-12-1
   ];
 
   nixpkgs.config.packageOverrides = pkgs: {
-    vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
+    # Enable hybrid codec for Intel i7-4980HQ
+    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
   };
 
   hardware.opengl = {
     enable = true;
     extraPackages = with pkgs; [
-      intel-media-driver # LIBVA_DRIVER_NAME=iHD
-      # vaapiIntel         # LIBVA_DRIVER_NAME=i965 (older but works better for Firefox/Chromium)
-      vaapiVdpau
-      libvdpau-va-gl
+      intel-vaapi-driver # Enable hardware enconding/decoding of video
+      vaapiVdpau # Not sure if this is needed
     ];
   };
 
-  # Webcam driver
-  hardware.facetimehd.enable = true;
+  # Force i965 VA-API driver
+  environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; };
 
+  # Power managerment
+  services.thermald.enable = true;
+  powerManagement.powertop.enable = true;
+
+  # Make fans as quite as possible
+  # It is probably not a good idea to let the laptop run this hot. Use at your own risk
+  services.mbpfan.settings.general = {
+    low_temp = 60;  # If temperature is below this, fans will run at minimum speed
+    high_temp = 85; # If temperature is above this, fan speed will gradually increase
+    max_temp = 95;  # If temperature is above this, fans will run at maximum speed
+    polling_interval = 4;
+    min_fan1_speed = 1500;
+    min_fan2_speed = 1500;
+  };
+
+  # Boot and module stuff
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
