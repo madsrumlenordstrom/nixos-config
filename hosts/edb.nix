@@ -10,6 +10,9 @@
   imports = [
     # Hardware
     ./edb-hardware.nix
+
+    # Custom nixos modules
+    outputs.nixosModules
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -103,39 +106,13 @@
   };
 
   # Make system prepared for a wayland compositor
-  security = { 
-    polkit.enable = true;
-    pam = {
-      # Needed for swaylock authentications
-      services.swaylock = {};
-      # Allow user programs to request realtime priority
-      loginLimits = [{ domain = "@users"; item = "rtprio"; type = "-"; value = 1; }];
-    };
-  };
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    config.sway.default = [ "wlr" "gtk" ];
-  };
+  wayland-session.enable = true;
 
-  # Greeter before compositor
-  services.greetd = {
-    enable = true;
-    settings.default_session = {
-      command = "${pkgs.greetd.tuigreet}/bin/tuigreet --user-menu --remember --time --time-format '%Y-%m-%d %H:%M' --asterisks --cmd sway";
-      user = "greeter";
-    };
-  };
+  # Enable display manager
+  tuigreet.enable = true;
 
-  # Audio
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-    jack.enable = true;
-  };
+  # Enable pipewire audio
+  pipewire.enable = true;
 
   # Install version
   system.stateVersion = "23.05";
