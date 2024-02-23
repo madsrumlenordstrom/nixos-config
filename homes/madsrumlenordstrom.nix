@@ -9,9 +9,7 @@
   # Modules for import
   imports = [
     inputs.nix-colors.homeManagerModules.default
-    outputs.homeManagerModules.monitors
-    outputs.homeManagerModules.icons
-    outputs.homeManagerModules.cursor
+    outputs.homeManagerModules
     ./programs/sway.nix
     ./programs/firefox.nix
     ./programs/git.nix
