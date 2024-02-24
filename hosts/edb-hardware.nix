@@ -51,6 +51,9 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  # Avoid flickering on boot
+  boot.kernelParams = [ "i915.fastboot=1" ];
+
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/047f4ab3-a427-4d58-b163-1eb615317d1e";
     fsType = "btrfs";

@@ -38,10 +38,14 @@ in
     # Greeter before compositor
     services.greetd = {
       enable = true;
+      # Tuigreet
       settings.default_session = {
         command = "${cfg.package}/bin/tuigreet ${concatStringsSep " " cfg.settings.args}";
         user = "greeter";
       };
     };
+
+  # Fixes TTYs overriding. https://github.com/apognu/tuigreet/issues/17#issuecomment-927173694
+   systemd.services.greetd.unitConfig.After = lib.mkOverride 0 [ "multi-user.target" ];
   };
 }
