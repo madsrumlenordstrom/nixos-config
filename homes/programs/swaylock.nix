@@ -13,7 +13,10 @@
       # General
       ignore-empty-password = true;
       show-failed-attempts = true;
-      font = "JetBrains-Mono-Medium-Nerd-Font-Complete";
+      daemonize = true;
+      font = "JetBrains-Mono-Medium-Nerd-Font-Complete"; # TODO
+      image = "~/Pictures/wallpapers/the-glow-transparent.png"; # TODO
+      color = "${config.colorScheme.palette.base02}"; # Fallback color
 
       # Ring
       indicator-radius = 60;
