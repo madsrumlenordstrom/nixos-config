@@ -11,7 +11,7 @@
     inputs.nix-colors.homeManagerModules.default
     outputs.homeManagerModules
     ./programs/sway.nix
-    ./programs/firefox.nix
+    ./programs/firefox
     ./programs/git.nix
     ./programs/alacritty.nix
     ./programs/fish.nix

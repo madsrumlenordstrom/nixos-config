@@ -8,18 +8,16 @@
 }:
 {
   imports = [
-    ./waybar.nix        # Status bar
     ./wofi.nix          # Menu
-    ./dunst.nix         # Notification daemon
-    ./gammastep.nix     # Color temperature adjuster
-    ./swaylock.nix      # Screen locker
+    ./dunst.nix         # Notification daemon (systemd service)
+    ./waybar.nix        # Status bar (systemd service)
+    ./gammastep.nix     # Color temperature adjuster (systemd service)
+    ./swaylock.nix      # Screen locker (systemd service)
+    ./swayidle.nix      # Inactivity manager (systemd service)
   ];
 
   # Playerctl for controlling media
   services.playerctld.enable = lib.mkIf config.wayland.windowManager.sway.enable true;
-
-  # Make electron apps work on wayland
-  home.sessionVariables.NIXOS_OZONE_WL = lib.mkIf config.wayland.windowManager.sway.enable "1";
 
   # Sway config
   wayland.windowManager.sway = 
@@ -28,16 +26,12 @@
     sway = "${config.wayland.windowManager.sway.package}/bin/sway";
     swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
     swaylock = "${config.programs.swaylock.package}/bin/swaylock";
-    lock = "${swaylock} -f -i ${wallpaper} -c ${fallback}";
     terminal = "${config.programs.alacritty.package}/bin/alacritty"; # TODO find modular way to do this
     wofi = "${config.programs.wofi.package}/bin/wofi";
     menu = "${wofi} -Imi --show drun|${pkgs.findutils}/bin/xargs ${sway} exec --";
     finder = "${pkgs.fd}/bin/fd --type file|${wofi} -Imi --show dmenu -M fuzzy|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
-    waybar = "${config.programs.waybar.package}/bin/waybar";
-    gammastep = "${config.services.gammastep.package}/bin/gammastep";
     playerctl = "${config.services.playerctld.package}/bin/playerctl";
     grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
-    timeout = 900; # Seconds idle before going to sleep
 
     # Wallpaper
     wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png"; # TODO find better way to do this
@@ -126,14 +120,6 @@
 
       startup = [
         # EASYEFFECTS TODO
-        { command = ''
-          ${pkgs.swayidle}/bin/swayidle -w \
-          timeout 10 'if ${pkgs.procps}/bin/pgrep -x ${swaylock}; then ${swaymsg} "output * power off"; fi' \
-          resume '${swaymsg} "output * power on"' \
-          timeout ${toString (timeout + 10)} '${swaymsg} "output * power off"' \
-          timeout ${toString timeout} '${lock}' \
-          resume '${swaymsg} "output * power on"'
-        ''; }
       ];
 
       gaps = {
@@ -149,7 +135,8 @@
         border = 1;
       };
 
-      bars = [{ command = "${waybar}"; }];
+      # Hides default swaybar
+      bars = [ ];
 
       keybindings = {
         # Essentials
@@ -212,7 +199,7 @@
         "${modifier}+Shift+minus" = "move scratchpad";
         "${modifier}+minus" = "scratchpad show";
 
-        "${modifier}+x" = "exec ${lock}";
+        "${modifier}+x" = "exec ${swaylock}";
         "${modifier}+c" = "reload";
         "${modifier}+Shift+e" = "exec ${swaymsg} exit";
 
@@ -305,11 +292,16 @@
       };
     };
 
+    extraSessionCommands = /*shell*/ ''
+      # Make electron apps work on wayland
+      export NIXOS_OZONE_WL=1
+    '';
+
     extraConfig = ''
       # Allow switching between workspaces with left and right swipes
       bindgesture swipe:4:right workspace prev
       bindgesture swipe:4:left workspace next
-      bindswitch --reload --locked lid:on exec ${lock}
+      bindswitch --reload --locked lid:on exec ${swaylock}
     '';
   };
 }

@@ -9,7 +9,9 @@
 {
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     settings.main = { # Needs some arbitrary name
+      # Positioning
       layer = "top";
       position = "top";
       height = 27;
