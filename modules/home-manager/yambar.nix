@@ -80,6 +80,7 @@ in {
 
     xdg.configFile."yambar/config.yml" = mkIf (cfg.settings != { }) {
       source = yamlFormat.generate "yambar-config" cfg.settings;
+      onChange = mkIf cfg.systemd.enable ''${pkgs.systemd}/bin/systemctl --user restart yambar.service'';
     };
 
     systemd.user.services.yambar = mkIf cfg.systemd.enable {
