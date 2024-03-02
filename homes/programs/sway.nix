@@ -27,7 +27,6 @@
     swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
     swaylock = "${config.programs.swaylock.package}/bin/swaylock";
     terminal = "${config.programs.alacritty.package}/bin/alacritty"; # TODO find modular way to do this
-    wofi = "${config.programs.wofi.package}/bin/wofi";
     menu = "${config.programs.fuzzel.package}/bin/fuzzel";
     finder = "${pkgs.fd}/bin/fd --type file|${menu} --dmenu|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
     playerctl = "${config.services.playerctld.package}/bin/playerctl";
@@ -44,43 +43,6 @@
     up = "k";
     right = "l";
 
-    volume-control = pkgs.writeShellScriptBin "volume-control" /*shell*/ ''
-      # Script to control volume 
-
-      ctl=""
-      val=3
-      msgTag="audio-volume"
-
-      # Get argument
-      if [ "$1" = "up" ]
-      then
-        ctl="$val%+"
-      elif [ "$1" = "down" ]
-      then
-        ctl="$val%-"
-        val=-$val
-      else
-        echo "Run script with correct argument:\n$0 <up|down>"
-        exit 1
-      fi
-
-      # Show notification
-      ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-      volume="$(${pkgs.wireplumber}/bin/wpctl get-volume @DEFAULT_AUDIO_SINK@ | ${pkgs.gnused}/bin/sed -r 's/Volume:\s//g;s/(0\.|0\.0|\.)//g')" 
-      volume=$(($volume + $val))
-      if [ "$volume" -le "0" ]
-      then
-        # Show the sound muted notification
-        volume="0"
-        ${pkgs.libnotify}/bin/notify-send -a "change-volume" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume" "󰝟 Audio muted" 
-      else
-        # Show the volume notification
-        ${pkgs.libnotify}/bin/notify-send -a "change-volume" -u low -h string:x-dunst-stack-tag:$msgTag -h int:value:"$volume" "󰕾 Audio volume"
-      fi
-
-      # Set volume
-      ${pkgs.wireplumber}/bin/wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ $ctl
-    '';
   in {
     enable = true;
     xwayland = false;
@@ -207,17 +169,17 @@
 
 
         # Brightness control
-        "--locked XF86MonBrightnessDown " = "exec ~/.config/user-scripts/brightness-control.sh down";
-        "--locked XF86MonBrightnessUp " = "exec ~/.config/user-scripts/brightness-control.sh up ";
+        "--locked XF86MonBrightnessDown " = "exec ${pkgs.brightness-control}/bin/brightness-control down";
+        "--locked XF86MonBrightnessUp " = "exec ${pkgs.brightness-control}/bin/brightness-control up ";
 
         # Keyboard backlight control
-        "--locked XF86KbdBrightnessDown " = "exec ~/.config/user-scripts/kb-brightness-control.sh down";
-        "--locked XF86KbdBrightnessUp " = "exec ~/.config/user-scripts/kb-brightness-control.sh up";
+        "--locked XF86KbdBrightnessDown " = "exec ${pkgs.kb-brightness-control}/bin/kb-brightness-control down";
+        "--locked XF86KbdBrightnessUp " = "exec ${pkgs.kb-brightness-control}/bin/kb-brightness-control up";
 
         # Volume control
         "--locked XF86AudioMute " = "exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        "--locked XF86AudioLowerVolume " = "exec ${volume-control}/bin/volume-control down";
-        "--locked XF86AudioRaiseVolume " = "exec ${volume-control}/bin/volume-control up";
+        "--locked XF86AudioLowerVolume " = "exec ${pkgs.volume-control}/bin/volume-control down";
+        "--locked XF86AudioRaiseVolume " = "exec ${pkgs.volume-control}/bin/volume-control up";
 
         # Media control
         "--locked XF86AudioPlay " = "exec ${playerctl} --player playerctld play-pause";
