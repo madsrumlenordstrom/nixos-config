@@ -9,6 +9,7 @@
 {
   imports = [
     ./wofi.nix          # Menu
+    ./fuzzel.nix
     ./dunst.nix         # Notification daemon (systemd service)
     ./gammastep.nix     # Color temperature adjuster (systemd service)
     ./swaylock.nix      # Screen locker (systemd service)
@@ -23,13 +24,12 @@
   wayland.windowManager.sway = 
   let
     # Essentials
-    sway = "${config.wayland.windowManager.sway.package}/bin/sway";
     swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
     swaylock = "${config.programs.swaylock.package}/bin/swaylock";
     terminal = "${config.programs.alacritty.package}/bin/alacritty"; # TODO find modular way to do this
     wofi = "${config.programs.wofi.package}/bin/wofi";
-    menu = "${wofi} -Imi --show drun|${pkgs.findutils}/bin/xargs ${sway} exec --";
-    finder = "${pkgs.fd}/bin/fd --type file|${wofi} -Imi --show dmenu -M fuzzy|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
+    menu = "${config.programs.fuzzel.package}/bin/fuzzel";
+    finder = "${pkgs.fd}/bin/fd --type file|${menu} --dmenu|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
     playerctl = "${config.services.playerctld.package}/bin/playerctl";
     grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
 
