@@ -10,10 +10,10 @@
   imports = [
     ./wofi.nix          # Menu
     ./dunst.nix         # Notification daemon (systemd service)
-    ./waybar.nix        # Status bar (systemd service)
     ./gammastep.nix     # Color temperature adjuster (systemd service)
     ./swaylock.nix      # Screen locker (systemd service)
     ./swayidle.nix      # Inactivity manager (systemd service)
+    ./yambar.nix        # Status bar (systemd service)
   ];
 
   # Playerctl for controlling media
@@ -201,7 +201,7 @@
 
         "${modifier}+x" = "exec ${swaylock}";
         "${modifier}+c" = "reload";
-        "${modifier}+Shift+e" = "exec ${swaymsg} exit";
+        "${modifier}+Shift+e" = "exec ${pkgs.systemd}/bin/systemctl --user stop sway-session.target | ${swaymsg} exit";
 
         "${modifier}+r" = "mode resize";
 
