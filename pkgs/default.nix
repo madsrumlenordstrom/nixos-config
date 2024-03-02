@@ -1,5 +1,5 @@
-# Custom packages, that can be defined similarly to ones from nixpkgs
-# You can build them using 'nix build .#example'
-pkgs: {
-  # example = pkgs.callPackage ./example { };
+{pkgs, ... }: {
+  volume-control = pkgs.callPackage ./volume-control { };
+  brightness-control = pkgs.callPackage ./brightness-control { };
+  kb-brightness-control = pkgs.callPackage ./kb-brightness-control { };
 }
