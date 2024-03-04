@@ -14,7 +14,8 @@
       n = "nix";
       nf = "nix flake";
       nd = "nix develop -c $SHELL";
-      ns = { setCursor = true; expansion = "nix shell nixpkgs#%"; };
+      ns = { setCursor = true; expansion = "nix search nixpkgs#%"; };
+      nsh = { setCursor = true; expansion = "nix shell nixpkgs#%"; };
       snrs = "sudo nixos-rebuild --flake . switch";
       hms = "home-manager --flake . switch";
 
