@@ -80,17 +80,23 @@
 
     # User packages
     packages = with pkgs; [
+      # CLI programs
       hexyl              # Hexdumper
-      mpv                # Media player
-      transmission-gtk   # Torrent client
       gdu                # Disk usage analyzer
-      wl-clipboard       # Copy paste utils
       ripgrep            # Grep but better
       htop               # Process viewer
       file               # File type analyzer
+      tldr               # Alternative to man pages
+      tokei              # Source code counter
+
+      # Graphical programs
+      transmission-gtk   # Torrent client
+      mpv                # Media player
+
+      # TODO move to more fitting place
+      wl-clipboard       # Copy paste utils
       nil                # LSP server for nix
       xdg-utils          # Useful desktop CLI tools
-      tldr               # Alternative to man pages
     ];
 
     stateVersion = "23.11";
