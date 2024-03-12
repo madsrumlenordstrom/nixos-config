@@ -18,7 +18,7 @@
 
     timeouts = [
       # For when the inactive time has already been reached and display is locked. It should then quickly power off display if user remains inactive
-      { timeout = 10; command = "if ${pkgs.procps}/bin/pgrep -x ${swaylock}; then ${outputPower} off; fi"; resumeCommand = "${outputPower} on"; }
+      { timeout = 10; command = "if ${pkgs.procps}/bin/pgrep --exact --full ${swaylock}; then ${outputPower} off; fi"; resumeCommand = "${outputPower} on"; }
 
       # Timeout for locking windown manager
       { timeout = inactiveTime; command = "${swaylock}"; }
