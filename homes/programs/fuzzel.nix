@@ -19,7 +19,7 @@
         icons-enabled = boolToYN true;
         show-actions = boolToYN false;
         terminal = config.home.sessionVariables.TERM;
-        width = 50;
+        width = 35;
         horizontal-pad = 16;
         vertical-pad = 8;
         lines = 10;
