@@ -22,12 +22,16 @@
 
       # Nix
       jnoortheen.nix-ide
+
+      # Theme
+      catppuccin.catppuccin-vsc
     ];
 
     userSettings = {
       "telemetry.telemetryLevel" = "off";
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
+      "workbench.colorTheme" = "Catppuccin Frappé";
       };
   };
 
