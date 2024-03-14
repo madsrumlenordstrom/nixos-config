@@ -22,9 +22,10 @@ writeShellApplication
   checkPhase = "";
 
   text = let
-    kbBrightnessMessage = "Keyboard brightness";
+    kbBrightnessMessage = "󰌌 Keyboard brightness";
     messageTag = "kb-brightness-control";
     changePercentage = 3;
+    device = "*kbd_backlight"; # Find with 'brightnessctl --list'
   in /* bash */ ''
 
     # Script to control brightness of keyboard
@@ -46,16 +47,17 @@ writeShellApplication
     fi
 
     # Show notification
-    bright="$(brightnessctl -m --device=smc::kbd_backlight get)" 
-    bright=$(($bright * 100 / 255))
+    max_bright="$(brightnessctl -m --device='${device}' max)" 
+    bright="$(brightnessctl -m --device='${device}' get)" 
+    bright=$(($bright * 100 / $max_bright))
     bright=$(($bright + $val))
     if [ "$bright" -le "0" ]
     then
     	bright=0
     fi
-    notify-send -a "change-kb-brightness" -u low -h string:x-dunst-stack-tag:${messageTag} -h int:value:"$bright" "${kbBrightnessMessage}"
+    notify-send -u low -h string:x-dunst-stack-tag:${messageTag} -h int:value:"$bright" "${kbBrightnessMessage}"
 
     # Set brightness
-    brightnessctl -q --device=smc::kbd_backlight set $ctl
+    brightnessctl -q --device='${device}' set $ctl
   '';
 }

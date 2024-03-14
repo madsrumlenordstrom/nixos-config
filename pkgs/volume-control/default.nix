@@ -61,7 +61,7 @@ writeShellApplication
     fi
 
     # Show the volume notification
-    notify-send -a "change-volume" -u low -h string:x-dunst-stack-tag:${messageTag} -h int:value:"$volume" "$message"
+    notify-send -u low -h string:x-dunst-stack-tag:${messageTag} -h int:value:"$volume" "$message"
 
     # Set volume
     wpctl set-volume --limit 1.0 @DEFAULT_AUDIO_SINK@ $ctl

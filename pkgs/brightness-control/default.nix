@@ -22,7 +22,7 @@ writeShellApplication
   checkPhase = "";
 
   text = let
-    brightnessMessage = "Screen brightness";
+    brightnessMessage = "󰍹 Screen brightness";
     messageTag = "brightness-control";
     changePercentage = 3;
   in /* bash */ ''
@@ -48,13 +48,13 @@ writeShellApplication
     # Show notification
     max_bright="$(brightnessctl -m max)" 
     bright="$(brightnessctl -m get)" 
-    bright=$(($bright * 100 / max_bright))
+    bright=$(($bright * 100 / $max_bright))
     bright=$(($bright + $val))
     if [ "$bright" -le "0" ]
     then
     	bright=0
     fi
-    notify-send -a "change-brightness" -u low -h string:x-dunst-stack-tag:${messageTag} -h int:value:"$bright" "${brightnessMessage}"
+    notify-send -u low -h string:x-dunst-stack-tag:${messageTag} -h int:value:"$bright" "${brightnessMessage}"
 
     # Set brightness
     brightnessctl -q set $ctl
