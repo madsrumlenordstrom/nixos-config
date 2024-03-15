@@ -19,7 +19,7 @@
     ./programs/gtk.nix
     ./programs/fzf.nix
     ./programs/eza.nix
-    ./programs/helix.nix
+    ./programs/helix
     ./programs/vscode.nix
     ./programs/bat.nix
     ./programs/zathura.nix
