@@ -65,10 +65,10 @@
     # Standalone home-manager configuration entrypoint
     # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
-      "madsrumlenordstrom@edb" = home-manager.lib.homeManagerConfiguration {
+      "rumle@edb" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ ./homes/madsrumlenordstrom.nix nur.hmModules.nur ];
+        modules = [ ./homes/rumle.nix nur.hmModules.nur ];
       };
     };
 

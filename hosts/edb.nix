@@ -72,9 +72,10 @@
   };
 
   # User
-  users.users.madsrumlenordstrom = {
+  users.users.rumle = {
     description = "Mads Rumle Nordstrøm";
     isNormalUser = true;
+    uid = 1000;
     shell = pkgs.fish;
     extraGroups = [ "wheel" "networkmanager" "video" ];
     hashedPassword = "$y$j9T$.uZNPXk3OFWaoNetj2P2e0$6rD7ex86u17L78b0wKQ.QzXd3cZUVkAPifTs7r.L3l5";

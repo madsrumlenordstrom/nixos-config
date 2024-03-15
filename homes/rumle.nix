@@ -75,7 +75,7 @@
   };
 
   home = {
-    username = "madsrumlenordstrom";
+    username = "rumle";
     homeDirectory = "/home/${config.home.username}";
 
     # User packages
