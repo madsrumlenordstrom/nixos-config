@@ -16,20 +16,22 @@
       "--info=right"
       "--border=sharp"
       "--preview-window=border-sharp"
-      " --preview='${pkgs.bat}/bin/bat -n --color=always {}'"
       "--no-scrollbar"
       "--no-separator"
       "--margin=1"
       "--info=hidden"
     ];
+
     fileWidgetCommand = "${pkgs.fd}/bin/fd --type file --follow";
     fileWidgetOptions = [
       " --preview '${pkgs.bat}/bin/bat -n --color=always {}'"
     ];
+
     changeDirWidgetCommand = "${pkgs.fd}/bin/fd --type directory --follow";
     changeDirWidgetOptions = [
-      "--preview '${pkgs.eza}/bin/eza --tree --color=always --icons=always {}'"
+      "--preview '${config.programs.eza.package}/bin/eza --tree --color=always --icons=always {}'"
     ];
+
     colors = with config.colorScheme.palette; {
       "fg" = "#${base05}";
       "bg" = "#${base00}";
