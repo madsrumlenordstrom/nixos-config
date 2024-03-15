@@ -1,11 +1,4 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ inputs, outputs, lib, config, pkgs, ... }:
 {
   # Set as default terminal if enabled
   home.sessionVariables.TERM = lib.mkIf config.programs.alacritty.enable "alacritty";

@@ -1,11 +1,5 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: let
+{ inputs, outputs, lib, config, pkgs, ... }:
+let
   # General settings for Firefox
   settings = import ./settings.nix { inherit inputs outputs lib config pkgs; };
 

@@ -1,12 +1,5 @@
+{ inputs, outputs, lib, config, pkgs, modulesPath, ... }:
 {
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  modulesPath,
-  ...
-}: {
   imports = [
     # Hardware
     ./edb-hardware.nix

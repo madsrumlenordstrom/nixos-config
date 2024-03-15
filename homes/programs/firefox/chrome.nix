@@ -1,11 +1,5 @@
+{ inputs, outputs, lib, config, pkgs, ... }:
 {
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
   # Empty for now
   userContent = ''''; # Empty for now
 

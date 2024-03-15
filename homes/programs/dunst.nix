@@ -1,11 +1,4 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ inputs, outputs, lib, config, pkgs, ... }:
 {
   # For notification binaries
   home.packages = [ pkgs.libnotify ];

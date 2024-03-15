@@ -1,11 +1,5 @@
+{ inputs, outputs, lib, config, pkgs, ... }:
 {
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
   style = with config.colorScheme.palette; /* css */ ''
     * {
       border: none;

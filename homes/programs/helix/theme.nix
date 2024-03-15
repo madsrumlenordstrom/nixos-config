@@ -1,11 +1,4 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ inputs, outputs, lib, config, pkgs, ... }:
 {
   # See https://docs.helix-editor.com/themes.html
   base16 = with config.colorScheme.palette; {

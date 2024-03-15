@@ -1,11 +1,5 @@
+{ inputs, outputs, lib, config, pkgs, ... }:
 {
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
   # Waits 3 seconds before restarting on crash
   systemd.user.services.waybar.Service.RestartSec = 3;
   

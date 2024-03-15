@@ -1,11 +1,4 @@
-{
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ inputs, outputs, lib, config, pkgs, ... }:
 let 
   updateInterval = 24 * 60 * 60 * 1000; # Updates icons once per day
 in {

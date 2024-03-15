@@ -1,10 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  modulesPath,
-  ...
-}:
+{ lib, config, pkgs, modulesPath, ... }:
 
 with lib;
 

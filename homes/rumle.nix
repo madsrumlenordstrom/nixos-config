@@ -1,11 +1,5 @@
+{ inputs, outputs, lib, config, pkgs, ... }:
 {
-  inputs,
-  outputs,
-  lib,
-  config,
-  pkgs,
-  ...
-}: {
   # Modules for import
   imports = [
     inputs.nix-colors.homeManagerModules.default
