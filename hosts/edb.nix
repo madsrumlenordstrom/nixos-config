@@ -29,6 +29,8 @@
     experimental-features = "nix-command flakes";
     # Deduplicate and optimize nix store
     auto-optimise-store = true;
+    # Use XDG directories instead of polluting home
+    use-xdg-base-directories = true;
   };
 
   # Add flakes to nix registry (used in legacy commands)
