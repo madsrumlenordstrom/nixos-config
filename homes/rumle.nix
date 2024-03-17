@@ -20,54 +20,6 @@
     ./programs/imv.nix
   ];
 
-  # Workaround for my broken display :(
-  wayland.windowManager.sway.config.gaps.left = 38;
-  programs.waybar.settings.main.margin-left = 44;
-  programs.yambar.settings.bar.border.left-margin = 2 * 44;
-
-  # Global color scheme. See https://github.com/tinted-theming/base16-schemes
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
-
-  # System icon theme
-  icons = {
-    enable = true;
-    package = pkgs.papirus-icon-theme;
-    name = if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light";
-  };
-
-  # System cursor theme
-  cursor = {
-    enable = true;
-    package = pkgs.capitaine-cursors;
-    name = "${if config.colorScheme.variant == "dark" then "capitaine-cursors-white" else "capitaine-cursors"}";
-    size = 32;
-  };
-
-  nixpkgs = {
-    # You can add overlays here
-    overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      # outputs.overlays.unstable-packages
-
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
-    ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
-  };
-
   home = {
     username = "rumle";
     homeDirectory = "/home/${config.home.username}";
@@ -95,6 +47,60 @@
 
     stateVersion = "23.11";
   };
+
+  # Workaround for my broken display :(
+  wayland.windowManager.sway.config.gaps.left = 38;
+  programs.waybar.settings.main.margin-left = 44;
+  programs.yambar.settings.bar.border.left-margin = 2 * 44;
+
+  # Global color scheme. See https://github.com/tinted-theming/base16-schemes
+  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
+
+  # System icon theme
+  icons = {
+    enable = true;
+    package = pkgs.papirus-icon-theme;
+    name = if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light";
+  };
+
+  # System cursor theme
+  home.pointerCursor = {
+    package = pkgs.capitaine-cursors;
+    name = if config.colorScheme.variant == "dark" then "capitaine-cursors-white" else "capitaine-cursors";
+    size = 32;
+    gtk.enable = true;
+  };
+
+  # Enable dconf as many programs reads dconf data
+  dconf.enable = true;
+
+  nixpkgs = {
+    # You can add overlays here
+    overlays = [
+      # Add overlays your own flake exports (from overlays and pkgs dir):
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      # outputs.overlays.unstable-packages
+
+      # You can also add overlays exported from other flakes:
+      # neovim-nightly-overlay.overlays.default
+
+      # Or define it inline, for example:
+      # (final: prev: {
+      #   hi = final.hello.overrideAttrs (oldAttrs: {
+      #     patches = [ ./change-hello-to-hi.patch ];
+      #   });
+      # })
+    ];
+    # Configure your nixpkgs instance
+    config = {
+      # Disable if you don't want unfree packages
+      allowUnfree = true;
+    };
+  };
+
+  # Enable XDG base directories management
+  xdg.enable = true;
 
   monitors = [
     { # Built in display

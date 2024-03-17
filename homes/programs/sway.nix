@@ -1,8 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 {
   imports = [
-    ./wofi.nix          # Menu
-    ./fuzzel.nix
+    ./fuzzel.nix        # Menu
     ./dunst.nix         # Notification daemon (systemd service)
     ./gammastep.nix     # Color temperature adjuster (systemd service)
     ./swaylock.nix      # Screen locker (systemd service)
@@ -219,7 +218,7 @@
       };
 
       # Cursor theme
-      seat.seat0.xcursor_theme = "${config.cursor.name} ${toString config.cursor.size}";
+      seat.seat0.xcursor_theme = "${config.home.pointerCursor.name} ${toString config.home.pointerCursor.size}";
 
       # Colors
       colors = with config.colorScheme.palette; {
