@@ -39,7 +39,6 @@
   # Networking
   networking = {
     hostName = "edb";
-    useDHCP = true;
 
     # Use iwd instead of wpa_supplicant
     wireless.iwd.enable =  true;
