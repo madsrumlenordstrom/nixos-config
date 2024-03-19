@@ -159,7 +159,7 @@
 
           {
             network = {
-              name = "wlp3s0";
+              name = "wlan0";
               poll-interval = 5000;
 
               content.map = {
@@ -179,9 +179,9 @@
 
               content.map = {
                 conditions = let
-                  charging = [ " " " " " " " " " " " " " " " " " " " " ];
-                  discharging = charging;
-                  not-charging = charging;
+                  charging = [ "󰢜 " "󰂆 " "󰂇 " "󰂈 " "󰢝 " "󰂉 " "󰢞 " "󰂊 " "󰂋 " "󰂅 " ];
+                  discharging = [ "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+                  not-charging = discharging;
                   unknown = charging;
                   mkBatRamp = texts: [ {
                     ramp = {

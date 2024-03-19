@@ -39,11 +39,15 @@
   # Networking
   networking = {
     hostName = "edb";
+    useDHCP = true;
+
+    # Use iwd instead of wpa_supplicant
+    wireless.iwd.enable =  true;
     networkmanager.enable = true;
-    interfaces.wlp3s0.ipv4.addresses = [ {
-      address = "192.168.1.129";
-      prefixLength = 24;
-    } ];
+    networkmanager.wifi.backend = "iwd";
+
+    # Use nftables instead of legacy iptables
+    nftables.enable = true;
     firewall = {
       enable = true;
       allowedTCPPorts = [ 22 ];
