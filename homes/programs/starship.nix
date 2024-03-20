@@ -49,7 +49,7 @@
       nix_shell = {
         symbol = " ";
         style = "blue";
-        format = "[$symbol$state $name]($style)";
+        format = "[$symbol$state $name]($style) ";
       };
       hostname = {
         ssh_only = true;
