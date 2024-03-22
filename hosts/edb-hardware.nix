@@ -23,9 +23,8 @@
   # Force i965 VA-API driver
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; };
 
-  # Power managerment
+  # CPU frequency scaling
   services.thermald.enable = true;
-  powerManagement.powertop.enable = true;
 
   # Make fans as quite as possible
   # It is probably not a good idea to let the laptop run this hot. Use at your own risk
@@ -36,6 +35,12 @@
     polling_interval = 4;
     min_fan1_speed = 1500;
     min_fan2_speed = 1500;
+  };
+
+  # Make accidental presses of the power key a little more forgiving
+  services.logind = {
+    powerKey = "ignore";
+    powerKeyLongPress = "poweroff";
   };
 
   # Boot and module stuff
