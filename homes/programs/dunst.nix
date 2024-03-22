@@ -28,10 +28,10 @@
         separator_color = "frame";
         font = "monospace 10"; # TODO
         markup = "full";
-        format = "<b>%s</b>\n%b";
         enable_recursive_icon_lookup = true;
         browser = "${pkgs.xdg-utils}/bin/xdg-open";
         corner_radius = 0;
+        icon_theme = config.icons.name; # Just to suppress warning
       };
 
       urgency_low = with config.colorScheme.palette; {
