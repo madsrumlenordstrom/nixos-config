@@ -1,7 +1,7 @@
 { inputs, outputs, lib, config, pkgs, ... }:
 {
   # For notification binaries
-  home.packages = [ pkgs.libnotify ];
+  home.packages = lib.mkIf config.services.dunst.enable [ pkgs.libnotify ];
 
   # Dunst configuration
   services.dunst = {
@@ -29,9 +29,9 @@
         font = "monospace 10"; # TODO
         markup = "full";
         enable_recursive_icon_lookup = true;
+        icon_theme = config.icons.name;
         browser = "${pkgs.xdg-utils}/bin/xdg-open";
         corner_radius = 0;
-        icon_theme = config.icons.name; # Just to suppress warning
       };
 
       urgency_low = with config.colorScheme.palette; {
@@ -57,11 +57,6 @@
         frame_color = "#${base09}";
         timeout = 0;
       };
-    };
-
-    iconTheme = {
-      inherit (config.icons) name package;
-      size = "32x32";
     };
   };
 }

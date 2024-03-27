@@ -161,22 +161,22 @@
 
 
         # Brightness control
-        "--locked XF86MonBrightnessDown " = "exec ${pkgs.brightness-control}/bin/brightness-control down";
-        "--locked XF86MonBrightnessUp " = "exec ${pkgs.brightness-control}/bin/brightness-control up ";
+        "--locked XF86MonBrightnessDown" = "exec ${pkgs.mon-brightness-control}/bin/mon-brightness-control decrease";
+        "--locked XF86MonBrightnessUp" = "exec ${pkgs.mon-brightness-control}/bin/mon-brightness-control increase";
 
         # Keyboard backlight control
-        "--locked XF86KbdBrightnessDown " = "exec ${pkgs.kb-brightness-control}/bin/kb-brightness-control down";
-        "--locked XF86KbdBrightnessUp " = "exec ${pkgs.kb-brightness-control}/bin/kb-brightness-control up";
+        "--locked XF86KbdBrightnessDown" = "exec ${pkgs.kbd-brightness-control}/bin/kbd-brightness-control decrease";
+        "--locked XF86KbdBrightnessUp" = "exec ${pkgs.kbd-brightness-control}/bin/kbd-brightness-control increase";
 
         # Volume control
-        "--locked XF86AudioMute " = "exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
-        "--locked XF86AudioLowerVolume " = "exec ${pkgs.volume-control}/bin/volume-control down";
-        "--locked XF86AudioRaiseVolume " = "exec ${pkgs.volume-control}/bin/volume-control up";
+        "--locked XF86AudioMute" = "exec ${pkgs.audio-volume-control}/bin/audio-volume-control toggle";
+        "--locked XF86AudioLowerVolume" = "exec ${pkgs.audio-volume-control}/bin/audio-volume-control decrease";
+        "--locked XF86AudioRaiseVolume" = "exec ${pkgs.audio-volume-control}/bin/audio-volume-control increase";
 
         # Media control
-        "--locked XF86AudioPlay " = "exec ${playerctl} --player playerctld play-pause";
-        "--locked XF86AudioNext " = "exec ${playerctl} --player playerctld next";
-        "--locked XF86AudioPrev " = "exec ${playerctl} --player playerctld previous";
+        "--locked XF86AudioPlay" = "exec ${playerctl} --player playerctld play-pause";
+        "--locked XF86AudioNext" = "exec ${playerctl} --player playerctld next";
+        "--locked XF86AudioPrev" = "exec ${playerctl} --player playerctld previous";
 
         # Screenshots
         "${modifier}+Shift+XF86LaunchA" = "exec ${grimshot} save output";
