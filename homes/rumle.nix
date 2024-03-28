@@ -71,32 +71,26 @@
     gtk.enable = true;
   };
 
-  # Enable dconf as many programs reads dconf data
+  # Enable dconf as many programs read dconf data
   dconf.enable = true;
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
-      # Add overlays your own flake exports (from overlays and pkgs dir):
       outputs.overlays.additions
       outputs.overlays.modifications
       # outputs.overlays.unstable-packages
 
-      # You can also add overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
+      # Make papirus icons match color theme
+      (final: prev: {
+        papirus-icon-theme = prev.papirus-icon-theme.overrideAttrs (oldAttrs: {
+          installPhase = oldAttrs.installPhase + ''
+            find $out/share/icons/${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
+          '';
+        });
+      })
     ];
-    # Configure your nixpkgs instance
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-    };
+
+    config.allowUnfree = true;
   };
 
   # Enable XDG base directories management
