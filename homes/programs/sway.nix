@@ -229,6 +229,7 @@
           indicator = "#${base06}";
           childBorder = "#${base04}";
         };
+
         focusedInactive = {
           border = "#${base04}";
           background = "#${base00}";
@@ -236,6 +237,7 @@
           indicator = "#${base04}";
           childBorder = "#${base01}";
         };
+
         unfocused = {
           border = "#${base04}";
           background = "#${base00}";
