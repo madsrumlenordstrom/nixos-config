@@ -17,11 +17,6 @@
 
   outputs = {
     self,
-    nixpkgs,
-    home-manager,
-    hardware,
-    nur,
-    nix-colors,
     ...
   } @ inputs: let
     inherit (self) outputs;
@@ -35,14 +30,14 @@
     ];
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+    forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
   in {
     # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
+    packages = forAllSystems (system: import ./pkgs inputs.nixpkgs.legacyPackages.${system});
     # Formatter for your nix files, available through 'nix fmt'
     # Other options beside 'alejandra' include 'nixpkgs-fmt'
-    formatter = forAllSystems (system: nixpkgs.legacyPackages.${system}.alejandra);
+    formatter = forAllSystems (system: inputs.nixpkgs.legacyPackages.${system}.alejandra);
 
     # Your custom packages and modifications, exported as overlays
     overlays = import ./overlays { inherit inputs; };
@@ -54,25 +49,23 @@
     homeManagerModules = import ./modules/home-manager;
 
     # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
-      "edb" = nixpkgs.lib.nixosSystem {
+      "edb" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/edb.nix ];
       };
     };
 
     # Standalone home-manager configuration entrypoint
-    # Available through 'home-manager --flake .#your-username@your-hostname'
     homeConfigurations = {
-      "rumle@edb" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+      "rumle@edb" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ ./homes/rumle.nix nur.hmModules.nur ];
+        modules = [ ./homes/rumle.nix inputs.nur.hmModules.nur ];
       };
     };
 
     # Development shell for boot strapping
-    # devShells = forAllSystems (system: "${system}".default = nixpkgs.legacyPackages.${system}.mkShell {} );
+    # devShells = forAllSystems (system: "${system}".default = inputs.nixpkgs.legacyPackages.${system}.mkShell {} );
   };
 }
