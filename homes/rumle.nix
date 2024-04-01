@@ -78,6 +78,7 @@
     overlays = [
       outputs.overlays.additions
       outputs.overlays.modifications
+      outputs.overlays.nur-packages
       # outputs.overlays.unstable-packages
 
       # Make papirus icons match color theme
