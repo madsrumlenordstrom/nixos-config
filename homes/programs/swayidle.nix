@@ -3,16 +3,17 @@
   services.swayidle = let 
     inactiveTime = 900; # Seconds idle before going to sleep
     swaylock = "${config.programs.swaylock.package}/bin/swaylock";
+    execWhenLocked = command: "if ${pkgs.procps}/bin/pgrep --exact --full ${swaylock}; then ${command}; fi";
     swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
     outputPower = "${swaymsg} output \"*\" power";
-    powerOff = "${outputPower} off && ${pkgs.brightnessctl}/bin/brightnessctl --device='*kbd_backlight' --save set 0";
-    powerOn = "${outputPower} on && ${pkgs.brightnessctl}/bin/brightnessctl --device='*kbd_backlight' --restore";
+    powerOff = "${outputPower} off && ${pkgs.brightnessctl}/bin/brightnessctl --quiet --device='*kbd_backlight' --save set 0";
+    powerOn = "${outputPower} on && ${pkgs.brightnessctl}/bin/brightnessctl --quiet --device='*kbd_backlight' --restore";
   in {
     enable = true;
 
     timeouts = [
       # For when the inactive time has already been reached and display is locked. It should then quickly power off display if user remains inactive
-      { timeout = 10; command = "if ${pkgs.procps}/bin/pgrep --exact --full ${swaylock}; then ${powerOff}; fi"; resumeCommand = powerOn; }
+      { timeout = 10; command = execWhenLocked powerOff; resumeCommand = execWhenLocked powerOn; }
 
       # Timeout for locking windown manager
       { timeout = inactiveTime; command = swaylock; }
