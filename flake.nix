@@ -61,7 +61,7 @@
       "rumle@edb" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ ./homes/rumle.nix inputs.nur.hmModules.nur ];
+        modules = [ (./. + "/homes/rumle@edb") inputs.nur.hmModules.nur ];
       };
     };
 
