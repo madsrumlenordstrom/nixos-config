@@ -52,7 +52,7 @@
     nixosConfigurations = {
       "edb" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/edb.nix ];
+        modules = [ ./hosts/edb ];
       };
     };
 
