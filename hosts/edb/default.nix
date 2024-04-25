@@ -2,7 +2,7 @@
 {
   imports = [
     # Hardware
-    ./edb-hardware.nix
+    ./hardware.nix
 
     # Custom nixos modules
     outputs.nixosModules
