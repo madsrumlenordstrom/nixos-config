@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
+{ config, lib, pkgs, inputs, outputs, ... }:
 {
   # Modules for import
   imports = [
@@ -40,20 +40,20 @@
       # Graphical programs
       transmission-gtk   # Torrent client
       mpv                # Media player
+      libreoffice        # Office suite
 
       # TODO move to more fitting place
-      wl-clipboard       # Copy paste utils
       nil                # LSP server for nix
-      xdg-utils          # Useful desktop CLI tools
     ];
 
     stateVersion = "23.11";
   };
 
   # Workaround for my broken display :(
-  wayland.windowManager.sway.config.gaps.left = 38;
-  programs.waybar.settings.main.margin-left = 44;
-  programs.yambar.settings.bar.border.left-margin = 2 * 44;
+  wayland.windowManager.sway.config.gaps.bottom = 90;
+  wayland.windowManager.sway.config.gaps.left = 162;
+  programs.waybar.settings.main.margin-left = 168;
+  programs.yambar.settings.bar.border.left-margin = 2 * 168;
 
   # Global color scheme. See https://github.com/tinted-theming/base16-schemes
   colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
