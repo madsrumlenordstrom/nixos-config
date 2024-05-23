@@ -15,6 +15,11 @@ in
     programs.yambar.enable = true;        # Status bar (systemd service)
     services.playerctld.enable = true;    # Playerctl for controlling media
 
+    home.packages = with pkgs; [
+      wl-clipboard       # Copy paste utils
+      xdg-utils          # Useful desktop CLI tools
+    ];
+
     # Sway config
     wayland.windowManager.sway = 
     let
@@ -40,6 +45,7 @@ in
 
     in {
       xwayland = false;
+      checkConfig = false;
       config = {
         fonts = { names = [ "monospace" ]; size = 10.0; }; # TODO
 
@@ -161,7 +167,6 @@ in
 
           "${modifier}+r" = "mode resize";
 
-
           # Brightness control
           "--locked XF86MonBrightnessDown" = "exec ${pkgs.mon-brightness-control}/bin/mon-brightness-control decrease";
           "--locked XF86MonBrightnessUp" = "exec ${pkgs.mon-brightness-control}/bin/mon-brightness-control increase";
@@ -180,13 +185,15 @@ in
           "--locked XF86AudioNext" = "exec ${playerctl} --player playerctld next";
           "--locked XF86AudioPrev" = "exec ${playerctl} --player playerctld previous";
 
-          # Screenshots
+          # Screenshot
           "${modifier}+Shift+XF86LaunchA" = "exec ${grimshot} save output";
           "${modifier}+Ctrl+Shift+XF86LaunchA" = "exec ${grimshot} copy output";
-          # Selected area
+
+          # Screenshot selected area
           "${modifier}+Shift+XF86LaunchB" = "exec ${grimshot} save area";
           "${modifier}+Ctrl+Shift+XF86LaunchB" = "exec ${grimshot} copy area";
-          # Specific window
+
+          # Screenshot specific window
           "${modifier}+Shift+XF86KbdBrightnessDown" = "exec ${grimshot} save window";
           "${modifier}+Ctrl+Shift+XF86KbdBrightnessDown" = "exec ${grimshot} copy window";
         };
