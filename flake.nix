@@ -9,6 +9,11 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
+    # WSL
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
+    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
     # Others
     hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
@@ -54,6 +59,11 @@
         specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/edb ];
       };
+
+      "wsl" = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
+        modules = [ ./hosts/wsl ];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
@@ -63,9 +73,12 @@
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [ (./. + "/homes/rumle@edb") inputs.nur.hmModules.nur ];
       };
-    };
 
-    # Development shell for boot strapping
-    # devShells = forAllSystems (system: "${system}".default = inputs.nixpkgs.legacyPackages.${system}.mkShell {} );
+      "rumle@wsl" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [ (./. + "/homes/rumle@wsl") inputs.nur.hmModules.nur ];
+      };
+    };
   };
 }
