@@ -6,26 +6,28 @@
     outputs.homeManagerModules
   ];
 
-    wayland.windowManager.sway.enable = true;
+  wayland.windowManager.sway.enable = true;
 
-    programs.firefox.enable = true;
-    programs.git.enable = true;
-    programs.alacritty.enable = true;
-    programs.fish.enable = true;
-    programs.starship.enable = true;
-    programs.fzf.enable = true;
-    programs.eza.enable = true;
-    programs.helix.enable = true;
-    programs.vscode.enable = true;
-    programs.bat.enable = true;
-    programs.zathura.enable = true;
-    programs.imv.enable = true;
-    programs.ripgrep.enable = true;
-    programs.fd.enable = true;
-    programs.htop.enable = true;
-    programs.mpv.enable = true;
+  programs = {
+    alacritty.enable = true;  # Terminal emulator
+    bat.enable = true;        # Terminal file viewer
+    eza.enable = true;        # Modern ls
+    fd.enable = true;         # Modern find
+    firefox.enable = true;    # Web browser
+    fish.enable = true;       # Shell
+    fzf.enable = true;        # Fuzzy finder
+    git.enable = true;        # VCS
+    helix.enable = true;      # Text editor
+    htop.enable = true;       # System monitor
+    imv.enable = true;        # Image viewer
+    mpv.enable = true;        # Video player
+    ripgrep.enable = true;    # Modern grep
+    starship.enable = true;   # Shell prompt
+    vscode.enable = true;     # GUI text editor
+    zathura.enable = true;    # Document viewer
+  };
 
-    gtk.enable = true;
+  gtk.enable = true;
 
   home = {
     username = "rumle";
