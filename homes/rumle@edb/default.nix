@@ -41,6 +41,8 @@
       transmission-gtk   # Torrent client
       mpv                # Media player
       libreoffice        # Office suite
+      steam-tui
+      steamcmd
 
       # TODO move to more fitting place
       nil                # LSP server for nix
@@ -98,6 +100,11 @@
 
   # Enable XDG base directories management
   xdg.enable = true;
+  nix = {
+    enable = true;
+    package = pkgs.nix;
+    settings.use-xdg-base-directories = true;
+  };
 
   monitors = [
     { # Built in display
