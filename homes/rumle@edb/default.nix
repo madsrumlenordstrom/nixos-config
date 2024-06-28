@@ -41,8 +41,6 @@
       transmission-gtk   # Torrent client
       mpv                # Media player
       libreoffice        # Office suite
-      steam-tui
-      steamcmd
 
       # TODO move to more fitting place
       nil                # LSP server for nix
