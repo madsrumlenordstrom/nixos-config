@@ -43,7 +43,7 @@
       tokei              # Source code counter
 
       # Graphical programs
-      transmission-gtk   # Torrent client
+      transmission_4-gtk   # Torrent client
       libreoffice        # Office suite
 
       # TODO move to more fitting place
@@ -93,6 +93,9 @@
           buildPhase = ''
             find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
           '';
+          dontPatchELF = true;
+          dontPatchShebangs = true;
+          dontRewriteSymlinks = true;
         });
       })
     ];
