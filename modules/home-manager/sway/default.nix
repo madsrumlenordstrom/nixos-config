@@ -70,12 +70,12 @@ in
           };
         };
 
-        output = builtins.listToAttrs(map(m: {
-          name = m.name;
+        output = builtins.listToAttrs(map(monitor: {
+          name = monitor.name;
           value = {
-            mode = "${toString m.width}x${toString m.height}@${toString m.refreshRate}Hz";
-            scale = toString m.scale;
-            pos = "${toString m.x} ${toString m.y}";
+            mode = "${toString monitor.width}x${toString monitor.height}@${toString monitor.refreshRate}Hz";
+            scale = toString monitor.scale;
+            pos = "${toString monitor.x} ${toString monitor.y}";
             background = "${wallpaper} fill '#${fallback}'";
           };
         }) (config.monitors));
