@@ -7,6 +7,7 @@
   ];
 
     wayland.windowManager.sway.enable = true;
+
     programs.firefox.enable = true;
     programs.git.enable = true;
     programs.alacritty.enable = true;
@@ -19,6 +20,11 @@
     programs.bat.enable = true;
     programs.zathura.enable = true;
     programs.imv.enable = true;
+    programs.ripgrep.enable = true;
+    programs.fd.enable = true;
+    programs.htop.enable = true;
+    programs.mpv.enable = true;
+
     gtk.enable = true;
 
   home = {
@@ -30,16 +36,12 @@
       # CLI programs
       hexyl              # Hexdumper
       gdu                # Disk usage analyzer
-      ripgrep            # Grep but better
-      fd                 # Find but better
-      htop               # Process viewer
       file               # File type analyzer
       tldr               # Alternative to man pages
       tokei              # Source code counter
 
       # Graphical programs
       transmission-gtk   # Torrent client
-      mpv                # Media player
       libreoffice        # Office suite
 
       # TODO move to more fitting place
