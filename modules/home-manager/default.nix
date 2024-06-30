@@ -17,6 +17,7 @@
     ./imv
     ./monitors
     ./starship
+    ./tokei
     ./sway
     ./swayidle
     ./swaylock

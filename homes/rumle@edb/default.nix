@@ -23,6 +23,7 @@
     mpv.enable = true;        # Video player
     ripgrep.enable = true;    # Modern grep
     starship.enable = true;   # Shell prompt
+    tokei.enable = true;      # Source code counter
     vscode.enable = true;     # GUI text editor
     zathura.enable = true;    # Document viewer
   };
@@ -40,7 +41,7 @@
       gdu                # Disk usage analyzer
       file               # File type analyzer
       tldr               # Alternative to man pages
-      tokei              # Source code counter
+      # tokei              # Source code counter
 
       # Graphical programs
       transmission_4-gtk   # Torrent client
