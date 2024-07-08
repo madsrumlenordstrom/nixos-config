@@ -2,6 +2,7 @@
   imports = [
     ./alacritty
     ./bat
+    ./cli
     ./dunst
     ./eza
     ./firefox
