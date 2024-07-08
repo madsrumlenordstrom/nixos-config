@@ -12,7 +12,7 @@
     intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
   };
 
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-vaapi-driver # Enable hardware enconding/decoding of video
@@ -32,9 +32,6 @@
     low_temp = 60;  # If temperature is below this, fans will run at minimum speed
     high_temp = 85; # If temperature is above this, fan speed will gradually increase
     max_temp = 95;  # If temperature is above this, fans will run at maximum speed
-    polling_interval = 4;
-    min_fan1_speed = 1500;
-    min_fan2_speed = 1500;
   };
 
   # Make accidental presses of the power key a little more forgiving

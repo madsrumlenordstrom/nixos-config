@@ -6,20 +6,29 @@
     outputs.homeManagerModules
   ];
 
-    wayland.windowManager.sway.enable = true;
-    programs.firefox.enable = true;
-    programs.git.enable = true;
-    programs.alacritty.enable = true;
-    programs.fish.enable = true;
-    programs.starship.enable = true;
-    programs.fzf.enable = true;
-    programs.eza.enable = true;
-    programs.helix.enable = true;
-    programs.vscode.enable = true;
-    programs.bat.enable = true;
-    programs.zathura.enable = true;
-    programs.imv.enable = true;
-    gtk.enable = true;
+  wayland.windowManager.sway.enable = true;
+
+  programs = {
+    alacritty.enable = true;  # Terminal emulator
+    bat.enable = true;        # Terminal file viewer
+    eza.enable = true;        # Modern ls
+    fd.enable = true;         # Modern find
+    firefox.enable = true;    # Web browser
+    fish.enable = true;       # Shell
+    fzf.enable = true;        # Fuzzy finder
+    git.enable = true;        # VCS
+    helix.enable = true;      # Text editor
+    htop.enable = true;       # System monitor
+    imv.enable = true;        # Image viewer
+    mpv.enable = true;        # Video player
+    ripgrep.enable = true;    # Modern grep
+    starship.enable = true;   # Shell prompt
+    tokei.enable = true;      # Source code counter
+    vscode.enable = true;     # GUI text editor
+    zathura.enable = true;    # Document viewer
+  };
+
+  gtk.enable = true;
 
   home = {
     username = "rumle";
@@ -30,16 +39,12 @@
       # CLI programs
       hexyl              # Hexdumper
       gdu                # Disk usage analyzer
-      ripgrep            # Grep but better
-      fd                 # Find but better
-      htop               # Process viewer
       file               # File type analyzer
       tldr               # Alternative to man pages
-      tokei              # Source code counter
+      # tokei              # Source code counter
 
       # Graphical programs
-      transmission-gtk   # Torrent client
-      mpv                # Media player
+      transmission_4-gtk   # Torrent client
       libreoffice        # Office suite
 
       # TODO move to more fitting place
@@ -89,6 +94,9 @@
           buildPhase = ''
             find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
           '';
+          dontPatchELF = true;
+          dontPatchShebangs = true;
+          dontRewriteSymlinks = true;
         });
       })
     ];
@@ -98,6 +106,11 @@
 
   # Enable XDG base directories management
   xdg.enable = true;
+  nix = {
+    enable = true;
+    package = pkgs.nix;
+    settings.use-xdg-base-directories = true;
+  };
 
   monitors = [
     { # Built in display

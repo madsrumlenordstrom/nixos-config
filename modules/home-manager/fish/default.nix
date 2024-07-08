@@ -15,6 +15,7 @@ in
         nd = "nix develop -c $SHELL";
         ns = { setCursor = true; expansion = "nix search nixpkgs#%"; };
         nsh = { setCursor = true; expansion = "nix shell nixpkgs#%"; };
+        nr = { setCursor = true; expansion = "nix run nixpkgs#%"; };
         np = { setCursor = true; expansion = "nix path-info nixpkgs#%"; };
         snrs = "sudo nixos-rebuild --flake . switch";
         hms = "home-manager --flake . switch";

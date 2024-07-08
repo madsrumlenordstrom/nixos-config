@@ -202,14 +202,16 @@ in
 
             {
               network = {
-                name = "wlan0";
                 poll-interval = 5000;
 
                 content.map = {
-                  default = { string.text = " "; };
-                  conditions = {
-                    "state == down" = { string.text = "󰤯 "; };
-                    "state == up" = { string.text = " "; };
+                  default = { empty = {}; };
+                  conditions."name == wlan0".map = {
+                    default = { string.text = ""; };
+                    conditions = {
+                      "state == down" = { string.text = "󰤯 "; };
+                      "state == up" = { string.text = " "; };
+                    };
                   };
                 };
               };

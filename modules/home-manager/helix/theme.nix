@@ -56,8 +56,8 @@
     "ui.cursor.insert" = { fg = "#${base05}"; modifiers = ["reversed"]; };
     "ui.cursor.match" = "#${base09}";
     "ui.cursor.select" = { fg = "#${base05}"; modifiers = ["reversed"]; };
-    "ui.cursorline.primary" = { fg = "#${base05}"; bg = "#${base00}"; modifier = ["dim"]; };
-    "ui.cursorline.secondary" = { fg = "#${base05}"; bg = "#${base00}"; modifier = ["dim"]; };
+    "ui.cursorline.primary" = { fg = "#${base05}"; bg = "#${base01}"; };
+    "ui.cursorline.secondary" = { fg = "#${base05}"; bg = "#${base01}"; };
     "ui.selection" = { bg = "#${base02}"; };
     "ui.selection.primary" = { bg = "#${base02}"; };
 
