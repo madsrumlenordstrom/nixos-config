@@ -8,22 +8,14 @@
 
   wayland.windowManager.sway.enable = true;
 
+  # Enable commonly used CLI tools
+  cli.enable = true;
+
   programs = {
     alacritty.enable = true;  # Terminal emulator
-    bat.enable = true;        # Terminal file viewer
-    eza.enable = true;        # Modern ls
-    fd.enable = true;         # Modern find
     firefox.enable = true;    # Web browser
-    fish.enable = true;       # Shell
-    fzf.enable = true;        # Fuzzy finder
-    git.enable = true;        # VCS
-    helix.enable = true;      # Text editor
-    htop.enable = true;       # System monitor
     imv.enable = true;        # Image viewer
     mpv.enable = true;        # Video player
-    ripgrep.enable = true;    # Modern grep
-    starship.enable = true;   # Shell prompt
-    tokei.enable = true;      # Source code counter
     vscode.enable = true;     # GUI text editor
     zathura.enable = true;    # Document viewer
   };
@@ -36,15 +28,8 @@
 
     # User packages
     packages = with pkgs; [
-      # CLI programs
-      hexyl              # Hexdumper
-      gdu                # Disk usage analyzer
-      file               # File type analyzer
-      tldr               # Alternative to man pages
-      # tokei              # Source code counter
-
       # Graphical programs
-      transmission_4-gtk   # Torrent client
+      transmission_4-gtk # Torrent client
       libreoffice        # Office suite
 
       # TODO move to more fitting place

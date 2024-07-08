@@ -6,13 +6,8 @@
     outputs.homeManagerModules
   ];
 
-    programs.git.enable = true;
-    programs.fish.enable = true;
-    programs.starship.enable = true;
-    programs.fzf.enable = true;
-    programs.eza.enable = true;
-    programs.helix.enable = true;
-    programs.bat.enable = true;
+  # Enable commonly used CLI tools
+  cli.enable = true;
 
   home = {
     username = "rumle";
@@ -20,20 +15,8 @@
 
     # User packages
     packages = with pkgs; [
-      # CLI programs
-      hexyl              # Hexdumper
-      gdu                # Disk usage analyzer
-      ripgrep            # Grep but better
-      fd                 # Find but better
-      htop               # Process viewer
-      file               # File type analyzer
-      tldr               # Alternative to man pages
-      tokei              # Source code counter
-
       # TODO move to more fitting place
-      wl-clipboard       # Copy paste utils
       nil                # LSP server for nix
-      xdg-utils          # Useful desktop CLI tools
     ];
 
     stateVersion = "23.11";
@@ -48,7 +31,6 @@
       outputs.overlays.modifications
       outputs.overlays.nur-packages
       # outputs.overlays.unstable-packages
-
     ];
 
     config.allowUnfree = true;
@@ -56,6 +38,11 @@
 
   # Enable XDG base directories management
   xdg.enable = true;
+  nix = {
+    enable = true;
+    package = pkgs.nix;
+    settings.use-xdg-base-directories = true;
+  };
 
   # Enable home-manager
   programs.home-manager.enable = true;
