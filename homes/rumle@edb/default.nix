@@ -1,8 +1,7 @@
-{ config, lib, pkgs, inputs, outputs, ... }:
+{ inputs, outputs, config, lib, pkgs, ... }:
 {
   # Modules for import
   imports = [
-    inputs.nix-colors.homeManagerModules.default
     outputs.homeManagerModules
   ];
 
@@ -45,9 +44,6 @@
   programs.waybar.settings.main.margin-left = 168;
   programs.yambar.settings.bar.border.left-margin = 2 * 168;
 
-  # Global color scheme. See https://github.com/tinted-theming/base16-schemes
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
-
   # System icon theme
   icons = {
     enable = true;
@@ -76,7 +72,7 @@
       # Make papirus icons match color theme
       (final: prev: {
         papirus-icon-theme-matching = prev.papirus-icon-theme.overrideAttrs (oldAttrs: {
-          buildPhase = ''
+          buildPhase = /* sh */ ''
             find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
           '';
           dontPatchELF = true;
@@ -94,7 +90,6 @@
   nix = {
     enable = true;
     package = pkgs.nix;
-    settings.use-xdg-base-directories = true;
   };
 
   monitors = [

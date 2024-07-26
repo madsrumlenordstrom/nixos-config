@@ -57,7 +57,7 @@
     nixosConfigurations = {
       "edb" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/edb ];
+        modules = [ ./hosts/edb ./shared/edb ];
       };
 
       "wsl" = inputs.nixpkgs.lib.nixosSystem {
@@ -71,7 +71,7 @@
       "rumle@edb" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ (./. + "/homes/rumle@edb") inputs.nur.hmModules.nur ];
+        modules = [ (./. + "/homes/rumle@edb") ./shared/edb inputs.nur.hmModules.nur ];
       };
 
       "rumle@wsl" = inputs.home-manager.lib.homeManagerConfiguration {

@@ -6,9 +6,6 @@
 
     # Custom nixos modules
     outputs.nixosModules
-
-    # Colorscheme (only used in virtual console)
-    inputs.nix-colors.homeManagerModules.default
   ];
 
   # Allow unfree packages
@@ -120,8 +117,8 @@
   console = {
     earlySetup = true;
 
-    # Color scheme for TTY. See https://github.com/tinted-theming/base16-schemes
-    colors = with inputs.nix-colors.colorSchemes.catppuccin-frappe.palette; [
+    # Colors for TTY
+    colors = with config.colorScheme.palette; [
       base00 base01 base02 base03 base04 base05 base06 base07
       base08 base09 base0A base0B base0C base0D base0E base0F
     ];
