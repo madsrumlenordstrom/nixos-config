@@ -18,6 +18,7 @@ in
         nr = { setCursor = true; expansion = "nix run nixpkgs#%"; };
         np = { setCursor = true; expansion = "nix path-info nixpkgs#%"; };
         snrs = "sudo nixos-rebuild --flake . switch";
+        snrb = "sudo nixos-rebuild --flake . boot";
         hms = "home-manager --flake . switch";
 
         # Git abbreviations
@@ -39,9 +40,7 @@ in
         wg = "wl-paste | xargs -I % echo 'wget --no-hsts %' | sh";
       };
 
-      functions = {
-        fish_greeting = "";
-      };
+      functions.fish_greeting = "";
 
       interactiveShellInit = with config.colorScheme.palette; /*fish*/ ''
         # Delete word on control + backspace
