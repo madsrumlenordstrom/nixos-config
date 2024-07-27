@@ -1,7 +1,7 @@
 {
   imports = [
-    ./wayland-session.nix
-    ./pipewire.nix
-    ./tuigreet.nix
+    ./wayland-session
+    ./pipewire
+    ./tuigreet
   ];
 }
