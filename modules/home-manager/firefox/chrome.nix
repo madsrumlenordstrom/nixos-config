@@ -134,6 +134,10 @@
       display: none !important;
     }
 
+    #nav-bar {
+      border-top: 0 !important;
+    }
+
     #nav-bar:not([tabs-hidden='true']) {
       box-shadow: none;
     }
