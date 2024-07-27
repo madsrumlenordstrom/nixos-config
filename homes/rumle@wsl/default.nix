@@ -2,7 +2,6 @@
 {
   # Modules for import
   imports = [
-    inputs.nix-colors.homeManagerModules.default
     outputs.homeManagerModules
   ];
 
@@ -22,9 +21,6 @@
     stateVersion = "23.11";
   };
 
-  # Global color scheme. See https://github.com/tinted-theming/base16-schemes
-  colorScheme = inputs.nix-colors.colorSchemes.catppuccin-frappe;
-
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
@@ -41,7 +37,6 @@
   nix = {
     enable = true;
     package = pkgs.nix;
-    settings.use-xdg-base-directories = true;
   };
 
   # Enable home-manager
