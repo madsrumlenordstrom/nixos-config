@@ -62,7 +62,7 @@
 
       "wsl" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/wsl ];
+        modules = [ ./hosts/wsl ./shared/wsl ];
       };
     };
 
@@ -77,7 +77,7 @@
       "rumle@wsl" = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ (./. + "/homes/rumle@wsl") inputs.nur.hmModules.nur ];
+        modules = [ (./. + "/homes/rumle@wsl") ./shared/wsl inputs.nur.hmModules.nur ];
       };
     };
   };
