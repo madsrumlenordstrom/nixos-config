@@ -10,7 +10,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
       # Use this module from nixpkgs
-      (import (modulesPath + "/programs/wayland/wayland-session.nix") { inherit lib; })
+      (import (modulesPath + "/programs/wayland/wayland-session.nix") { inherit lib pkgs; })
     {
       # Disable xwayland
       programs.xwayland.enable = false;
