@@ -3,22 +3,11 @@
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
 
-    # My model is older but this works. This configures almost everything for an Intel laptop.
-    inputs.hardware.nixosModules.apple-macbook-pro-12-1
+    # My model is newer but this works. This configures almost everything for an Intel laptop.
+    inputs.hardware.nixosModules.apple-macbook-pro-11-1
   ];
 
-  nixpkgs.config.packageOverrides = pkgs: {
-    # Enable hybrid codec for Intel i7-4980HQ
-    intel-vaapi-driver = pkgs.intel-vaapi-driver.override { enableHybridCodec = true; };
-  };
-
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      intel-vaapi-driver # Enable hardware enconding/decoding of video
-      vaapiVdpau # Not sure if this is needed
-    ];
-  };
+  hardware.graphics.enable = true;
 
   # Force i965 VA-API driver
   environment.sessionVariables = { LIBVA_DRIVER_NAME = "i965"; };
