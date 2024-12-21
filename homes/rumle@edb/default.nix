@@ -39,10 +39,10 @@
   };
 
   # Workaround for my broken display :(
-  wayland.windowManager.sway.config.gaps.bottom = 90;
-  wayland.windowManager.sway.config.gaps.left = 162;
-  programs.waybar.settings.main.margin-left = 168;
-  programs.yambar.settings.bar.border.left-margin = 2 * 168;
+  wayland.windowManager.sway.config.gaps.bottom = 350;
+  wayland.windowManager.sway.config.gaps.left = 295;
+  programs.waybar.settings.main.margin-left = config.wayland.windowManager.sway.config.gaps.left + 12;
+  programs.yambar.settings.bar.border.left-margin = 2 * config.wayland.windowManager.sway.config.gaps.left + 12;
 
   # System icon theme
   icons = {
