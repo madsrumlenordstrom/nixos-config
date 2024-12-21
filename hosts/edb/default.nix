@@ -28,6 +28,8 @@
     auto-optimise-store = true;
     # Use XDG directories instead of polluting home
     use-xdg-base-directories = true;
+    # Add root and wheel group to trusted users
+    trusted-users = [ "root" "@wheel" ];
   };
 
   # Add flakes to nix registry (used in legacy commands)
@@ -95,7 +97,7 @@
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
-      (nerdfonts.override { fonts = [ "Meslo" ]; })
+      nerd-fonts.meslo-lg
     ];
     fontconfig.defaultFonts = {
       serif = [ "Noto Serif" ];

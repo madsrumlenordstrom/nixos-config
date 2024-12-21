@@ -16,7 +16,7 @@ in
         global = {
           follow = "mouse";
           width = 220;
-          height = 300;
+          height = "(0, 300)";
           origin = "top-right";
           offset = "6x6";
           notification_limit = 0;
