@@ -223,7 +223,7 @@
     .urlbarView-row[selected],
     .urlbarView-row:hover {
       color: var(--text) !important;
-      background-color: var(--button-hover-bgcolor) !important;
+      background-color: #${base02} !important;
     }
 
     /* Tool bar  */
