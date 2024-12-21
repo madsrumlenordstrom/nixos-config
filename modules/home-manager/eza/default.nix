@@ -9,7 +9,7 @@ in
   config = mkIf cfg.enable {
     programs.eza = {
       git = true;
-      icons = true;
+      icons = "auto";
       extraOptions = [ "--time-style=long-iso" ];
     };
   };
