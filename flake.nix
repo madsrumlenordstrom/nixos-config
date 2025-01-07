@@ -60,6 +60,11 @@
         modules = [ ./hosts/edb ./shared/edb ];
       };
 
+      "p43s" = inputs.nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs outputs; };
+        modules = [ ./hosts/p43s ./shared/p43s ];
+      };
+
       "wsl" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
         modules = [ ./hosts/wsl ./shared/wsl ];
@@ -72,6 +77,12 @@
         pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [ (./. + "/homes/rumle@edb") ./shared/edb inputs.nur.modules.homeManager.default ];
+      };
+
+      "rumle@p43s" = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [ (./. + "/homes/rumle@p43s") ./shared/p43s inputs.nur.modules.homeManager.default ];
       };
 
       "rumle@wsl" = inputs.home-manager.lib.homeManagerConfiguration {
