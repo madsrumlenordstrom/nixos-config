@@ -1,0 +1,21 @@
+{ lib, config, pkgs, ... }:
+
+with lib;
+
+let
+  cfg = config.boot;
+in
+{
+  options.boot.enable = mkEnableOption "Boot settings";
+
+  config = mkIf cfg.enable {
+    boot.loader = {
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 10;
+      };
+      efi.canTouchEfiVariables = true;
+      timeout = 1;
+    };
+  };
+}

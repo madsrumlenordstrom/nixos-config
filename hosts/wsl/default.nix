@@ -30,15 +30,6 @@
   services.locate.enable = true;
   services.locate.prunePaths = [ "/mnt" ];
 
-  nix.settings = {
-    # Enable flakes and new 'nix' command
-    experimental-features = "nix-command flakes";
-    # Deduplicate and optimize nix store
-    auto-optimise-store = true;
-    # Use XDG directories instead of polluting home
-    use-xdg-base-directories = true;
-  };
-
   # Add flakes to nix registry (used in legacy commands)
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 

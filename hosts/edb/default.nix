@@ -11,62 +11,21 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # Boot loader
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 10;
-    };
-    efi.canTouchEfiVariables = true;
-    timeout = 1;
-  };
-
-  nix.settings = {
-    # Enable flakes and new 'nix' command
-    experimental-features = "nix-command flakes";
-    # Deduplicate and optimize nix store
-    auto-optimise-store = true;
-    # Use XDG directories instead of polluting home
-    use-xdg-base-directories = true;
-    # Add root and wheel group to trusted users
-    trusted-users = [ "root" "@wheel" ];
-  };
-
   # Add flakes to nix registry (used in legacy commands)
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 
-  # Networking
-  networking = {
-    hostName = "edb";
+  # Boot settings
+  boot.enable = true;
 
-    # Use iwd instead of wpa_supplicant
-    wireless.iwd.enable =  true;
-    networkmanager.enable = true;
-    networkmanager.wifi.backend = "iwd";
-
-    # Use nftables instead of legacy iptables
-    nftables.enable = true;
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 22 ];
-    };
-  };
+  # Networking settings
+  networking.enable = true;
+  networking.hostName = "edb";
 
   # SSH
   services.openssh.enable = true;
 
   # Time zone and locale.
   services.automatic-timezoned.enable = true;
-  i18n = { 
-    defaultLocale = "en_US.UTF-8";
-    extraLocaleSettings = {
-      LC_TIME = lib.mkDefault "da_DK.UTF-8";
-    };
-    supportedLocales = lib.mkDefault [
-      "en_US.UTF-8/UTF-8"
-      "da_DK.UTF-8/UTF-8"
-    ];
-  };
 
   # User
   users.users.rumle = {
@@ -115,19 +74,8 @@
   # Enable pipewire audio
   pipewire.enable = true;
 
-  # Make TTY a little nicer for bootscreen and tuigreet
-  console = {
-    earlySetup = true;
-
-    # Colors for TTY
-    colors = with config.colorScheme.palette; [
-      base00 base01 base02 base03 base04 base05 base06 base07
-      base08 base09 base0A base0B base0C base0D base0E base0F
-    ];
-
-    # Large font for HiDPI display
-    font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
-  };
+  # Large font for HiDPI display
+  console.font = "${pkgs.terminus_font}/share/consolefonts/ter-132n.psf.gz";
 
   # Install version
   system.stateVersion = "23.05";

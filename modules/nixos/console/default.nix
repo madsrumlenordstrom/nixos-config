@@ -1,0 +1,22 @@
+{ lib, config, pkgs, ... }:
+
+with lib;
+
+let
+  cfg = config.console;
+in
+{
+  config = mkIf cfg.enable {
+    console = {
+      earlySetup = true;
+
+      # Colors for TTY
+      colors = with config.colorScheme.palette; [
+        base00 base01 base02 base03 base04 base05 base06 base07
+        base08 base09 base0A base0B base0C base0D base0E base0F
+      ];
+
+      font = mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-116n.psf.gz";
+    };
+  };
+}
