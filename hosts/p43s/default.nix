@@ -56,7 +56,8 @@
   services.openssh.enable = true;
 
   # Time zone and locale.
-  services.automatic-timezoned.enable = true;
+  # services.automatic-timezoned.enable = true;
+  time.timeZone = "Europe/Copenhagen";
   i18n = { 
     defaultLocale = "en_US.UTF-8";
     extraLocaleSettings = {
@@ -68,8 +69,13 @@
     ];
   };
 
-  # Configure console keymap
+    # Configure keymap
   console.keyMap = "dk-latin1";
+  services.xserver.xkb = {
+    layout = "dk";
+    options = "grp:win_space_toggle";
+  };
+
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
