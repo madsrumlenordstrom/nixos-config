@@ -30,6 +30,7 @@
       # Graphical programs
       transmission_4-gtk # Torrent client
       libreoffice        # Office suite
+      signal-desktop     # Message application
 
       # TODO move to more fitting place
       nil                # LSP server for nix
