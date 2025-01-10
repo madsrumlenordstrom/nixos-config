@@ -15,7 +15,7 @@
     vscode-server.url = "github:nix-community/nixos-vscode-server";
 
     # Others
-    hardware.url = "github:nixos/nixos-hardware";
+    nixos-hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
     nix-colors.url = "github:misterio77/nix-colors";
   };

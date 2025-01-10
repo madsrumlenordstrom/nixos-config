@@ -13,7 +13,7 @@ in
         ignore-empty-password = true;
         show-failed-attempts = true;
         daemonize = true;
-        font = "JetBrains-Mono-Medium-Nerd-Font-Complete"; # TODO
+        font = head config.fonts.fontconfig.defaultFonts.monospace;
         image = "~/Pictures/wallpapers/the-glow-transparent.png"; # TODO
         color = "${config.colorScheme.palette.base02}"; # Fallback color
 

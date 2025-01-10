@@ -50,21 +50,8 @@
   ];
 
   # Fonts
-  fonts = {
-    enableDefaultPackages = true;
-    packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      nerd-fonts.meslo-lg
-    ];
-    fontconfig.defaultFonts = {
-      serif = [ "Noto Serif" ];
-      sansSerif = [ "Noto Sans" ];
-      monospace = [ "MesloLGLDZ Nerd Font" ];
-    };
-  };
-
+  fonts.enableDefaultPackages = true;
+ 
   # Make system prepared for a wayland compositor
   wayland-session.enable = true;
 

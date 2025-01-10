@@ -4,7 +4,7 @@
     inputs.nixpkgs.nixosModules.notDetected
 
     # My model is newer but this works. This configures almost everything for an Intel laptop.
-    inputs.hardware.nixosModules.apple-macbook-pro-11-1
+    inputs.nixos-hardware.nixosModules.apple-macbook-pro-11-1
   ];
 
   hardware.graphics.enable = true;

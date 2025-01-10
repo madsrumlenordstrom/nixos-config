@@ -7,7 +7,7 @@
     ./eza
     ./firefox
     ./fish
-    # ./fonts
+    ./fontconfig
     ./fuzzel
     ./fzf
     ./gammastep

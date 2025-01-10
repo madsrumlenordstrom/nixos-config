@@ -19,6 +19,7 @@
     zathura.enable = true;    # Document viewer
   };
 
+  fonts.fontconfig.enable = true;
   gtk.enable = true;
 
   home = {

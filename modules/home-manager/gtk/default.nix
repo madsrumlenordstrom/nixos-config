@@ -10,10 +10,10 @@ in
 {
   config = mkIf cfg.enable {
     gtk = rec {
-      # font = { TODO
-      #   name = config.fontProfiles.regular.family;
-      #   size = 12;
-      # };
+      font = {
+        name = head config.fonts.fontconfig.defaultFonts.sansSerif;
+        size = 12;
+      };
 
       theme = {
         name = "${config.colorScheme.slug}";

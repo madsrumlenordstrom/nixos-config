@@ -3,7 +3,7 @@
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
 
-    inputs.hardware.nixosModules.lenovo-thinkpad-p53
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p53
   ];
 
   hardware.graphics.enable = true;
