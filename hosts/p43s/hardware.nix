@@ -8,6 +8,8 @@
 
   hardware.graphics.enable = true;
 
+  hardware.bluetooth.enable = true;
+
   # Boot and module stuff
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
