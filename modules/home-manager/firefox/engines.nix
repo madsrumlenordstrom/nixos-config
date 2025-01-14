@@ -93,4 +93,15 @@ in
     inherit updateInterval;
     definedAliases = ["@wt"];
   };
+
+  "DBA" = {
+    urls = [ {
+      template = "https://www.dba.dk/soeg";
+      params = [ { name = "soeg"; value = "{searchTerms}"; } ];
+    } ];
+
+    iconUpdateURL = "https://dbastatic.dk/Content/dba.ico";
+    inherit updateInterval;
+    definedAliases = ["@dba"];
+  };
 }
