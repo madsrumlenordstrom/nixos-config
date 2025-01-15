@@ -10,10 +10,12 @@ in
 
   config = mkIf cfg.enable {
     i18n = { 
-      defaultLocale = "en_US.UTF-8";
-      supportedLocales = lib.mkDefault [
+      defaultLocale = "en_DK.UTF-8";
+      supportedLocales = [
+        "C.UTF-8/UTF-8"
         "en_US.UTF-8/UTF-8"
         "da_DK.UTF-8/UTF-8"
+        "en_DK.UTF-8/UTF-8"
       ];
     };
   };
