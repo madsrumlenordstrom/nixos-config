@@ -13,7 +13,7 @@ in
         n = "nix";
         nf = "nix flake";
         nd = "nix develop -c $SHELL";
-        ns = { setCursor = true; expansion = "nix search nixpkgs#%"; };
+        ns = { setCursor = true; expansion = "nix search nixpkgs %"; };
         nsh = { setCursor = true; expansion = "nix shell nixpkgs#%"; };
         nr = { setCursor = true; expansion = "nix run nixpkgs#%"; };
         np = { setCursor = true; expansion = "nix path-info nixpkgs#%"; };
