@@ -38,60 +38,51 @@
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
+
+    mkNixosConfiguration = host: inputs.nixpkgs.lib.nixosSystem {
+      specialArgs = { inherit inputs outputs; };
+      modules = [
+        (./. + "/hosts/${host}")
+        (./. + "/shared/${host}")
+        inputs.nix-index-database.nixosModules.nix-index
+      ];
+    };
+
+    mkHomeManagerConfiguration = { user, host, system }: inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = inputs.nixpkgs.legacyPackages.${system};
+        extraSpecialArgs = { inherit inputs outputs; };
+        modules = [
+          (./. + "/homes/${user}@${host}")
+          ./shared/${host}
+          inputs.nur.modules.homeManager.default
+        ];
+      };
   in {
-    # Your custom packages
     # Accessible through 'nix build', 'nix shell', etc
     packages = forAllSystems (system: import ./pkgs inputs.nixpkgs.legacyPackages.${system});
+
     # Formatter for your nix files, available through 'nix fmt'
-    # Other options beside 'alejandra' include 'nixpkgs-fmt'
     formatter = forAllSystems (system: inputs.nixpkgs.legacyPackages.${system}.alejandra);
 
-    # Your custom packages and modifications, exported as overlays
+    # Custom packages and modifications, exported as overlays
     overlays = import ./overlays { inherit inputs; };
-    # Reusable nixos modules you might want to export
-    # These are usually stuff you would upstream into nixpkgs
+
     nixosModules = import ./modules/nixos;
-    # Reusable home-manager modules you might want to export
-    # These are usually stuff you would upstream into home-manager
+
     homeManagerModules = import ./modules/home-manager;
 
     # NixOS configuration entrypoint
     nixosConfigurations = {
-      "edb" = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/edb ./shared/edb inputs.nix-index-database.nixosModules.nix-index ];
-      };
-
-      "p43s" = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/p43s ./shared/p43s inputs.nix-index-database.nixosModules.nix-index ];
-      };
-
-      "wsl" = inputs.nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/wsl ./shared/wsl inputs.nix-index-database.nixosModules.nix-index ];
-      };
+      "edb" = mkNixosConfiguration "edb";
+      "p43s" = mkNixosConfiguration "p43s";
+      "wsl" = mkNixosConfiguration "wsl";
     };
 
     # Standalone home-manager configuration entrypoint
     homeConfigurations = {
-      "rumle@edb" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ (./. + "/homes/rumle@edb") ./shared/edb inputs.nur.modules.homeManager.default ];
-      };
-
-      "rumle@p43s" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ (./. + "/homes/rumle@p43s") ./shared/p43s inputs.nur.modules.homeManager.default ];
-      };
-
-      "rumle@wsl" = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs outputs; };
-        modules = [ (./. + "/homes/rumle@wsl") ./shared/wsl inputs.nur.modules.homeManager.default ];
-      };
+      "rumle@edb" = mkHomeManagerConfiguration { user = "rumle"; host = "edb"; system = "x86_64-linux"; };
+      "rumle@p43s" = mkHomeManagerConfiguration { user = "rumle"; host = "p43s"; system = "x86_64-linux"; };
+      "rumle@wsl" = mkHomeManagerConfiguration { user = "rumle"; host = "wsl"; system = "x86_64-linux"; };
     };
   };
 }
