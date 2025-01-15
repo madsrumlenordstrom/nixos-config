@@ -18,6 +18,8 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
     nix-colors.url = "github:misterio77/nix-colors";
+    nix-index-database.url = "github:nix-community/nix-index-database";
+    nix-index-database.inputs.nixpkgs.follows = "nixpkgs";
   };
 
   outputs = {
@@ -57,17 +59,17 @@
     nixosConfigurations = {
       "edb" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/edb ./shared/edb ];
+        modules = [ ./hosts/edb ./shared/edb inputs.nix-index-database.nixosModules.nix-index ];
       };
 
       "p43s" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/p43s ./shared/p43s ];
+        modules = [ ./hosts/p43s ./shared/p43s inputs.nix-index-database.nixosModules.nix-index ];
       };
 
       "wsl" = inputs.nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs outputs; };
-        modules = [ ./hosts/wsl ./shared/wsl ];
+        modules = [ ./hosts/wsl ./shared/wsl inputs.nix-index-database.nixosModules.nix-index ];
       };
     };
 
