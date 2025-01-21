@@ -3,12 +3,38 @@
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
 
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p53
+    inputs.nixos-hardware.nixosModules.common-cpu-intel
+    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-sync
+    inputs.nixos-hardware.nixosModules.common-pc-ssd
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad
   ];
 
-  hardware.graphics.enable = true;
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
 
-  hardware.bluetooth.enable = true;
+    nvidia = {
+      open = false;
+      prime = {
+        sync.enable = true;
+        intelBusId = "PCI:0:2:0";
+        nvidiaBusId = "PCI:60:0:0";
+      };
+      # fix suspend/resume screen corruption in sync mode
+      powerManagement.enable = lib.mkDefault config.hardware.nvidia.prime.sync.enable;
+
+      # fix screen tearing in sync mode
+      modesetting.enable = lib.mkDefault config.hardware.nvidia.prime.sync.enable;
+    };
+
+    bluetooth.enable = true;
+
+    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  };
+
+  services.throttled.enable = lib.mkDefault true;
 
   # Boot and module stuff
   boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
@@ -34,5 +60,4 @@
   } ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
