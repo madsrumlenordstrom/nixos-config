@@ -17,10 +17,7 @@ in
 
       # Use nftables instead of legacy iptables
       nftables.enable = true;
-      firewall = {
-        enable = true;
-        allowedTCPPorts = [ 22 ];
-      };
+      firewall.enable = true;
     };
   };
 }
