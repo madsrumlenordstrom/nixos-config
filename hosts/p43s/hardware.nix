@@ -23,24 +23,29 @@
         nvidiaBusId = "PCI:60:0:0";
       };
       # fix suspend/resume screen corruption in sync mode
-      powerManagement.enable = lib.mkDefault config.hardware.nvidia.prime.sync.enable;
+      powerManagement.enable = config.hardware.nvidia.prime.sync.enable;
 
       # fix screen tearing in sync mode
-      modesetting.enable = lib.mkDefault config.hardware.nvidia.prime.sync.enable;
+      modesetting.enable = config.hardware.nvidia.prime.sync.enable;
     };
 
     bluetooth.enable = true;
 
-    cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
   };
 
-  services.throttled.enable = lib.mkDefault true;
+  services = {
+    throttled.enable = true;
+    fwupd.enable = true;
+  };
 
   # Boot and module stuff
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    initrd.availableKernelModules = [ "xhci_pci" "nvme" "usbhid" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+    initrd.kernelModules = [ ];
+    kernelModules = [ "kvm-intel" ];
+    extraModulePackages = [ ];
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/ea60f739-6305-4959-b746-c8918681c1bf";
@@ -59,5 +64,5 @@
     size = 16*1024;
   } ];
 
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 }
