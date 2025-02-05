@@ -19,8 +19,10 @@
 
   services.vscode-server.enable = true;
      
-  programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
+  programs.fish.enable = true;
+  programs.nix-index.enable = true;
+  programs.command-not-found.enable = false;
 
   environment.systemPackages = with pkgs; [
     git

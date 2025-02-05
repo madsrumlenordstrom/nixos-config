@@ -7,6 +7,7 @@
     ./nix
     ./pipewire
     ./tuigreet
+    ./users
     ./wayland-session
   ];
 }
