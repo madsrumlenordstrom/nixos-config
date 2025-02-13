@@ -1,10 +1,5 @@
 { inputs, outputs, config, lib, pkgs, ... }:
 {
-  # Modules for import
-  imports = [
-    outputs.homeManagerModules
-  ];
-
   wayland.windowManager.sway.enable = true;
 
   # Enable commonly used CLI tools

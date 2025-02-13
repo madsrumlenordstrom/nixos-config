@@ -64,6 +64,7 @@
         pkgs = allPackages.${system};
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
+          outputs.homeManagerModules
           (./. + "/homes/${user}@${host}")
           ./shared/${host}
           inputs.nur.modules.homeManager.default
@@ -96,6 +97,7 @@
               useUserPackages = true;
               extraSpecialArgs = { inherit inputs outputs; };
               users.nixos.imports = [
+                outputs.homeManagerModules
                 (./. + "/homes/nixos@iso")
                 ./shared/iso
                 inputs.nur.modules.homeManager.default

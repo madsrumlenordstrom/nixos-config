@@ -1,10 +1,5 @@
 { inputs, outputs, config, lib, pkgs, ... }:
 {
-  # Modules for import
-  imports = [
-    outputs.homeManagerModules
-  ];
-
   # Enable commonly used CLI tools
   cli.enable = true;
 
