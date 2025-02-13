@@ -21,17 +21,6 @@
     stateVersion = "23.11";
   };
 
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.nur-packages
-      # outputs.overlays.unstable-packages
-    ];
-
-    config.allowUnfree = true;
-  };
-
   # Enable XDG base directories management
   xdg.enable = true;
   nix = {

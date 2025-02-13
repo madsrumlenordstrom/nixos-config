@@ -49,7 +49,14 @@
   # System icon theme
   icons = {
     enable = true;
-    package = pkgs.papirus-icon-theme-matching;
+    package = pkgs.papirus-icon-theme.overrideAttrs (oldAttrs: {
+      buildPhase = /* sh */ ''
+        find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
+      '';
+      dontPatchELF = true;
+      dontPatchShebangs = true;
+      dontRewriteSymlinks = true;
+    });
     name = if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light";
   };
 
@@ -63,29 +70,6 @@
 
   # Enable dconf as many programs read dconf data
   dconf.enable = true;
-
-  nixpkgs = {
-    overlays = [
-      outputs.overlays.additions
-      outputs.overlays.modifications
-      outputs.overlays.nur-packages
-      # outputs.overlays.unstable-packages
-
-      # Make papirus icons match color theme
-      (final: prev: {
-        papirus-icon-theme-matching = prev.papirus-icon-theme.overrideAttrs (oldAttrs: {
-          buildPhase = /* sh */ ''
-            find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
-          '';
-          dontPatchELF = true;
-          dontPatchShebangs = true;
-          dontRewriteSymlinks = true;
-        });
-      })
-    ];
-
-    config.allowUnfree = true;
-  };
 
   # Enable XDG base directories management
   xdg.enable = true;

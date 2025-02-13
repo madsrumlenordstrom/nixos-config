@@ -8,9 +8,6 @@
     outputs.nixosModules
   ];
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # Add flakes to nix registry (used in legacy commands)
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);
 

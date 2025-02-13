@@ -40,23 +40,34 @@
     # pass to it, with each system as an argument
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
-    mkNixosConfiguration = host: inputs.nixpkgs.lib.nixosSystem {
+    allPackages = forAllSystems (system: import inputs.nixpkgs {
+      inherit system;
+      overlays = [
+        outputs.overlays.additions
+        outputs.overlays.modifications
+        inputs.nur.overlays.default
+      ];
+      config.allowUnfree = true;
+    });
+
+    mkNixosConfiguration = { host, system, extraModules ? [ ] }: inputs.nixpkgs.lib.nixosSystem {
+      pkgs = allPackages.${system};
       specialArgs = { inherit inputs outputs; };
       modules = [
         (./. + "/hosts/${host}")
         (./. + "/shared/${host}")
         inputs.nix-index-database.nixosModules.nix-index
-      ];
+      ] ++ extraModules;
     };
 
-    mkHomeManagerConfiguration = { user, host, system }: inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = inputs.nixpkgs.legacyPackages.${system};
+    mkHomeManagerConfiguration = { user, host, system, extraModules ? [ ] }: inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = allPackages.${system};
         extraSpecialArgs = { inherit inputs outputs; };
         modules = [
           (./. + "/homes/${user}@${host}")
           ./shared/${host}
           inputs.nur.modules.homeManager.default
-        ];
+        ] ++ extraModules;
       };
   in {
     # Accessible through 'nix build', 'nix shell', etc
@@ -74,9 +85,9 @@
 
     # NixOS configuration entrypoint
     nixosConfigurations = {
-      "edb" = mkNixosConfiguration "edb";
-      "p43s" = mkNixosConfiguration "p43s";
-      "wsl" = mkNixosConfiguration "wsl";
+      "edb" = mkNixosConfiguration { host = "edb"; system = "x86_64-linux"; };
+      "p43s" = mkNixosConfiguration { host = "p43s"; system = "x86_64-linux"; };
+      "wsl" = mkNixosConfiguration { host = "wsl"; system = "x86_64-linux"; };
     };
 
     # Standalone home-manager configuration entrypoint
