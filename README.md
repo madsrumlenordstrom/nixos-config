@@ -15,3 +15,10 @@ To build the home manager configuration located in ```homes/``` run the followin
 ```shell
 home-manager --flake . switch
 ```
+
+## Building ISO
+To build the ISO image with a NixOS installer run the following command:
+
+```shell
+nix build .#packages.iso
+```

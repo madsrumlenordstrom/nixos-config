@@ -70,11 +70,8 @@
         ] ++ extraModules;
       };
   in {
-    # Accessible through 'nix build', 'nix shell', etc
-    packages = forAllSystems (system: import ./pkgs inputs.nixpkgs.legacyPackages.${system});
-
-    # Formatter for your nix files, available through 'nix fmt'
-    formatter = forAllSystems (system: inputs.nixpkgs.legacyPackages.${system}.alejandra);
+    # ISO image
+    packages = forAllSystems (system: import ./pkgs allPackages.${system}) // { iso = self.nixosConfigurations.iso.config.system.build.isoImage; };
 
     # Custom packages and modifications, exported as overlays
     overlays = import ./overlays { inherit inputs; };
@@ -88,6 +85,25 @@
       "edb" = mkNixosConfiguration { host = "edb"; system = "x86_64-linux"; };
       "p43s" = mkNixosConfiguration { host = "p43s"; system = "x86_64-linux"; };
       "wsl" = mkNixosConfiguration { host = "wsl"; system = "x86_64-linux"; };
+      "iso" = mkNixosConfiguration {
+        host = "iso";
+        system = "x86_64-linux";
+        extraModules = [
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit inputs outputs; };
+              users.nixos.imports = [
+                (./. + "/homes/nixos@iso")
+                ./shared/iso
+                inputs.nur.modules.homeManager.default
+              ];
+            };
+          }
+        ];
+      };
     };
 
     # Standalone home-manager configuration entrypoint
