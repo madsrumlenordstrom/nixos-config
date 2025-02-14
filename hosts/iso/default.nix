@@ -10,6 +10,7 @@
     # Create an ISO image with KDE
     (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
   ];
+  isoImage.squashfsCompression = "gzip -Xcompression-level 1";
 
   # Add flakes to nix registry (used in legacy commands)
   nix.registry = (lib.mapAttrs (_: flake: {inherit flake;})) ((lib.filterAttrs (_: lib.isType "flake")) inputs);

@@ -6,6 +6,16 @@ let
   cfg = config.wayland.windowManager.sway;
 in
 {
+  # This option cannot be defined under sway.config
+  # due to how the sway module is implemented.
+  # TODO: define a generic wallpaper module or
+  # use something like stylix in the future
+  options.wayland.windowManager.sway.wallpaper = mkOption {
+    type = types.path;
+    default = pkgs.nixos-artwork.wallpapers.simple-light-gray;
+    description = "Wallpaper for Sway compositor";
+  };
+
   config = mkIf cfg.enable {
     programs.fuzzel.enable = true;        # Menu
     services.dunst.enable = true;         # Notification daemon (systemd service)
@@ -20,20 +30,39 @@ in
       xdg-utils          # Useful desktop CLI tools
     ];
 
+    # System icon theme
+    icons = {
+      enable = true;
+      package = pkgs.papirus-icon-theme.overrideAttrs (oldAttrs: {
+        buildPhase = /* sh */ ''
+          find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
+        '';
+        dontPatchELF = true;
+        dontPatchShebangs = true;
+        dontRewriteSymlinks = true;
+      });
+      name = if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light";
+    };
+
+    # System cursor theme
+    home.pointerCursor = {
+      package = pkgs.capitaine-cursors;
+      name = if config.colorScheme.variant == "dark" then "capitaine-cursors-white" else "capitaine-cursors";
+      size = 32;
+      gtk.enable = true;
+    };
+
     # Sway config
     wayland.windowManager.sway = 
     let
       # Essentials
       swaymsg = "${config.wayland.windowManager.sway.package}/bin/swaymsg";
       swaylock = "${config.programs.swaylock.package}/bin/swaylock";
-      terminal = "${config.programs.alacritty.package}/bin/alacritty"; # TODO find modular way to do this
       menu = "${config.programs.fuzzel.package}/bin/fuzzel";
       finder = "${pkgs.fd}/bin/fd --type file|${menu} --dmenu|${pkgs.findutils}/bin/xargs -I {} ${pkgs.xdg-utils}/bin/xdg-open '{}'";
       playerctl = "${config.services.playerctld.package}/bin/playerctl";
       grimshot = "${pkgs.sway-contrib.grimshot}/bin/grimshot";
 
-      # Wallpaper
-      wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png"; # TODO find better way to do this
       fallback = "${config.colorScheme.palette.base02}"; # Fallback color for wallpaper
 
       # Basic bindings
@@ -76,7 +105,7 @@ in
             mode = "${toString monitor.width}x${toString monitor.height}@${toString monitor.refreshRate}Hz";
             scale = toString monitor.scale;
             pos = "${toString monitor.x} ${toString monitor.y}";
-            background = "${wallpaper} fill '#${fallback}'";
+            background = "${toString cfg.wallpaper} fill '#${fallback}'";
           };
         }) (config.monitors));
 
@@ -102,7 +131,7 @@ in
 
         keybindings = {
           # Essentials
-          "${modifier}+Return" = "exec ${terminal}";
+          "${modifier}+Return" = "exec ${cfg.config.terminal}";
           "${modifier}+q" = "kill";
           "${modifier}+d" = "exec ${menu}";
           "${modifier}+Shift+d" = "exec ${finder}";

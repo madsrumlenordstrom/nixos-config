@@ -35,28 +35,6 @@
     stateVersion = "24.11";
   };
 
-  # System icon theme
-  icons = {
-    enable = true;
-    package = pkgs.papirus-icon-theme.overrideAttrs (oldAttrs: {
-      buildPhase = /* sh */ ''
-        find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
-      '';
-      dontPatchELF = true;
-      dontPatchShebangs = true;
-      dontRewriteSymlinks = true;
-    });
-    name = if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light";
-  };
-
-  # System cursor theme
-  home.pointerCursor = {
-    package = pkgs.capitaine-cursors;
-    name = if config.colorScheme.variant == "dark" then "capitaine-cursors-white" else "capitaine-cursors";
-    size = 32;
-    gtk.enable = true;
-  };
-
   # Enable dconf as many programs read dconf data
   dconf.enable = true;
 
