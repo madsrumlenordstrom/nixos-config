@@ -46,6 +46,12 @@
     wget
   ];
 
+  # Make system prepared for a wayland compositor
+  wayland-session.enable = true;
+
+  # Enable display manager
+  tuigreet.enable = true;
+
   # Fonts
   fonts.enableDefaultPackages = true;
 
