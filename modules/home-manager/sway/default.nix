@@ -105,13 +105,10 @@ in
             mode = "${toString monitor.width}x${toString monitor.height}@${toString monitor.refreshRate}Hz";
             scale = toString monitor.scale;
             pos = "${toString monitor.x} ${toString monitor.y}";
-            background = "${toString cfg.wallpaper} fill '#${fallback}'";
           };
-        }) (config.monitors));
+        }) (config.monitors)) // { "*".background = "${toString cfg.wallpaper} fill '#${fallback}'"; };
 
-        startup = [
-          # EASYEFFECTS TODO
-        ];
+        startup = [ ];
 
         gaps = {
           inner = 6;
