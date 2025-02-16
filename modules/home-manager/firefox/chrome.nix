@@ -186,6 +186,10 @@
       border: 1px solid rgba(0, 0, 0, 0) !important;
     }
 
+    #urlbar-background {
+      background-color: var(--sfwindow) !important;
+    }
+
     #urlbar-container {
       margin-left: 0 !important;
     }
