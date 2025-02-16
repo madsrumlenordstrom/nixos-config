@@ -37,6 +37,8 @@ in {
             ublock-origin
             sponsorblock
             h264ify
+            danish-dictionary
+            danish-language-pack
           ];
         };
       };
