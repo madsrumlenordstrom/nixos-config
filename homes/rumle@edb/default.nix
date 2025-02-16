@@ -2,6 +2,7 @@
 {
   wayland.windowManager.sway = {
     enable = true;
+    config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
     wallpaper = ~/Pictures/wallpapers/the-glow-transparent.png;
   };
 

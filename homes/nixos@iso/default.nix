@@ -1,6 +1,9 @@
 { inputs, outputs, config, lib, pkgs, ... }:
 {
-  wayland.windowManager.sway.enable = true;
+  wayland.windowManager.sway = {
+    enable = true;
+    config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
+  };
 
   # Enable commonly used CLI tools
   cli.enable = true;
@@ -40,7 +43,7 @@
 
   monitors = [
     { # Built in display
-      name = "eDP-1";
+      name = "*";
       width = 1920;
       height = 1080;
       refreshRate = 59.990;
