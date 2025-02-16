@@ -13,7 +13,6 @@
     firefox.enable = true;    # Web browser
     imv.enable = true;        # Image viewer
     mpv.enable = true;        # Video player
-    vscode.enable = true;     # GUI text editor
     zathura.enable = true;    # Document viewer
   };
 
@@ -26,11 +25,6 @@
 
     # User packages
     packages = with pkgs; [
-      # Graphical programs
-      transmission_4-gtk # Torrent client
-      libreoffice        # Office suite
-      signal-desktop     # Message application
-
       # TODO move to more fitting place
       nil                # LSP server for nix
     ];
