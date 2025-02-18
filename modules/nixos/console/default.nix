@@ -12,8 +12,8 @@ in
 
       # Colors for TTY
       colors = with config.colorScheme.palette; [
-        base00 base01 base02 base03 base04 base05 base06 base07
-        base08 base09 base0A base0B base0C base0D base0E base0F
+        base00 base08 base0B base0A base0D base0E base0C base05
+        base03 base08 base0B base0A base0D base0E base0C base06
       ];
 
       font = mkDefault "${pkgs.terminus_font}/share/consolefonts/ter-116n.psf.gz";
