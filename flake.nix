@@ -67,7 +67,6 @@
           outputs.homeManagerModules
           (./. + "/homes/${user}@${host}")
           ./shared/${host}
-          inputs.nur.modules.homeManager.default
         ] ++ extraModules;
       };
   in {
@@ -100,7 +99,6 @@
                 outputs.homeManagerModules
                 (./. + "/homes/nixos@iso")
                 ./shared/iso
-                inputs.nur.modules.homeManager.default
               ];
             };
           }
