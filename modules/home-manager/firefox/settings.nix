@@ -20,6 +20,9 @@
   # Fully disable Pocket
   "extensions.pocket.enabled" = false;
 
+  # Enable extensions by default
+  "extensions.autoDisableScopes" = 0;
+
   # Hardening inspired by arkenfox
   "browser.newtabpage.enabled" = false;
   "browser.newtabpage.activity-stream.showSponsored" = false;
