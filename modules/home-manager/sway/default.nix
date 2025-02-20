@@ -11,8 +11,8 @@ in
   # TODO: define a generic wallpaper module or
   # use something like stylix in the future
   options.wayland.windowManager.sway.wallpaper = mkOption {
-    type = types.path;
-    default = pkgs.nixos-artwork.wallpapers.simple-light-gray.gnomeFilePath;
+    type = types.string;
+    default = toString pkgs.nixos-artwork.wallpapers.simple-light-gray.gnomeFilePath;
     description = "Wallpaper for Sway compositor";
   };
 
@@ -106,7 +106,7 @@ in
             scale = toString monitor.scale;
             pos = "${toString monitor.x} ${toString monitor.y}";
           };
-        }) (config.monitors)) // { "*".background = "${toString cfg.wallpaper} fill '#${fallback}'"; };
+        }) (config.monitors)) // { "*".background = "${cfg.wallpaper} fill '#${fallback}'"; };
 
         startup = [ ];
 

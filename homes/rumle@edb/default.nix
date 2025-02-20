@@ -3,7 +3,7 @@
   wayland.windowManager.sway = {
     enable = true;
     config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
-    wallpaper = ~/Pictures/wallpapers/the-glow-transparent.png;
+    wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png";
   };
 
   # Enable commonly used CLI tools
