@@ -16,6 +16,16 @@
   "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
   "devtools.chrome.enabled" = true;
   "devtools.debugger.remote-enabled" = true;
+  "browser.uiCustomization.state" = builtins.toJSON {
+    currentVersion = 21;
+    # Place extensions in the extensions menu
+    placements.unified-extensions-area = [
+      "sponsorblocker_ajay_app-browser-action"
+      "ublock0_raymondhill_net-browser-action"
+      "addon_darkreader_org-browser-action"
+      "jid1-tsgsxbhncspbwq_jetpack-browser-action"
+    ];
+  };
 
   # Fully disable Pocket
   "extensions.pocket.enabled" = false;
