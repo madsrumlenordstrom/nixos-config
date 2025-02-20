@@ -11,7 +11,7 @@ in
   # TODO: define a generic wallpaper module or
   # use something like stylix in the future
   options.wayland.windowManager.sway.wallpaper = mkOption {
-    type = types.string;
+    type = types.str;
     default = toString pkgs.nixos-artwork.wallpapers.simple-light-gray.gnomeFilePath;
     description = "Wallpaper for Sway compositor";
   };
