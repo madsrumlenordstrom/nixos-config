@@ -39,12 +39,6 @@
     stateVersion = "23.11";
   };
 
-  # Workaround for my broken display :(
-  wayland.windowManager.sway.config.gaps.bottom = 350;
-  wayland.windowManager.sway.config.gaps.left = 295;
-  programs.waybar.settings.main.margin-left = config.wayland.windowManager.sway.config.gaps.left + 12;
-  programs.yambar.settings.bar.border.left-margin = 2 * config.wayland.windowManager.sway.config.gaps.left + 12;
-
   # Enable dconf as many programs read dconf data
   dconf.enable = true;
 
