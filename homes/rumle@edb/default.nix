@@ -31,6 +31,7 @@
       transmission_4-gtk # Torrent client
       libreoffice        # Office suite
       signal-desktop     # Message application
+      element-desktop    # Matrix client
 
       # TODO move to more fitting place
       nil                # LSP server for nix
