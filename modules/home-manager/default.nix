@@ -5,7 +5,7 @@
     ./cli
     ./dunst
     ./eza
-    ./firefox
+    ./librewolf
     ./fish
     ./fontconfig
     ./fuzzel

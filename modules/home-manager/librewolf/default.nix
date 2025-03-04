@@ -3,9 +3,9 @@
 with lib;
 
 let
-  cfg = config.programs.firefox;
+  cfg = config.programs.librewolf;
 
-  # General settings for Firefox
+  # General settings for Librewolf
   settings = import ./settings.nix { inherit config lib pkgs; };
 
   # Search engines
@@ -17,9 +17,9 @@ let
 in {
   config = mkIf cfg.enable {
     # Set as default browser
-    home.sessionVariables.BROWSER = "firefox";
+    home.sessionVariables.BROWSER = "librewolf";
   
-    programs.firefox = {
+    programs.librewolf = {
       profiles = {
         default = {
           isDefault = true;
