@@ -32,7 +32,7 @@ in {
           inherit userChrome userContent settings;
   
           # Extentions must be manually enabled on first launch
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             darkreader
             ublock-origin
             sponsorblock

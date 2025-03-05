@@ -10,28 +10,31 @@ in
     programs.vscode = {
       package = pkgs.vscode;
 
-      enableUpdateCheck = false;
-      enableExtensionUpdateCheck = false;
       mutableExtensionsDir = false;
 
-      extensions = with pkgs.vscode-extensions; [
-        # Scala/Chisel
-        scalameta.metals
-        scala-lang.scala
+      profiles.default = {
+        enableUpdateCheck = false;
+        enableExtensionUpdateCheck = false;
 
-        # Nix
-        jnoortheen.nix-ide
+        extensions = with pkgs.vscode-extensions; [
+          # Scala/Chisel
+          scalameta.metals
+          scala-lang.scala
 
-        # Theme
-        catppuccin.catppuccin-vsc
-      ];
+          # Nix
+          jnoortheen.nix-ide
 
-      userSettings = {
-        "telemetry.telemetryLevel" = "off";
-        "nix.enableLanguageServer" = true;
-        "nix.serverPath" = "nil";
-        "workbench.colorTheme" = "Catppuccin Frappé";
+          # Theme
+          catppuccin.catppuccin-vsc
+        ];
+
+        userSettings = {
+          "telemetry.telemetryLevel" = "off";
+          "nix.enableLanguageServer" = true;
+          "nix.serverPath" = "nil";
+          "workbench.colorTheme" = "Catppuccin Frappé";
         };
+      };
     };
 
     home.packages = with pkgs; [
