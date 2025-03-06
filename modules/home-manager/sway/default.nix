@@ -34,8 +34,8 @@ in
     icons = {
       enable = true;
       package = pkgs.papirus-icon-theme.overrideAttrs (oldAttrs: {
-        buildPhase = /* sh */ ''
-          find ${if config.colorScheme.variant == "dark" then "Papirus-Dark" else "Papirus-Light"}/symbolic -type f -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
+        patchPhase = /* sh */ ''
+          find . -type f -name "*.svg" -exec sed -i 's/#${if config.colorScheme.variant == "dark" then "dfdfdf" else "444444"}/#${config.colorScheme.palette.base05}/g' {} +
         '';
         dontPatchELF = true;
         dontPatchShebangs = true;
