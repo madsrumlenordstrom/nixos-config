@@ -27,6 +27,10 @@ in
           lsp.display-inlay-hints = true;
           scrolloff = 8;
           shell = [ "fish" "-c" ];
+
+          # Diagnostics
+          end-of-line-diagnostics = "hint";
+          inline-diagnostics.cursor-line = "error";
   
           statusline = {
             center = [
