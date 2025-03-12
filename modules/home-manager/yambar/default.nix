@@ -206,7 +206,7 @@ in
 
                 content.map = {
                   default = { empty = {}; };
-                  conditions."name == wlan0".map = {
+                  conditions."name == wlp3s0".map = {
                     default = { string.text = ""; };
                     conditions = {
                       "state == down" = { string.text = "󰤯 "; };
