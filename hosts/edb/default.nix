@@ -33,7 +33,7 @@
     git
   ];
 
-  # Enable virtualisation tecnologies
+  # Enable virtualisation technologies
   virtualisation.enable = true;
 
   # Fonts

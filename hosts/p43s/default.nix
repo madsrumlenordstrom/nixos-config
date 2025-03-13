@@ -22,8 +22,7 @@
   services.openssh.enable = true;
 
   # Time zone and locale.
-  # services.automatic-timezoned.enable = true;
-  time.timeZone = "Europe/Copenhagen";
+  services.automatic-timezoned.enable = true;
   i18n.enable = true;
 
   # User
@@ -41,7 +40,6 @@
   services.displayManager.sddm.wayland.enable = true;
   services.desktopManager.plasma6.enable = true;
 
-
   # Packages
   programs = {
     git.enable = true;
@@ -54,6 +52,9 @@
   environment.systemPackages = with pkgs; [
     wget
   ];
+
+  # Enable virtualisation technologies
+  virtualisation.enable = true;
 
   # Fonts
   fonts.enableDefaultPackages = true;
