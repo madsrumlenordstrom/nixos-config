@@ -5,7 +5,7 @@
 
   programs = {
     alacritty.enable = true;  # Terminal emulator
-    firefox.enable = true;    # Web browser
+    librewolf.enable = true;  # Web browser
     imv.enable = true;        # Image viewer
     mpv.enable = true;        # Video player
     vscode.enable = true;     # GUI text editor
@@ -21,9 +21,10 @@
     # User packages
     packages = with pkgs; [
       # Graphical programs
-      transmission_4-gtk # Torrent client
+      qbittorrent        # Torrent client
       libreoffice        # Office suite
       signal-desktop     # Message application
+      element-desktop    # Matrix client
     ];
 
     stateVersion = "24.11";
