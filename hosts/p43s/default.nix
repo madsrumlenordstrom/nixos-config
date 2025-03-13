@@ -22,7 +22,7 @@
   services.openssh.enable = true;
 
   # Time zone and locale.
-  services.automatic-timezoned.enable = true;
+  time.timeZone = "Europe/Copenhagen";
   i18n.enable = true;
 
   # User
