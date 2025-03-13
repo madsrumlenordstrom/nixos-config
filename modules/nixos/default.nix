@@ -8,6 +8,7 @@
     ./pipewire
     ./tuigreet
     ./users
+    ./virtualisation
     ./wayland-session
   ];
 }

@@ -33,6 +33,9 @@
     git
   ];
 
+  # Enable virtualisation tecnologies
+  virtualisation.enable = true;
+
   # Fonts
   fonts.enableDefaultPackages = true;
  
