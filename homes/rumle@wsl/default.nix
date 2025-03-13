@@ -7,12 +7,6 @@
     username = "rumle";
     homeDirectory = "/home/${config.home.username}";
 
-    # User packages
-    packages = with pkgs; [
-      # TODO move to more fitting place
-      nil                # LSP server for nix
-    ];
-
     stateVersion = "23.11";
   };
 

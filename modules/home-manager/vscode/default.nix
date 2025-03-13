@@ -31,7 +31,7 @@ in
         userSettings = {
           "telemetry.telemetryLevel" = "off";
           "nix.enableLanguageServer" = true;
-          "nix.serverPath" = "nil";
+          "nix.serverPath" = "nixd";
           "workbench.colorTheme" = "Catppuccin Frappé";
         };
       };

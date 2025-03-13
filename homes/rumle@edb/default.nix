@@ -32,9 +32,6 @@
       libreoffice        # Office suite
       signal-desktop     # Message application
       element-desktop    # Matrix client
-
-      # TODO move to more fitting place
-      nil                # LSP server for nix
     ];
 
     stateVersion = "23.11";

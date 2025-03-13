@@ -96,6 +96,8 @@ in
       };
   
       themes = (import ./theme.nix { inherit config lib pkgs; });
+
+      languages = (import ./languages.nix { inherit config lib pkgs; });
     };
   };
 }
