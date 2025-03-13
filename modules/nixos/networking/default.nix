@@ -15,7 +15,7 @@ in
       wait-online.timeout = 20;
       networks = {
         "25-wireless" = {
-          matchConfig.Name = "wlp3s0";
+          matchConfig.Name = "wlp*";
           linkConfig.RequiredForOnline = "routable";
           networkConfig = {
             DHCP = "yes";
