@@ -36,5 +36,7 @@
   "privacy.clearOnShutdown_v2.cache" = false;
 
   # Allow website to detect system theme
-  "browser.display.use_system_colors" = true;
+  "privacy.resistFingerprinting" = false;
+  "privacy.fingerprintingProtection" = true;
+  "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme";
 }
