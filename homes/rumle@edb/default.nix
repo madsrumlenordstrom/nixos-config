@@ -32,6 +32,7 @@
       libreoffice        # Office suite
       signal-desktop     # Message application
       element-desktop    # Matrix client
+      tutanota-desktop   # Email client
     ];
 
     stateVersion = "23.11";
