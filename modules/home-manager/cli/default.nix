@@ -30,6 +30,7 @@ in
       gdu                       # Disk usage analyzer
       file                      # File type analyzer
       tldr                      # Alternative to man pages
+      fq                        # Binary file analyzer
     ];
   };
 }
