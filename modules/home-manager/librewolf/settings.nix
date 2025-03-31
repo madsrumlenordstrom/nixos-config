@@ -38,5 +38,5 @@
   # Allow website to detect system theme
   "privacy.resistFingerprinting" = false;
   "privacy.fingerprintingProtection" = true;
-  "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme";
+  "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
 }
