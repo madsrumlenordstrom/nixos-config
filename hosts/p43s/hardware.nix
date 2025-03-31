@@ -2,42 +2,10 @@
 {
   imports = [
     inputs.nixpkgs.nixosModules.notDetected
-
-    inputs.nixos-hardware.nixosModules.common-cpu-intel
-    inputs.nixos-hardware.nixosModules.common-gpu-nvidia-sync
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
-    inputs.nixos-hardware.nixosModules.lenovo-thinkpad
+    inputs.nixos-hardware.nixosModules.lenovo-thinkpad-p43s
   ];
 
-  hardware = {
-    graphics = {
-      enable = true;
-      enable32Bit = true;
-    };
-
-    nvidia = {
-      open = false;
-      prime = {
-        sync.enable = true;
-        intelBusId = "PCI:0:2:0";
-        nvidiaBusId = "PCI:60:0:0";
-      };
-      # fix suspend/resume screen corruption in sync mode
-      powerManagement.enable = config.hardware.nvidia.prime.sync.enable;
-
-      # fix screen tearing in sync mode
-      modesetting.enable = config.hardware.nvidia.prime.sync.enable;
-    };
-
-    bluetooth.enable = true;
-
-    cpu.intel.updateMicrocode = config.hardware.enableRedistributableFirmware;
-  };
-
-  services = {
-    throttled.enable = true;
-    fwupd.enable = true;
-  };
+  services.fwupd.enable = true;
 
   # Boot and module stuff
   boot = {
