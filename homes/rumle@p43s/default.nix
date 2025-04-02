@@ -26,10 +26,13 @@
       signal-desktop     # Message application
       element-desktop    # Matrix client
       tutanota-desktop   # Email client
+      keepassxc          # Password manager
     ];
 
     stateVersion = "24.11";
   };
+
+  services.syncthing.enable = true;
 
   # Enable XDG base directories management
   xdg.enable = true;

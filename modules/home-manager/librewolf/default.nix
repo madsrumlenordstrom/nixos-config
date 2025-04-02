@@ -39,6 +39,7 @@ in {
             h264ify
             danish-dictionary
             danish-language-pack
+            keepassxc-browser
           ];
         };
       };
