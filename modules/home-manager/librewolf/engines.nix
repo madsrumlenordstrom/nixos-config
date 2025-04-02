@@ -3,13 +3,8 @@ let
   updateInterval = 24 * 60 * 60 * 1000; # Updates icons once per day
 in
 {
-  # Disable stuff I do not use
-  "Google".metaData.hidden = true;
-  "Bing".metaData.hidden = true;
-  "Amazon.com".metaData.hidden = true;
-  "Wikipedia (en)".metaData.hidden = true;
-
-  "Nix Packages" = {
+  nix-packages = {
+    name = "Nix Packages";
     urls = [ {
       template = "https://search.nixos.org/packages";
       params = [
@@ -19,12 +14,13 @@ in
       ];
     } ];
 
-    iconUpdateURL = "https://nixos.org/favicon.png";
+    icon = "https://nixos.org/favicon.png";
     inherit updateInterval;
     definedAliases = ["@np"];
   };
 
-  "Nix Options" = {
+  nix-options = {
+    name = "Nix Options";
     urls = [ {
       template = "https://search.nixos.org/options";
       params = [
@@ -34,73 +30,79 @@ in
       ];
     } ];
 
-    iconUpdateURL = "https://nixos.org/favicon.png";
+    icon = "https://nixos.org/favicon.png";
     inherit updateInterval;
     definedAliases = ["@no"];
   };
 
-  "AOTY" = {
+  aoty = {
+    name = "AOTY";
     urls = [ {
       template = "https://www.albumoftheyear.org/search";
       params = [ { name = "q"; value = "{searchTerms}"; } ];
     } ];
 
-    iconUpdateURL = "https://cdn.albumoftheyear.org/images/favicon.png";
+    icon = "https://cdn.albumoftheyear.org/images/favicon.png";
     inherit updateInterval;
     definedAliases = ["@aoty"];
   };
 
-  "Den Danske Ordbog" = {
+  ddo = {
+    name = "Den Danske Ordbog";
     urls = [ {
       template = "https://ordnet.dk/ddo/ordbog";
       params = [ { name = "query"; value = "{searchTerms}"; } ];
     } ];
 
-    iconUpdateURL = "https://ordnet.dk/favicon.ico";
+    icon = "https://ordnet.dk/favicon.ico";
     inherit updateInterval;
     definedAliases = ["@ddo"];
   };
 
-  "GitHub" = {
+  github = {
+    name = "GitHub";
     urls = [ {
       template = "https://github.com/search";
       params = [ { name = "q"; value = "{searchTerms}"; } ];
     } ];
 
-    iconUpdateURL = "https://github.githubassets.com/favicons/favicon-dark.png";
+    icon = "https://github.githubassets.com/favicons/favicon-dark.png";
     inherit updateInterval;
     definedAliases = ["@gh"];
   };
 
-  "Wikipedia" = {
+  wikipedia = {
+    name = "Wikipedia";
     urls = [ {
       template = "https://en.wikipedia.org";
       params = [ { name = "search"; value = "{searchTerms}"; } ];
     } ];
 
-    iconUpdateURL = "https://en.wikipedia.org/static/favicon/wikipedia.ico";
+    icon = "https://en.wikipedia.org/static/favicon/wikipedia.ico";
     inherit updateInterval;
     definedAliases = ["@wp"];
   };
 
-  "Wiktionary" = {
+  wiktionary = {
+    name = "Wiktionary";
     urls = [ {
       template = "https://en.wiktionary.org";
       params = [ { name = "search"; value = "{searchTerms}"; } ];
     } ];
 
-    iconUpdateURL = "https://en.wiktionary.org/static/favicon/wiktionary/en.ico";
+    icon = "https://en.wiktionary.org/static/favicon/wiktionary/en.ico";
     inherit updateInterval;
     definedAliases = ["@wt"];
   };
 
-  "DBA" = {
+  dba = {
+    name = "DBA";
     urls = [ {
       template = "https://www.dba.dk/soeg";
       params = [ { name = "soeg"; value = "{searchTerms}"; } ];
     } ];
 
-    iconUpdateURL = "https://dbastatic.dk/Content/dba.ico";
+    icon = "https://dbastatic.dk/Content/dba.ico";
     inherit updateInterval;
     definedAliases = ["@dba"];
   };

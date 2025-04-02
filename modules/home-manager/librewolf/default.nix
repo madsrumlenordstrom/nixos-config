@@ -24,7 +24,7 @@ in {
         default = {
           isDefault = true;
           search = {
-            default = "DuckDuckGo";
+            default = "ddg";
             force = true;
             inherit engines;
           };
