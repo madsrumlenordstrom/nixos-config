@@ -3,6 +3,11 @@ let
   updateInterval = 24 * 60 * 60 * 1000; # Updates icons once per day
 in
 {
+
+  # Disable stuff I do not use
+  google.metaData.hidden = true;
+  bing.metaData.hidden = true;
+
   nix-packages = {
     name = "Nix Packages";
     urls = [ {
