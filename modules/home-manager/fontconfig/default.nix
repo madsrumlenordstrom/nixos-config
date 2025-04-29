@@ -21,6 +21,7 @@ in
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
       nerd-fonts.meslo-lg
+      ibm-plex
     ];
   };
 }
