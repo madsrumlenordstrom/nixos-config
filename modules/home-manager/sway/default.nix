@@ -81,7 +81,6 @@ in
         input = {
           # Keyboard layout
           "type:keyboard" = {
-            xkb_layout = "us(mac),dk(mac),kr";
             xkb_options = "grp:alt_caps_toggle";
           };
           # Touchpad

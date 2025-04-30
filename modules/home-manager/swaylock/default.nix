@@ -14,7 +14,7 @@ in
         show-failed-attempts = true;
         daemonize = true;
         font = head config.fonts.fontconfig.defaultFonts.monospace;
-        image = "~/Pictures/wallpapers/the-glow-transparent.png"; # TODO
+        image = config.wayland.windowManager.sway.wallpaper; # TODO
         color = "${config.colorScheme.palette.base02}"; # Fallback color
 
         # Ring

@@ -22,7 +22,10 @@
   services.openssh.enable = true;
 
   # Time zone and locale.
-  time.timeZone = "Europe/Copenhagen";
+  services.automatic-timezoned.enable = true;
+  # TODO: remove when this is merged: https://github.com/NixOS/nixpkgs/pull/391845
+  services.geoclue2.geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+  services.geoclue2.submissionUrl = "https://api.beacondb.net/v2/geosubmit";
   i18n.enable = true;
 
   # User
@@ -34,11 +37,6 @@
     layout = "dk";
     options = "grp:win_space_toggle";
   };
-
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
-  services.desktopManager.plasma6.enable = true;
 
   # Packages
   programs = {
@@ -58,6 +56,12 @@
 
   # Fonts
   fonts.enableDefaultPackages = true;
+
+  # Make system prepared for a wayland compositor
+  wayland-session.enable = true;
+
+  # Enable display manager
+  tuigreet.enable = true;
 
   # Enable pipewire audio
   pipewire.enable = true;

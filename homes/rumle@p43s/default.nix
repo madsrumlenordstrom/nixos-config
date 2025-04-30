@@ -1,5 +1,12 @@
 { inputs, outputs, config, lib, pkgs, ... }:
 {
+  wayland.windowManager.sway = {
+    enable = true;
+    config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
+    wallpaper = "~/Android Camera/Camera/PXL_20250418_143800423.MP.jpg";
+    config.input."type:keyboard".xkb_layout = "dk";
+  };
+
   # Enable commonly used CLI tools
   cli.enable = true;
 
@@ -13,6 +20,7 @@
   };
 
   fonts.fontconfig.enable = true;
+  gtk.enable = true;
 
   home = {
     username = "rumle";
@@ -34,12 +42,28 @@
 
   services.syncthing.enable = true;
 
+  # Enable dconf as many programs read dconf data
+  dconf.enable = true;
+
   # Enable XDG base directories management
   xdg.enable = true;
   nix = {
     enable = true;
     package = pkgs.nix;
   };
+
+  monitors = [
+    { # Built in display
+      name = "eDP-1";
+      width = 1920;
+      height = 1080;
+        refreshRate = 60.001;
+      x = 0;
+      y = 0;
+      scale = 1.0;
+      primary = true;
+    }
+  ];
 
   # Enable home-manager
   programs.home-manager.enable = true;

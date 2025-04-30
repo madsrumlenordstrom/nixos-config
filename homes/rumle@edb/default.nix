@@ -4,6 +4,7 @@
     enable = true;
     config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
     wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png";
+    config.input."type:keyboard".xkb_layout = "us(mac),dk(mac),kr";
   };
 
   # Enable commonly used CLI tools
