@@ -90,6 +90,7 @@ in
             natural_scroll = "enabled";
             scroll_factor = "0.35";
             dwt = "disabled";
+            click_method = "clickfinger";
           };
           # Mouse
           "type:pointer" = {
@@ -285,6 +286,7 @@ in
       extraSessionCommands = /*shell*/ ''
         # Make electron apps work on wayland
         export NIXOS_OZONE_WL=1
+        export ELECTRON_OZONE_PLATFORM_HINT=auto
       '';
 
       extraConfig = ''
