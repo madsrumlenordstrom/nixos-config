@@ -6,6 +6,9 @@
   # Enable DRM
   "media.eme.enabled" = true;
 
+  # Enable WebGL
+  "webgl.disabled" = false;
+
   # UI stuff
   "browser.download.autohidebuttton" = false;
   "browser.aboutwelcome.enabled" = false;
@@ -39,4 +42,7 @@
   "privacy.resistFingerprinting" = false;
   "privacy.fingerprintingProtection" = true;
   "privacy.fingerprintingProtection.overrides" = "+AllTargets,-CSSPrefersColorScheme,-JSDateTimeUTC";
+
+  # Change default geo location API
+  "geo.provider.use_geoclue" = true;
 }
