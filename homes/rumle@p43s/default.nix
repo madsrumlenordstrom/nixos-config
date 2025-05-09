@@ -36,7 +36,28 @@
     stateVersion = "24.11";
   };
 
-  services.syncthing.enable = true;
+  services.syncthing = {
+    enable = true;
+    settings = {
+      folders = {
+        dcim = {
+          id = "dcim";
+          path = "~/DCIM";
+          devices = [ "pixel" ];
+        };
+        pictures = {
+          id = "pictures";
+          path = "~/Pictures";
+          devices = [ "pixel" ];
+        };
+        public = {
+          id = "public";
+          path = "~/Public";
+          devices = [ "pixel" ];
+        };
+      };
+    };
+  };
 
   # Enable dconf as many programs read dconf data
   dconf.enable = true;

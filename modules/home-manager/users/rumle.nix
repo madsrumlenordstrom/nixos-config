@@ -35,9 +35,9 @@ in
     services.syncthing = {
       settings = {
         devices = {
-          pixel = {};
-          p43s = {};
-          edb = {};
+          pixel.id = "M7FJDSU-6WUW5AV-RTNK4OE-XYJDKLQ-3XYHFX4-PSPRAUN-3ZSYIO6-U3K23AE";
+          p43s.id = "RSCAZCQ-AIVEFTH-X2VQJJO-AARUEQG-NWGPV6V-U7VM64D-6FRBB5Q-GZWV6AV";
+          # edb.id = "";
         };
       };
     };

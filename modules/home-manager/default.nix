@@ -19,6 +19,7 @@
     ./monitors
     ./starship
     ./tokei
+    ./users
     ./sway
     ./swayidle
     ./swaylock
