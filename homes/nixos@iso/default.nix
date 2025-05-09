@@ -1,12 +1,11 @@
 { inputs, outputs, config, lib, pkgs, ... }:
 {
+  users.nixos.enable = true;
+
   wayland.windowManager.sway = {
     enable = true;
     config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
   };
-
-  # Enable commonly used CLI tools
-  cli.enable = true;
 
   programs = {
     alacritty.enable = true;  # Terminal emulator
@@ -19,12 +18,7 @@
   fonts.fontconfig.enable = true;
   gtk.enable = true;
 
-  home = {
-    username = "nixos";
-    homeDirectory = "/home/${config.home.username}";
-
-    stateVersion = "24.11";
-  };
+  home.stateVersion = "24.11";
 
   # Enable dconf as many programs read dconf data
   dconf.enable = true;
@@ -41,15 +35,4 @@
       primary = true;
     }
   ];
-
-  # Enable XDG base directories management
-  xdg.enable = true;
-  nix.enable = true;
-
-  # Enable home-manager
-  programs.home-manager.enable = true;
-  news.display = "show";
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 }

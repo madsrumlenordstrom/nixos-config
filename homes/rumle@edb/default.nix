@@ -1,14 +1,13 @@
 { inputs, outputs, config, lib, pkgs, ... }:
 {
+  users.rumle.enable = true;
+
   wayland.windowManager.sway = {
     enable = true;
     config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
     wallpaper = "~/Pictures/wallpapers/the-glow-transparent.png";
     config.input."type:keyboard".xkb_layout = "us(mac),dk(mac),kr";
   };
-
-  # Enable commonly used CLI tools
-  cli.enable = true;
 
   programs = {
     alacritty.enable = true;  # Terminal emulator
@@ -23,17 +22,15 @@
   gtk.enable = true;
 
   home = {
-    username = "rumle";
-    homeDirectory = "/home/${config.home.username}";
-
     # User packages
     packages = with pkgs; [
       # Graphical programs
-      transmission_4-gtk # Torrent client
+      qbittorrent        # Torrent client
       libreoffice        # Office suite
       signal-desktop     # Message application
       element-desktop    # Matrix client
       tutanota-desktop   # Email client
+      keepassxc          # Password manager
     ];
 
     stateVersion = "23.11";
@@ -41,13 +38,6 @@
 
   # Enable dconf as many programs read dconf data
   dconf.enable = true;
-
-  # Enable XDG base directories management
-  xdg.enable = true;
-  nix = {
-    enable = true;
-    package = pkgs.nix;
-  };
 
   monitors = [
     { # Built in display
@@ -70,11 +60,4 @@
       scale = 1.0;
     }
   ];
-
-  # Enable home-manager
-  programs.home-manager.enable = true;
-  news.display = "show";
-
-  # Nicely reload system units when changing configs
-  systemd.user.startServices = "sd-switch";
 }
