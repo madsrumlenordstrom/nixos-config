@@ -10,12 +10,13 @@ in
 
   config = mkIf cfg.enable {
     users.users.rumle = {
-      description = "Mads Rumle Nordstrøm";
+      description = "Rumle Nordstrøm";
       isNormalUser = true;
       shell = config.programs.fish.package;
       extraGroups = [
         "wheel"
         "video"
+        "dialout"
         (mkIf config.networking.networkmanager.enable "networkmanager")
         (mkIf config.programs.adb.enable "adbusers")
         (mkIf config.virtualisation.libvirtd.enable "libvirtd")
