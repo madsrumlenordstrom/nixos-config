@@ -30,6 +30,17 @@ in
       xdg-utils          # Useful desktop CLI tools
     ];
 
+    # XDG desktop integration
+    xdg.portal = {
+      enable = true;
+      extraPortals = with pkgs; [ xdg-desktop-portal-wlr ];
+      config.common = {
+        default = "gtk";
+        "org.freedesktop.impl.portal.Screenshot" = "wlr";
+        "org.freedesktop.impl.portal.ScreenCast" = "wlr";
+      };
+    };
+
     # System icon theme
     icons = {
       enable = true;
