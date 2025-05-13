@@ -242,6 +242,8 @@ in
           # Make some windows float by default
           criteria = [
             { title = "(?:Open|Save) (?:File|Folder|As)"; }
+            { app_id = "localsend_app"; }
+            { app_id = "org.keepassxc.KeePassXC"; }
           ];
         };
 
