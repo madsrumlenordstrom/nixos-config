@@ -5,7 +5,7 @@
   wayland.windowManager.sway = {
     enable = true;
     config.terminal = "${config.programs.alacritty.package}/bin/alacritty";
-    wallpaper = "~/Android Camera/Camera/PXL_20250418_143800423.MP.jpg";
+    wallpaper = "~/Pictures/Wallpapers/brut.PNG";
     config.input."type:keyboard".xkb_layout = "dk";
   };
 
