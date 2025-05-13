@@ -11,8 +11,7 @@ in
   config = mkIf cfg.enable {
     systemd.network = {
       enable = true;
-      wait-online.anyInterface = true;
-      wait-online.timeout = 20;
+      wait-online.enable = false;
       networks = {
         "25-wireless" = {
           matchConfig.Name = "wlp*";
