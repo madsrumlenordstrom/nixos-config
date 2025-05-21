@@ -13,6 +13,16 @@ in
       enable = true;
       wait-online.enable = false;
       networks = {
+        "20-wired" = {
+          matchConfig.Name = "enp*";
+          linkConfig.RequiredForOnline = "routable";
+          networkConfig = {
+            DHCP = "yes";
+            DNSOverTLS = "opportunistic";
+          };
+          dhcpV4Config.RouteMetric = 100;
+          ipv6AcceptRAConfig.RouteMetric = 100;
+        };
         "25-wireless" = {
           matchConfig.Name = "wlp*";
           linkConfig.RequiredForOnline = "routable";
@@ -21,6 +31,8 @@ in
             IgnoreCarrierLoss = "3s";
             DNSOverTLS = "opportunistic";
           };
+          dhcpV4Config.RouteMetric = 600;
+          ipv6AcceptRAConfig.RouteMetric = 600;
         };
       };
       # Use predictable naming scheme
