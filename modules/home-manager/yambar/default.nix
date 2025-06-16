@@ -6,43 +6,7 @@ let
   cfg = config.programs.yambar;
 in
 {
-  options.programs.yambar = {
-    systemd.enable = mkEnableOption "yambar systemd integration";
-
-    systemd.target = mkOption {
-      type = types.str;
-      default = "graphical-session.target";
-      example = "sway-session.target";
-      description = ''
-        The systemd target that will automatically start the yambar service.
-
-        When setting this value to `"sway-session.target"`,
-        make sure to also enable {option}`wayland.windowManager.sway.systemd.enable`,
-        otherwise the service may never be started.
-      '';
-    };
-  };
-
   config = mkIf cfg.enable {
-    systemd.user.services.yambar = mkIf cfg.systemd.enable {
-      Unit = {
-        Description = "Modular status panel for X11 and Wayland";
-        Documentation = "man:yambar";
-        PartOf = [ "graphical-session.target" ];
-        After = [ "graphical-session-pre.target" "pipewire.service" ];
-      };
-
-      Service = {
-        ExecStart = "${cfg.package}/bin/yambar";
-        ExecReload = "${pkgs.coreutils}/bin/kill -SIGUSR2 $MAINPID";
-        Restart = "on-failure";
-        RestartSec = 3;
-        KillMode = "mixed";
-      };
-
-      Install = { WantedBy = [ cfg.systemd.target ]; };
-    };
-
     # User configuration begins here
     programs.yambar = {
       systemd.enable = true;
@@ -206,7 +170,7 @@ in
 
                 content.map = {
                   default = { empty = {}; };
-                  conditions."name == wlp3s0".map = {
+                  conditions."name == wlp0s20f3".map = {
                     default = { string.text = ""; };
                     conditions = {
                       "state == down" = { string.text = "󰤯 "; };
@@ -239,7 +203,7 @@ in
                     "state == charging" = mkBatRamp charging;
                     "state == discharging" = mkBatRamp discharging;
                     "state == unknown" = mkBatRamp unknown;
-                    "state == full" = [ { string.text = lists.last (charging); } ];
+                    "state == full" = [ { string.text = lists.last charging; } ];
                   };
                 };
                 };
