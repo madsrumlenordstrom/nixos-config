@@ -18,7 +18,7 @@ in
           linkConfig.RequiredForOnline = "routable";
           networkConfig = {
             DHCP = "yes";
-            DNSOverTLS = "opportunistic";
+            MulticastDNS = true;
           };
           dhcpV4Config.RouteMetric = 100;
           ipv6AcceptRAConfig.RouteMetric = 100;
@@ -28,8 +28,8 @@ in
           linkConfig.RequiredForOnline = "routable";
           networkConfig = {
             DHCP = "yes";
+            MulticastDNS = true;
             IgnoreCarrierLoss = "3s";
-            DNSOverTLS = "opportunistic";
           };
           dhcpV4Config.RouteMetric = 600;
           ipv6AcceptRAConfig.RouteMetric = 600;
@@ -50,5 +50,9 @@ in
       # Wireless daemon
       wireless.iwd.enable = true;
     };
+
+    # DNS
+    networking.nameservers = [ "194.242.2.4#base.dns.mullvad.net" ];
+    services.resolved.dnsovertls = "true";
   };
 }
