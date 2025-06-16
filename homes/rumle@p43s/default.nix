@@ -31,6 +31,8 @@
       element-desktop    # Matrix client
       tutanota-desktop   # Email client
       keepassxc          # Password manager
+      inkscape           # Vector graphics editor
+      freecad-wayland    # 3D modeling tool
     ];
 
     stateVersion = "24.11";
