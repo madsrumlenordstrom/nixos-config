@@ -11,11 +11,6 @@ in
   config = mkIf cfg.enable {
     virtualisation = {
       libvirtd.enable = true;
-
-      docker.rootless = {
-        enable = true;
-        setSocketVariable = true;
-      };
     };
   };
 }
