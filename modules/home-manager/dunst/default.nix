@@ -25,14 +25,14 @@ in
           progress_bar_frame_width = 1;
           progress_bar_min_width = 220;
           progress_bar_max_width = 300;
-          separator_height = 1;
+          separator_height = 2;
           padding = 8;
           horizontal_padding = 8;
           text_icon_padding = 0;
-          frame_width = 1;
+          frame_width = 2;
           gap_size = 0;
           separator_color = "frame";
-          font = "monospace 10"; # TODO
+          font = "monospace 9"; # TODO
           markup = "full";
           enable_recursive_icon_lookup = true;
           icon_theme = config.icons.name;
@@ -41,12 +41,13 @@ in
           corner_radius = 0;
         };
 
+
         urgency_low = with config.colorScheme.palette; {
           background = "#${base00}";
           foreground = "#${base05}";
           highlight = "#${base04}";
           frame_color = "#${base04}";
-          timeout = 3;
+          timeout = 5;
         };
 
         urgency_normal = with config.colorScheme.palette; {
@@ -54,7 +55,7 @@ in
           foreground = "#${base05}";
           highlight = "#${base04}";
           frame_color = "#${base04}";
-          timeout = 3;
+          timeout = 5;
         };
 
         urgency_critical = with config.colorScheme.palette; {

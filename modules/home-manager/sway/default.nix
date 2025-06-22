@@ -131,7 +131,7 @@ in
         window = {
           titlebar = false;
           hideEdgeBorders = "none";
-          border = 1;
+          border = 2;
         };
 
         # Hides default swaybar

@@ -36,7 +36,7 @@ in
             color = "${base04}ff";
             margin = mkDefault (scaledInt 6);
             bottom-margin = mkDefault (scaledInt 0);
-            width = scaledInt 1;
+            width = scaledInt 2;
           };
 
           left = [
