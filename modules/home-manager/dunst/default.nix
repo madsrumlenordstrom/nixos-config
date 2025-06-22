@@ -15,8 +15,8 @@ in
       settings = {
         global = {
           follow = "mouse";
-          width = 220;
-          height = "(0, 300)";
+          width = 300;
+          height = "(0, 200)";
           origin = "top-right";
           offset = "6x6";
           notification_limit = 0;
