@@ -20,10 +20,7 @@ in
 
     # Enable XDG base directories management
     xdg.enable = true;
-    nix = {
-      enable = true;
-      package = pkgs.nix;
-    };
+    nix.enable = true;
 
     # Enable home-manager
     programs.home-manager.enable = true;
