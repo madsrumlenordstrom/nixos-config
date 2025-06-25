@@ -30,11 +30,8 @@
     inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
     systems = [
-      "aarch64-linux"
-      "i686-linux"
       "x86_64-linux"
-      "aarch64-darwin"
-      "x86_64-darwin"
+      "aarch64-linux"
     ];
     # This is a function that generates an attribute by calling a function you
     # pass to it, with each system as an argument
@@ -70,8 +67,20 @@
         ] ++ extraModules;
       };
   in {
-    # ISO image
-    packages = forAllSystems (system: import ./pkgs allPackages.${system}) // { iso = self.nixosConfigurations.iso.config.system.build.isoImage; };
+    packages = forAllSystems (system: {
+      default = self.packages.${system}.iso;
+      iso = self.nixosConfigurations.iso.config.system.build.isoImage;
+      nixos-vm = allPackages.${system}.writeShellScriptBin "nixos-vm" /* bash */ ''
+        ${allPackages.${system}.qemu}/bin/qemu-system-x86_64 -enable-kvm -m 4096 -vga virtio -cdrom ${self.packages.${system}.iso}/iso/${self.nixosConfigurations.iso.config.system.build.isoImage.isoName}
+      '';
+    });
+
+    apps = forAllSystems (system: {
+      default = {
+        type = "app";
+        program = "${self.packages.${system}.nixos-vm}/bin/nixos-vm";
+      };
+    });
 
     # Custom packages and modifications, exported as overlays
     overlays = import ./overlays { inherit inputs; };
