@@ -9,11 +9,6 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # WSL
-    nixos-wsl.url = "github:nix-community/nixos-wsl";
-    nixos-wsl.inputs.nixpkgs.follows = "nixpkgs";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-
     # Others
     nixos-hardware.url = "github:nixos/nixos-hardware";
     nur.url = "github:nix-community/NUR";
@@ -93,7 +88,6 @@
     nixosConfigurations = {
       "edb" = mkNixosConfiguration { host = "edb"; system = "x86_64-linux"; };
       "p43s" = mkNixosConfiguration { host = "p43s"; system = "x86_64-linux"; };
-      "wsl" = mkNixosConfiguration { host = "wsl"; system = "x86_64-linux"; };
       "iso" = mkNixosConfiguration {
         host = "iso";
         system = "x86_64-linux";
@@ -119,7 +113,6 @@
     homeConfigurations = {
       "rumle@edb" = mkHomeManagerConfiguration { user = "rumle"; host = "edb"; system = "x86_64-linux"; };
       "rumle@p43s" = mkHomeManagerConfiguration { user = "rumle"; host = "p43s"; system = "x86_64-linux"; };
-      "rumle@wsl" = mkHomeManagerConfiguration { user = "rumle"; host = "wsl"; system = "x86_64-linux"; };
     };
   };
 }
