@@ -6,14 +6,14 @@ let
   cfg = config.programs.librewolf;
 
   # General settings for Librewolf
-  settings = import ./settings.nix { inherit config lib pkgs; };
+  settings = import ./settings.nix { inherit inputs config lib pkgs; };
 
   # Search engines
-  engines = import ./engines.nix { inherit config lib pkgs; };
+  engines = import ./engines.nix { inherit inputs config lib pkgs; };
 
   # Chrome styling
-  userChrome = (import ./chrome.nix { inherit config lib pkgs; }).userChrome;
-  userContent = (import ./chrome.nix { inherit config lib pkgs; }).userContent;
+  userChrome = (import ./chrome.nix { inherit inputs config lib pkgs; }).userChrome;
+  userContent = (import ./chrome.nix { inherit inputs config lib pkgs; }).userContent;
 in {
   config = mkIf cfg.enable {
     # Set as default browser

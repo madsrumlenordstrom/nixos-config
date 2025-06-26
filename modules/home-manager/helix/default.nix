@@ -95,9 +95,9 @@ in
         theme = "base16";
       };
   
-      themes = (import ./theme.nix { inherit config lib pkgs; });
+      themes = (import ./theme.nix { inherit inputs config lib pkgs; });
 
-      languages = (import ./languages.nix { inherit config lib pkgs; });
+      languages = (import ./languages.nix { inherit inputs config lib pkgs; });
     };
   };
 }
