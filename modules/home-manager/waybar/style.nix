@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 {
   style = with config.colorScheme.palette; /* css */ ''
     * {

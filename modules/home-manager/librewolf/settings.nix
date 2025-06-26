@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 {
   # Hardware accelerated video
   "media.ffmpeg.vaapi.enabled" = true;

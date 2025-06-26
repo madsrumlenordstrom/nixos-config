@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 {
   language-server = {
     nixd.command = "${pkgs.nixd}/bin/nixd";

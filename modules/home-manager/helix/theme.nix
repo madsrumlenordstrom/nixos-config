@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 {
   # See https://docs.helix-editor.com/themes.html
   base16 = with config.colorScheme.palette; {

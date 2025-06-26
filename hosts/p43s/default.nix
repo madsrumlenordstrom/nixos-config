@@ -1,4 +1,4 @@
-{ inputs, lib, config, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 {
   imports = [
     # Hardware
