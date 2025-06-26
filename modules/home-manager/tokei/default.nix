@@ -4,6 +4,7 @@ with lib;
 
 let
   cfg = config.programs.tokei;
+
   tomlFormat = pkgs.formats.toml { };
 in
 {

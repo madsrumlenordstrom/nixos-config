@@ -10,11 +10,4 @@ in
     ./rumle.nix
     ./nixos.nix
   ];
-
-  # options.users = mkOption {
-  #   default = { };
-  #   description = ''
-  #     User which are available in home-manager configuration.
-  #   '';
-  # };
 }

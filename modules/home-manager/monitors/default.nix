@@ -1,8 +1,8 @@
 { inputs, config, lib, pkgs, ... }:
 
-let
-  inherit (lib) mkOption types;
+with lib;
 
+let
   cfg = config.monitors;
 in
 {
