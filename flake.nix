@@ -74,6 +74,7 @@
       default = {
         type = "app";
         program = "${self.packages.${system}.nixos-vm}/bin/nixos-vm";
+        meta.description = "Script that runs a virtual machine with ISO.";
       };
     });
 
