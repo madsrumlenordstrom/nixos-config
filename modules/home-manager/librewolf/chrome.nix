@@ -5,6 +5,11 @@
 
   # Chrome styling
   userChrome = with config.colorScheme.palette; /* css */ ''
+    * {
+      font-family: monospace;
+      font-size: 14;
+    }
+
     :root {
       --sfwindow: #${base01};
       --sfsecondary: #${base00};
