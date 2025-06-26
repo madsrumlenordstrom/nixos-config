@@ -1,4 +1,4 @@
-{ lib, config, pkgs, modulesPath, ... }:
+{ inputs, lib, config, pkgs, ... }:
 
 with lib;
 
@@ -10,7 +10,7 @@ in
 
   config = mkIf cfg.enable (mkMerge [
       # Use this module from nixpkgs
-      (import (modulesPath + "/programs/wayland/wayland-session.nix") { inherit lib pkgs; })
+      (import "${inputs.nixpkgs}/nixos/modules/programs/wayland/wayland-session.nix" { inherit lib pkgs; })
     {
       # Disable xwayland
       programs.xwayland.enable = false;

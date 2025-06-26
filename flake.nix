@@ -22,7 +22,6 @@
     self,
     ...
   } @ inputs: let
-    inherit (self) outputs;
     # Supported systems for your flake packages, shell, etc.
     systems = [
       "x86_64-linux"
@@ -32,20 +31,28 @@
     # pass to it, with each system as an argument
     forAllSystems = inputs.nixpkgs.lib.genAttrs systems;
 
+    # Custom packages and modifications, exported as overlays
+    overlays = import ./overlays { inherit inputs; };
+
     allPackages = forAllSystems (system: import inputs.nixpkgs {
       inherit system;
       overlays = [
-        outputs.overlays.additions
-        outputs.overlays.modifications
+        overlays.additions
+        overlays.modifications
         inputs.nur.overlays.default
       ];
       config.allowUnfree = true;
     });
 
+    nixosModules = import ./modules/nixos;
+
+    homeManagerModules = import ./modules/home-manager;
+
     mkNixosConfiguration = { host, system, extraModules ? [ ] }: inputs.nixpkgs.lib.nixosSystem {
       pkgs = allPackages.${system};
-      specialArgs = { inherit inputs outputs; };
+      specialArgs = { inherit inputs; };
       modules = [
+        nixosModules
         (./. + "/hosts/${host}")
         (./. + "/shared/${host}")
         inputs.nix-index-database.nixosModules.nix-index
@@ -54,9 +61,9 @@
 
     mkHomeManagerConfiguration = { user, host, system, extraModules ? [ ] }: inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = allPackages.${system};
-        extraSpecialArgs = { inherit inputs outputs; };
+        extraSpecialArgs = { inherit inputs; };
         modules = [
-          outputs.homeManagerModules
+          homeManagerModules
           (./. + "/homes/${user}@${host}")
           ./shared/${host}
         ] ++ extraModules;
@@ -78,13 +85,6 @@
       };
     });
 
-    # Custom packages and modifications, exported as overlays
-    overlays = import ./overlays { inherit inputs; };
-
-    nixosModules = import ./modules/nixos;
-
-    homeManagerModules = import ./modules/home-manager;
-
     # NixOS configuration entrypoint
     nixosConfigurations = {
       "edb" = mkNixosConfiguration { host = "edb"; system = "x86_64-linux"; };
@@ -98,9 +98,9 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = { inherit inputs outputs; };
+              extraSpecialArgs = { inherit inputs; };
               users.nixos.imports = [
-                outputs.homeManagerModules
+                homeManagerModules
                 (./. + "/homes/nixos@iso")
                 ./shared/iso
               ];

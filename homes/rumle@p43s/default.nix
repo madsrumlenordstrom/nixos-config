@@ -1,4 +1,4 @@
-{ inputs, outputs, config, lib, pkgs, ... }:
+{ inputs, config, lib, pkgs, ... }:
 {
   users.rumle.enable = true;
   

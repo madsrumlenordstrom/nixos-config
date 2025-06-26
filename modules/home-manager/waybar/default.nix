@@ -1,4 +1,4 @@
-{ inputs, outputs, lib, config, pkgs, ... }:
+{ inputs, lib, config, pkgs, ... }:
 {
   # Waits 3 seconds before restarting on crash
   systemd.user.services.waybar.Service.RestartSec = 3;
@@ -82,6 +82,6 @@
     };
 
     # Import bar style configuration
-    inherit (import ./style.nix { inherit inputs outputs lib config pkgs; }) style;
+    inherit (import ./style.nix { inherit inputs lib config pkgs; }) style;
   };
 }

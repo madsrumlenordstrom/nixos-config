@@ -1,14 +1,11 @@
-{ inputs, outputs, lib, config, pkgs, modulesPath, ... }:
+{ inputs, lib, config, pkgs, ... }:
 {
   imports = [
     # Hardware
     ./hardware.nix
 
-    # Custom nixos modules
-    outputs.nixosModules
-
-    # Create an ISO image with KDE
-    (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
+    # Create an ISO image
+    "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
   ];
   isoImage.squashfsCompression = "gzip -Xcompression-level 1";
 
