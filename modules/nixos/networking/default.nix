@@ -19,6 +19,7 @@ in
           networkConfig = {
             DHCP = "yes";
             MulticastDNS = true;
+            LLMNR = "no";
           };
           dhcpV4Config.RouteMetric = 100;
           ipv6AcceptRAConfig.RouteMetric = 100;
@@ -29,6 +30,7 @@ in
           networkConfig = {
             DHCP = "yes";
             MulticastDNS = true;
+            LLMNR = "no";
             IgnoreCarrierLoss = "3s";
           };
           dhcpV4Config.RouteMetric = 600;
@@ -45,7 +47,12 @@ in
 
       # Use nftables instead of legacy iptables
       nftables.enable = true;
-      firewall.enable = true;
+      firewall = {
+        enable = true;
+        allowedUDPPorts = [
+          5353 # MulticastDNS
+        ];
+      };
 
       # Wireless daemon
       wireless.iwd.enable = true;
